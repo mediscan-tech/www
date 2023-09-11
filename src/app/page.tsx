@@ -13,7 +13,7 @@ export default function HomePage() {
           onUploadBegin={() => {
             alert("Upload Completed! Waiting for AI to process...");
           }}
-          onClientUploadComplete={async (res: Promise<any>) => {
+          onClientUploadComplete={async (res: any) => {
             if (res && Array.isArray(res) && res.length > 0) {
               try {
                 const response = await fetch(`/api/getPrediction?key=${res[0].key}`);

@@ -43,7 +43,7 @@ export const ourFileRouter = {
           prediction: modelData.predicted_class,
         }
 
-        let result = await collection.insertOne(doc);
+        const result = await collection.insertOne(doc);
       } catch (error) {
         console.error('Error sending image to API:', error);
       }
