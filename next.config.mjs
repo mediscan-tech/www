@@ -2,6 +2,7 @@ import "./src/env.mjs";
 
 /** @type {import("next").NextConfig} */
 const config = {
-  experimental: { serverActions: false },
+  esmExternals: true
 };
+
 export default config;

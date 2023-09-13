@@ -9,8 +9,9 @@ env:
   NODE_LTS_VERSION: 18
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  UPLOADTHING_SECRET: ${{ secrets.VERCEL_PROJECT_ID }}
-  UPLOADTHING_APP_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  UPLOADTHING_SECRET: ${{ secrets.UPLOADTHING_SECRET }}
+  UPLOADTHING_APP_ID: ${{ secrets.UPLOADTHING_APP_ID }}
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
   
 jobs:
   lint_build:
