@@ -4,8 +4,16 @@ import React, { useState, useEffect } from 'react';
 
 const LocationComponent = () => {
   const [location, setLocation] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [zipCode, setZip] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // You now have access to `window`
+    const userAgent = window.navigator.userAgent;
+    const mobile = /mobile/i.test(userAgent);
+    setIsMobile(mobile);
+   }, [])
 
   useEffect(() => {
     if ('geolocation' in navigator) {
@@ -55,12 +63,19 @@ const LocationComponent = () => {
           <p>Your longitude: {location.longitude}</p>
           <p>Your ZIP code: {zipCode}</p>
         </div>
-      ) : error ? (
+      ) : error && !isMobile ? (
         <div>
           <p>Error: {error.message}</p>
           <p>
             To retry, please refresh the page and grant location access when
             prompted.
+          </p>
+        </div>
+      ) : error && isMobile ? (
+        <div>
+          <p>Error: {error.message}</p>
+          <p>
+            Enable location access: Visit Settings &gt;Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
           </p>
         </div>
       ) : (
