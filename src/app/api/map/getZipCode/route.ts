@@ -4,7 +4,13 @@ export async function POST(request: Request) {
     const data: any = await request.json();
     const latitude = data.latitude;
     const longitude = data.longitude;
-    // console.log(data.latitude)
+
+    if (!data || data === null || data === undefined || data === '') {
+        return new Response(`Latitude or longitude missing!`, {
+            status: 500,
+        })
+    }
+    
     const getZip = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
     // console.log(await getZip.json())
     try {
