@@ -75,7 +75,7 @@ const LocationComponent = () => {
         <div>
           <p>Error: {error.message}</p>
           <p>
-            Enable location access: Visit Settings &gt;Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
+            Enable location access: Visit Settings &gt; Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
           </p>
         </div>
       ) : (
