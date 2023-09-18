@@ -10,7 +10,8 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "test", "production"]),
     UPLOADTHING_SECRET: z.string().min(72),
     UPLOADTHING_APP_ID: z.string().min(10),
-    MONGODB_URI: z.string().min(90)
+    MONGODB_URI: z.string().min(90),
+    OPENCAGE_API_KEY: z.string().min(32),
   },
 
   /**
@@ -30,7 +31,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
-    MONGODB_URI: process.env.MONGODB_URI
+    MONGODB_URI: process.env.MONGODB_URI,
+    OPENCAGE_API_KEY: process.env.OPENCAGE_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
