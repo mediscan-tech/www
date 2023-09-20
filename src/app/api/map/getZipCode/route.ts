@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
     
     const getZip = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
-    // console.log(await getZip.json())
+
     try {
         if (getZip.ok) {
             const data = await getZip.json();
@@ -29,21 +29,3 @@ export async function POST(request: Request) {
         })
     }
 }
-
-
-// import { NextResponse } from 'next/server';
-// export async function POST(request: Request) {
-//     const data: any = await request.json();
-//     const latitude = data.latitude;
-//     const longitude = data.longitude;
-//     console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-//     return NextResponse.json({ lat: latitude, long: longitude})
-// }
-
-
-// import { NextResponse } from 'next/server'
- 
-// export async function POST(request: Request) {
-//  const res = await request.json()
-//  return NextResponse.json({ res })
-// }

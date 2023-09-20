@@ -13,6 +13,7 @@ env:
   UPLOADTHING_APP_ID: ${{ secrets.UPLOADTHING_APP_ID }}
   MONGODB_URI: ${{ secrets.MONGODB_URI }}
   OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
+  GEONAMES_USERNAME: ${{ secrets.GEONAMES_USERNAME }}
 
 jobs:
   lint_build:

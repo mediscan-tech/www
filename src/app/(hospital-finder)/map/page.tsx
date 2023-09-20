@@ -9,13 +9,12 @@ const LocationComponent = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // You now have access to `window`
+    //Check device
     const userAgent = window.navigator.userAgent;
     const mobile = /mobile/i.test(userAgent);
     setIsMobile(mobile);
-   }, [])
 
-  useEffect(() => {
+    //Grab location
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
@@ -53,6 +52,31 @@ const LocationComponent = () => {
     } else {
       setError(new Error('Geolocation is not available in your browser.'));
     }
+
+    // Find nearest zipcodes
+    const getNearbyZipCodes = async () => {
+      const requestData = {
+        latitude: location.latitude,
+        longitude: location.longitude,
+      };
+
+      const response = await fetch('/api/map/getNearbyZipCodes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (response.ok) { //TODO: format given data
+        const data = await response.json();
+        console.log(data);
+      } else {
+        setError(new Error('Failed to fetch ZIP code from the server.'));
+      }
+    };
+
+    getNearbyZipCodes();
   }, []);
   
   return (

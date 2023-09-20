@@ -12,6 +12,7 @@ export const env = createEnv({
     UPLOADTHING_APP_ID: z.string().min(10),
     MONGODB_URI: z.string().min(90),
     OPENCAGE_API_KEY: z.string().min(32),
+    GEONAMES_USERNAME: z.string().min(8),
   },
 
   /**
@@ -33,6 +34,7 @@ export const env = createEnv({
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     MONGODB_URI: process.env.MONGODB_URI,
     OPENCAGE_API_KEY: process.env.OPENCAGE_API_KEY,
+    GEONAMES_USERNAME: process.env.GEONAMES_USERNAME,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
