@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 const LocationComponent = () => {
   const [location, setLocation] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [zipCode, setZip] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -24,8 +23,9 @@ const LocationComponent = () => {
             latitude: latitude,
             longitude: longitude,
           };
-
-          const response = await fetch('/api/map/getZipCode', {
+          
+          // Find nearest zipcodes
+          const response = await fetch('/api/map/findNearbyZipCodes', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -35,7 +35,6 @@ const LocationComponent = () => {
 
           if (response.ok) {
             const data = await response.json();
-            setZip(data.zipCode);
             setLocation({ latitude, longitude });
             setError(null);
           } else {
@@ -52,31 +51,6 @@ const LocationComponent = () => {
     } else {
       setError(new Error('Geolocation is not available in your browser.'));
     }
-
-    // Find nearest zipcodes
-    const getNearbyZipCodes = async () => {
-      const requestData = {
-        latitude: location.latitude,
-        longitude: location.longitude,
-      };
-
-      const response = await fetch('/api/map/getNearbyZipCodes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-      });
-
-      if (response.ok) { //TODO: format given data
-        const data = await response.json();
-        console.log(data);
-      } else {
-        setError(new Error('Failed to fetch ZIP code from the server.'));
-      }
-    };
-
-    getNearbyZipCodes();
   }, []);
   
   return (
@@ -85,7 +59,6 @@ const LocationComponent = () => {
         <div>
           <p>Your latitude: {location.latitude}</p>
           <p>Your longitude: {location.longitude}</p>
-          <p>Your ZIP code: {zipCode}</p>
         </div>
       ) : error && !isMobile ? (
         <div>
