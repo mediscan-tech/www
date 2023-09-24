@@ -1,8 +1,6 @@
 import "./src/env.mjs";
 
 /** @type {import("next").NextConfig} */
-const config = {
-  esmExternals: true
-};
+const config = {};
 
 export default config;
