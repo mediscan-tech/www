@@ -24,8 +24,8 @@ const LocationComponent = () => {
             longitude: longitude,
           };
           
-          // Find nearest zipcodes
-          const response = await fetch('/api/map/findNearbyZipCodes', {
+          // Find nearest zipcodes and get back hospital data
+          const response = await fetch('/api/map/getHospitalData', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -34,7 +34,8 @@ const LocationComponent = () => {
           });
 
           if (response.ok) {
-            const data = await response.json();
+            const hData = await response.json();
+            console.log(hData.data)
             setLocation({ latitude, longitude });
             setError(null);
           } else {
