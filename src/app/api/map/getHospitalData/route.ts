@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     const data: any = await request.json();
     let latitude = data.latitude;
     let longitude = data.longitude;
-    const limit = 499;
     let zipCode: string | null = null;
     let postalCodesArray = [];
     let formattedData: { count: number; results: Result[] } = {
@@ -69,12 +68,13 @@ export async function POST(request: Request) {
     }    
     
     //Get nearby zip codes
-    const getNearbyZipCodes = await fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=${zipCode}&country=US&radius=24.2&maxRows=${limit}&username=${process.env.GEONAMES_USERNAME}`)
+    const geoNamesLimit = 499; // Not 500, as it would use 3 credits for 500 results
+    const getNearbyZipCodes = await fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=${zipCode}&country=US&radius=24.2&maxRows=${geoNamesLimit}&username=${process.env.GEONAMES_USERNAME}`)
     try {
         if (getNearbyZipCodes.ok) {
             const getNearbyZipCodesData = await getNearbyZipCodes.json();
             postalCodesArray = [];
-            for (let i = 0; i < Math.min(limit, getNearbyZipCodesData.postalCodes.length); i++) {
+            for (let i = 0; i < Math.min(geoNamesLimit, getNearbyZipCodesData.postalCodes.length); i++) {
                 postalCodesArray.push(getNearbyZipCodesData.postalCodes[i].postalCode);
             }
             
