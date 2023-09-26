@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { redis } from '@/lib/redis/redis.ts';
+
 type Result = {
     facility_id: string;
     facility_name: string;
@@ -34,24 +36,31 @@ export async function POST(request: Request) {
             status: 500,
         })
     }
-    
-    const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
-    //TODO: add redis caching here to save on API calls
-    try {
-        if (getZipCode.ok) {
-            const data = await getZipCode.json();
-            zipCode = data.results[0].components.postcode;
-        } else {
-            return new Response(`Failed to fetch ZIP code!`, {
+
+    //Redis caching to save on API calls
+    const cachedZip = await redis.get(`${latitude},${longitude}`);
+    if (cachedZip) {
+        zipCode = cachedZip;
+    } else if (!cachedZip) {
+        // If not in cache, get zip code from latitude and longitude 
+        const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
+        try {
+            if (getZipCode.ok) {
+                const data = await getZipCode.json();
+                zipCode = data.results[0].components.postcode;
+                await redis.set(`${latitude},${longitude}`, zipCode)
+            } else {
+                return new Response(`Failed to fetch ZIP code!`, {
+                    status: 500,
+                })
+            }
+        } catch (error) {
+            return new Response(`Error fetching ZIP code! ${error}`, {
                 status: 500,
             })
         }
-    } catch (error) {
-        return new Response(`Error fetching ZIP code! ${error}`, {
-            status: 500,
-        })
-    }
-
+    }    
+    
     //Get nearby zip codes
     const getNearbyZipCodes = await fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=${zipCode}&country=US&radius=24.2&maxRows=${limit}&username=${process.env.GEONAMES_USERNAME}`)
     try {
@@ -88,27 +97,23 @@ export async function POST(request: Request) {
         "operator": "="
       }));
 
-      const finalConditions = [
-        ...conditions,
-        {
-          "groupOperator": "or",
-          "conditions": formattedPostalCodesArray
-        }
-      ];
-
     const payload = {
-        "conditions": finalConditions,
+        "conditions": [
+            ...conditions,
+            {
+                "groupOperator": "or",
+                "conditions": formattedPostalCodesArray
+            }
+        ],
         "limit": 500
-    };
-
-    const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
     };
 
     const fetchCMSData = await fetch('https://data.cms.gov/provider-data/api/1/datastore/query/yv7e-xc69/0', {
         method: 'POST',
-        headers: headers,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(payload)
     })
 
