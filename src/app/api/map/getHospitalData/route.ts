@@ -22,8 +22,8 @@ type Result = {
 
 export async function POST(request: Request) {
     const data: any = await request.json();
-    const latitude = data.latitude;
-    const longitude = data.longitude;
+    let latitude = data.latitude;
+    let longitude = data.longitude;
     const limit = 499;
     let zipCode: string | null = null;
     let postalCodesArray = [];
@@ -31,16 +31,22 @@ export async function POST(request: Request) {
         count: 0,
         results: [],
     };
+
     if (!data || data === null || data === undefined || data === '') {
         return new Response(`Latitude or longitude missing!`, {
             status: 500,
         })
     }
 
+    //Round latitude and longitude to 4 decimal places to maintain consistency to reduce the number of API calls and cache hits (https://blis.com/precision-matters-critical-importance-decimal-places-five-lowest-go/)
+    latitude = parseFloat(latitude.toFixed(4));
+    longitude = parseFloat(longitude.toFixed(4));
+
     //Redis caching to save on API calls
     const cachedZip = await redis.get(`${latitude},${longitude}`);
     if (cachedZip) {
         zipCode = cachedZip;
+        console.log(`Retrieved ZIP code from cache: ${zipCode}`);
     } else if (!cachedZip) {
         // If not in cache, get zip code from latitude and longitude 
         const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
@@ -49,6 +55,7 @@ export async function POST(request: Request) {
                 const data = await getZipCode.json();
                 zipCode = data.results[0].components.postcode;
                 await redis.set(`${latitude},${longitude}`, zipCode)
+                console.log(`Added ZIP code ${zipCode} to cache`)
             } else {
                 return new Response(`Failed to fetch ZIP code!`, {
                     status: 500,
