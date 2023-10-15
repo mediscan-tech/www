@@ -26,8 +26,10 @@ export async function POST(request: Request) {
     let longitude = data.longitude;
     let zipCode: string | null = null;
     let postalCodesArray = [];
-    let formattedData: { count: number; results: Result[] } = {
+    let formattedData: { count: number; startLatitude: number; startLongitude: number;  results: Result[]; } = {
         count: 0,
+        startLatitude: latitude,
+        startLongitude: longitude,
         results: [],
     };
 
@@ -128,22 +130,63 @@ export async function POST(request: Request) {
         if (fetchCMSData.ok) {
             const CMSData = await fetchCMSData.json();
 
-            const formattedResults = CMSData.results.map((result: Result) => ({
-                facility_name: result.facility_name,
-                address: result.address,
-                citytown: result.citytown,
-                state: result.state,
-                zip_code: result.zip_code,
-                countyparish: result.countyparish,
-                telephone_number: result.telephone_number,
-                score: result.score,
-                sample: result.sample,
-            }));
+            const formattedResults = CMSData.results.map(async (result: Result) => {
+                const hospital = {
+                    facility_name: result.facility_name,
+                    address: result.address,
+                    citytown: result.citytown,
+                    state: result.state,
+                    zip_code: result.zip_code,
+                    countyparish: result.countyparish,
+                    telephone_number: result.telephone_number,
+                    hospital_latitude: null,
+                    hospital_longitude: null,
+                    score: result.score,
+                    sample: result.sample,
+                };
+          
+                //Now get lat and long for each hospital and add to data
+                const forwardGeocodeHospitalAddress = async (address: String) => {
+                    try {
+                        const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?autocomplete=false&types=address&access_token=${process.env.MAPBOX_API}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.features && data.features.length > 0) {
+                                // Access the coordinates from the first feature (hihgest relevancy)
+                                const [longitude, latitude] = data.features[0].center;
+                                return { latitude, longitude };
+                            } else {
+                                return new Response(`No coordinates found for ${address}`, {
+                                    status: 204,
+                                })
+                            }
+                        }
+                    } catch (error) {
+                        return new Response(`Error forward fetching hospital coordinates! ${error}`, {
+                            status: 500,
+                        })
+                    }
+                };
+                const geocodedData: any = await forwardGeocodeHospitalAddress(`${hospital.address} + ${hospital.citytown} + ${hospital.state} + ${hospital.zip_code} + "United States"`);
+                
+                if (geocodedData) {
+                    hospital.hospital_latitude = geocodedData.latitude;
+                    hospital.hospital_longitude = geocodedData.longitude;
+                }
+          
+                return hospital;
+              });
+          
+              const formattedResultsWithCoordinates = await Promise.all(formattedResults);
+          
+              formattedData = {
+                count: formattedResultsWithCoordinates.length,
+                results: formattedResultsWithCoordinates,
+                startLatitude: latitude,
+                startLongitude: longitude,
+              };
 
-            formattedData = {
-                count: formattedResults.length,
-                results: formattedResults,
-            };
+            console.log(formattedData)
             
         } else {
             return new Response(`Failed to cross-reference the CMS database!`, {

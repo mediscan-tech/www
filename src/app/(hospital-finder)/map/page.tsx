@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { MapComponent } from '@/components/HospitalMap/Map';
 
-const LocationComponent = () => {
+export default function MapDisplayPage() {
   const [location, setLocation] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState(null);
+  const [hData, setHData] = useState(null);
 
   useEffect(() => {
     //Check device
@@ -34,8 +36,7 @@ const LocationComponent = () => {
           });
 
           if (response.ok) {
-            const hData = await response.json();
-            console.log(hData.data)
+            setHData(await response.json());
             setLocation({ latitude, longitude });
             setError(null);
           } else {
@@ -58,8 +59,7 @@ const LocationComponent = () => {
     <div>
       {location ? (
         <div>
-          <p>Your latitude: {location.latitude}</p>
-          <p>Your longitude: {location.longitude}</p>
+          {/* <MapComponent mapData = {hData}/> */}
         </div>
       ) : error && !isMobile ? (
         <div>
@@ -82,5 +82,3 @@ const LocationComponent = () => {
     </div>
   );
 };
-
-export default LocationComponent;
