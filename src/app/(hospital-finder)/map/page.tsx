@@ -22,7 +22,7 @@ export default function MapDisplayPage() {
   const [hData, setHData] = useState(null);
   const [startLatitude, setStartLatitude] = useState(null);
   const [startLongitude, setStartLongitude] = useState(null);
-  const key = "pk.eyJ1IjoiZGV2ZWxpdGUiLCJhIjoiY2xucXc5bzk4MHZyNDJqbXI1aHo5eW9yYiJ9.YCgBgtStC9HbxWK02W3QaA" //Okay to reveal as it is restricted to only our domain
+  const key = "pk.eyJ1IjoiZGV2ZWxpdGUiLCJhIjoiY2xucjJqMzN2MG8wOTJrbzE3MTlqMzlyNyJ9.jmFookpSLQ1vKGoMeLRX6g" //Okay to reveal as it is restricted to only our domain
 
   useEffect(() => {
     //Check device
