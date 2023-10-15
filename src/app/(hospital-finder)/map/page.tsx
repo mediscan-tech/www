@@ -170,7 +170,3 @@ export default function MapDisplayPage() {
     </div> 
   );
 };
-
-export function renderToDom(container) {
-  createRoot(container).render(<MapDisplayPage/>);
-}
