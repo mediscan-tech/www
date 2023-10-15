@@ -47,7 +47,6 @@ export async function POST(request: Request) {
     const cachedZip = await redis.get(`${latitude},${longitude}`);
     if (cachedZip) {
         zipCode = cachedZip;
-        console.log(`Retrieved ZIP code from cache: ${zipCode}`);
     } else if (!cachedZip) {
         // If not in cache, get zip code from latitude and longitude 
         const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
@@ -56,7 +55,6 @@ export async function POST(request: Request) {
                 const data = await getZipCode.json();
                 zipCode = data.results[0].components.postcode;
                 await redis.set(`${latitude},${longitude}`, zipCode)
-                console.log(`Added ZIP code ${zipCode} to cache`)
             } else {
                 return new Response(`Failed to fetch ZIP code!`, {
                     status: 500,
@@ -185,8 +183,6 @@ export async function POST(request: Request) {
                 startLatitude: latitude,
                 startLongitude: longitude,
               };
-
-            // console.log(formattedData)
             
         } else {
             return new Response(`Failed to cross-reference the CMS database!`, {
