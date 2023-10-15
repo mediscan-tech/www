@@ -22,6 +22,12 @@ type Result = {
 
 export async function POST(request: Request) {
     const data: any = await request.json();
+    if (!data || data.latitude === null || data.longitude === undefined || data === '') {
+        return new Response(`Latitude or longitude missing!`, {
+            status: 500,
+        })
+    }
+
     let latitude = data.latitude;
     let longitude = data.longitude;
     let zipCode: string | null = null;
@@ -31,13 +37,7 @@ export async function POST(request: Request) {
         startLatitude: latitude,
         startLongitude: longitude,
         results: [],
-    };
-
-    if (!data || data === null || data === undefined || data === '') {
-        return new Response(`Latitude or longitude missing!`, {
-            status: 500,
-        })
-    }
+    };    
 
     //Round latitude and longitude to 4 decimal places to maintain consistency to reduce the number of API calls and cache hits (https://blis.com/precision-matters-critical-importance-decimal-places-five-lowest-go/)
     latitude = parseFloat(latitude.toFixed(4));
@@ -146,7 +146,7 @@ export async function POST(request: Request) {
                 };
           
                 //Now get lat and long for each hospital and add to data
-                const forwardGeocodeHospitalAddress = async (address: String) => {
+                const forwardGeocodeHospitalAddress = async (address: string) => {
                     try {
                         const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?autocomplete=false&types=address&access_token=${process.env.MAPBOX_API}`);
                         if (response.ok) {
@@ -186,7 +186,7 @@ export async function POST(request: Request) {
                 startLongitude: longitude,
               };
 
-            console.log(formattedData)
+            // console.log(formattedData)
             
         } else {
             return new Response(`Failed to cross-reference the CMS database!`, {

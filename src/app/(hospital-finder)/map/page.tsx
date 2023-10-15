@@ -1,13 +1,25 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { MapComponent } from '@/components/HospitalMap/Map';
+import React, { useState, useEffect, useMemo } from 'react';
+import { createRoot } from 'react-dom/client';
+import Map, {
+    Marker,
+    Popup,
+    NavigationControl,
+    FullscreenControl,
+    ScaleControl,
+    GeolocateControl
+  } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 export default function MapDisplayPage() {
   const [location, setLocation] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState(null);
   const [hData, setHData] = useState(null);
+  const [startLatitude, setStartLatitude] = useState(null);
+  const [startLongitude, setStartLongitude] = useState(null);
+  const key = "pk.eyJ1IjoiZGV2ZWxpdGUiLCJhIjoiY2xucXdobnBiMHhwbTJrbXJ5dTJrNDdjOCJ9.XA-EL1LHn_Fq0K6limdpqQ" //Okay to reveal as it is restricted to our domain
 
   useEffect(() => {
     //Check device
@@ -36,7 +48,19 @@ export default function MapDisplayPage() {
           });
 
           if (response.ok) {
-            setHData(await response.json());
+            const hData = await response.json();
+            setHData(hData)
+            console.log(hData)
+            if (hData && hData.data) {
+              const startLat = hData.data.formattedData.startLatitude;
+              const startLng = hData.data.formattedData.startLongitude;
+      
+              setStartLatitude(startLat);
+              setStartLongitude(startLng);
+            } else {
+              console.error("hData is null or undefined.");
+            }
+
             setLocation({ latitude, longitude });
             setError(null);
           } else {
@@ -54,12 +78,21 @@ export default function MapDisplayPage() {
       setError(new Error('Geolocation is not available in your browser.'));
     }
   }, []);
-  
+
   return (
     <div>
       {location ? (
         <div>
-          {/* <MapComponent mapData = {hData}/> */}
+          <Map
+                mapboxAccessToken = {key}
+                initialViewState = {{
+                    longitude: startLongitude,
+                    latitude: startLatitude,
+                    zoom: 14
+                }}
+                style = {{width: 1200, height: 900}}
+                mapStyle = "mapbox://styles/mapbox/streets-v9"
+            />
         </div>
       ) : error && !isMobile ? (
         <div>
