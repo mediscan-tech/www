@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { redis } from '@/lib/redis/redis.ts';
+
 type Result = {
     facility_id: string;
     facility_name: string;
@@ -20,45 +22,59 @@ type Result = {
 
 export async function POST(request: Request) {
     const data: any = await request.json();
-    const latitude = data.latitude;
-    const longitude = data.longitude;
-    const limit = 499;
+    let latitude = data.latitude;
+    let longitude = data.longitude;
     let zipCode: string | null = null;
     let postalCodesArray = [];
     let formattedData: { count: number; results: Result[] } = {
         count: 0,
         results: [],
     };
+
     if (!data || data === null || data === undefined || data === '') {
         return new Response(`Latitude or longitude missing!`, {
             status: 500,
         })
     }
-    
-    const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
-    //TODO: add redis caching here to save on API calls
-    try {
-        if (getZipCode.ok) {
-            const data = await getZipCode.json();
-            zipCode = data.results[0].components.postcode;
-        } else {
-            return new Response(`Failed to fetch ZIP code!`, {
+
+    //Round latitude and longitude to 4 decimal places to maintain consistency to reduce the number of API calls and cache hits (https://blis.com/precision-matters-critical-importance-decimal-places-five-lowest-go/)
+    latitude = parseFloat(latitude.toFixed(4));
+    longitude = parseFloat(longitude.toFixed(4));
+
+    //Redis caching to save on API calls
+    const cachedZip = await redis.get(`${latitude},${longitude}`);
+    if (cachedZip) {
+        zipCode = cachedZip;
+        console.log(`Retrieved ZIP code from cache: ${zipCode}`);
+    } else if (!cachedZip) {
+        // If not in cache, get zip code from latitude and longitude 
+        const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
+        try {
+            if (getZipCode.ok) {
+                const data = await getZipCode.json();
+                zipCode = data.results[0].components.postcode;
+                await redis.set(`${latitude},${longitude}`, zipCode)
+                console.log(`Added ZIP code ${zipCode} to cache`)
+            } else {
+                return new Response(`Failed to fetch ZIP code!`, {
+                    status: 500,
+                })
+            }
+        } catch (error) {
+            return new Response(`Error fetching ZIP code! ${error}`, {
                 status: 500,
             })
         }
-    } catch (error) {
-        return new Response(`Error fetching ZIP code! ${error}`, {
-            status: 500,
-        })
-    }
-
+    }    
+    
     //Get nearby zip codes
-    const getNearbyZipCodes = await fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=${zipCode}&country=US&radius=24.2&maxRows=${limit}&username=${process.env.GEONAMES_USERNAME}`)
+    const geoNamesLimit = 499; // Not 500, as it would use 3 credits for 500 results
+    const getNearbyZipCodes = await fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=${zipCode}&country=US&radius=24.2&maxRows=${geoNamesLimit}&username=${process.env.GEONAMES_USERNAME}`)
     try {
         if (getNearbyZipCodes.ok) {
             const getNearbyZipCodesData = await getNearbyZipCodes.json();
             postalCodesArray = [];
-            for (let i = 0; i < Math.min(limit, getNearbyZipCodesData.postalCodes.length); i++) {
+            for (let i = 0; i < Math.min(geoNamesLimit, getNearbyZipCodesData.postalCodes.length); i++) {
                 postalCodesArray.push(getNearbyZipCodesData.postalCodes[i].postalCode);
             }
             
@@ -88,27 +104,23 @@ export async function POST(request: Request) {
         "operator": "="
       }));
 
-      const finalConditions = [
-        ...conditions,
-        {
-          "groupOperator": "or",
-          "conditions": formattedPostalCodesArray
-        }
-      ];
-
     const payload = {
-        "conditions": finalConditions,
+        "conditions": [
+            ...conditions,
+            {
+                "groupOperator": "or",
+                "conditions": formattedPostalCodesArray
+            }
+        ],
         "limit": 500
-    };
-
-    const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
     };
 
     const fetchCMSData = await fetch('https://data.cms.gov/provider-data/api/1/datastore/query/yv7e-xc69/0', {
         method: 'POST',
-        headers: headers,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(payload)
     })
 
