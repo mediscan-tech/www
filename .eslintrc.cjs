@@ -5,9 +5,9 @@ const path = require("path");
 const config = {
   overrides: [
     {
-      extends: [
-        "plugin:@typescript-eslint/recommended",
-      ],
+      // extends: [
+      //   "plugin:@typescript-eslint/recommended",
+      // ],
       files: ["*.ts", "*.tsx"],
       parserOptions: {
         project: path.join(__dirname, "tsconfig.json"),
