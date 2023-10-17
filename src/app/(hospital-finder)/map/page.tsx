@@ -50,37 +50,34 @@ export default function MapDisplayPage() {
             body: JSON.stringify(requestData),
           });
 
+          setError(null);
+
           if (response.ok) {
             const hData = await response.json();
             setHData(hData)
             if (hData && hData.data) {
               const startLat = hData.data.formattedData.startLatitude;
               const startLng = hData.data.formattedData.startLongitude;
-      
               setStartLatitude(startLat);
               setStartLongitude(startLng);
             } else {
-              console.error("hData is null or undefined.");
+              setError(JSON.stringify({msg: 'hData is null or undefined.'}))
             }
-
             setLocation({ latitude, longitude });
-            setError(null);
-          } else {
-            setError(new Error('Failed to fetch ZIP code from the server.'));
+          } else if (!response.ok) {
+            const errorData = await response.json()
+            setError(errorData);
           }
-
           setLocation({ latitude, longitude });
-          setError(null);
         },
         (err) => {
-          setError(err);
+          setError(JSON.stringify({msg: err}))
         }
       );
     } else {
-      setError(new Error('Geolocation is not available in your browser.'));
+      setError(JSON.stringify({msg: 'Geolocation is not available in your browser.'}))
     }
   }, []);
-
   const [popupInfo, setPopupInfo] = useState(null)
 
   const markers = useMemo(() => { //TODO: maybe draw a 15m radius (slightly)
@@ -97,7 +94,7 @@ export default function MapDisplayPage() {
             setPopupInfo(result);
           }}
         >
-          <Pin />
+          <Pin/>
         </Marker>
       ));
     }
@@ -108,6 +105,8 @@ export default function MapDisplayPage() {
     <div>
       {location ? (
         <div>
+          {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
+          
           <Map
             mapboxAccessToken = {key}
             initialViewState = {{
@@ -127,7 +126,7 @@ export default function MapDisplayPage() {
             <NavigationControl position="top-left"/>
             <ScaleControl position="bottom-left" unit="imperial"/>
           
-            { markers }
+            {markers}
 
             {popupInfo && (
             <Popup

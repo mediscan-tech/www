@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { redis } from '@/lib/redis/redis.ts';
+import { NextApiResponse } from 'next';
 
 type Result = {
     facility_id: string;
@@ -20,7 +21,7 @@ type Result = {
     end_date: string;
 };
 
-export async function POST(request: Request) {
+export async function POST(request: Request, res: NextApiResponse) {
     const data: any = await request.json();
     if (!data || data.latitude === null || data.longitude === undefined || data === '') {
         return new Response(`Latitude or longitude missing!`, {
@@ -60,10 +61,16 @@ export async function POST(request: Request) {
                     status: 500,
                 })
             }
-        } catch (error) {
-            return new Response(`Error fetching ZIP code! ${error}`, {
+        } catch (error) {           
+            return new Response(JSON.stringify({
+                msg: `Error fetching ZIP code!`,
+                data: `${error.name + error.message}`
+            }), {
                 status: 500,
-            })
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     }    
     
@@ -84,9 +91,15 @@ export async function POST(request: Request) {
             })
         }
     } catch (error) {
-        return new Response(`Error fetching nearby ZIP codes! ${error}`, {
+        return new Response(JSON.stringify({
+            msg: `Error fetching nearby ZIP codes!`,
+            data: `${error.name + error.message}`
+        }), {
             status: 500,
-        })
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     //Cross-reference zip codes with CMS (Centers for Medicare & Medicaid Services) database to find hospitals in zip code
@@ -97,13 +110,11 @@ export async function POST(request: Request) {
             "operator": "="
         }
     ];
-
     const formattedPostalCodesArray = postalCodesArray.map((postalCode) => ({
         "property": "zip_code",
         "value": postalCode,
         "operator": "="
       }));
-
     const payload = {
         "conditions": [
             ...conditions,
@@ -123,11 +134,9 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify(payload)
     })
-
     try {
         if (fetchCMSData.ok) {
             const CMSData = await fetchCMSData.json();
-
             const formattedResults = CMSData.results.map(async (result: Result) => {
                 const hospital = {
                     facility_name: result.facility_name,
@@ -154,15 +163,22 @@ export async function POST(request: Request) {
                                 const [longitude, latitude] = data.features[0].center;
                                 return { latitude, longitude };
                             } else {
+                                console.log(`No coordinates found for ${address}`)
                                 return new Response(`No coordinates found for ${address}`, {
                                     status: 204,
                                 })
                             }
                         }
                     } catch (error) {
-                        return new Response(`Error forward fetching hospital coordinates! ${error}`, {
+                        return new Response(JSON.stringify({
+                            msg: `Error forward fetching hospital coordinates!`,
+                            data: `${error.name + error.message}`
+                        }), {
                             status: 500,
-                        })
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
                     }
                 };
                 const geocodedData: any = await forwardGeocodeHospitalAddress(`${hospital.address} + ${hospital.citytown} + ${hospital.state} + ${hospital.zip_code} + "United States"`);
@@ -190,9 +206,15 @@ export async function POST(request: Request) {
             })
         }
     } catch (error) {
-        return new Response(`Error cross-referencing the CMS database! ${error}`, {
+        return new Response(JSON.stringify({
+            msg: `Error cross-referencing the CMS database!`,
+            data: `${error.name + error.message}`
+        }), {
             status: 500,
-        })
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     return NextResponse.json({ status: "success", data: { formattedData } });
