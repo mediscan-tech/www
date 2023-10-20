@@ -5,9 +5,9 @@ const path = require("path");
 const config = {
   overrides: [
     {
-      extends: [
-        "plugin:@typescript-eslint/recommended",
-      ],
+      // extends: [
+      //   "plugin:@typescript-eslint/recommended",
+      // ],
       files: ["*.ts", "*.tsx"],
       parserOptions: {
         project: path.join(__dirname, "tsconfig.json"),
@@ -27,8 +27,8 @@ const config = {
     "@typescript-eslint/no-unsafe-call": "warn",
     "@typescript-eslint/no-explicit-any": "warn",
     "prefer-const": "warn",
+    "@typescript-eslint/no-extra-semi": "warn",
     
-
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {

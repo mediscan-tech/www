@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { redis } from '@/lib/redis/redis.ts';
+import { NextApiResponse } from 'next';
 
 type Result = {
     facility_id: string;
@@ -20,22 +21,24 @@ type Result = {
     end_date: string;
 };
 
-export async function POST(request: Request) {
+export async function POST(request: Request, res: NextApiResponse) {
     const data: any = await request.json();
-    let latitude = data.latitude;
-    let longitude = data.longitude;
-    let zipCode: string | null = null;
-    let postalCodesArray = [];
-    let formattedData: { count: number; results: Result[] } = {
-        count: 0,
-        results: [],
-    };
-
-    if (!data || data === null || data === undefined || data === '') {
+    if (!data || data.latitude === null || data.longitude === undefined || data === '') {
         return new Response(`Latitude or longitude missing!`, {
             status: 500,
         })
     }
+
+    let latitude = data.latitude;
+    let longitude = data.longitude;
+    let zipCode: string | null = null;
+    let postalCodesArray = [];
+    let formattedData: { count: number; startLatitude: number; startLongitude: number;  results: Result[]; } = {
+        count: 0,
+        startLatitude: latitude,
+        startLongitude: longitude,
+        results: [],
+    };    
 
     //Round latitude and longitude to 4 decimal places to maintain consistency to reduce the number of API calls and cache hits (https://blis.com/precision-matters-critical-importance-decimal-places-five-lowest-go/)
     latitude = parseFloat(latitude.toFixed(4));
@@ -45,7 +48,6 @@ export async function POST(request: Request) {
     const cachedZip = await redis.get(`${latitude},${longitude}`);
     if (cachedZip) {
         zipCode = cachedZip;
-        console.log(`Retrieved ZIP code from cache: ${zipCode}`);
     } else if (!cachedZip) {
         // If not in cache, get zip code from latitude and longitude 
         const getZipCode = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.OPENCAGE_API_KEY}`)
@@ -54,16 +56,21 @@ export async function POST(request: Request) {
                 const data = await getZipCode.json();
                 zipCode = data.results[0].components.postcode;
                 await redis.set(`${latitude},${longitude}`, zipCode)
-                console.log(`Added ZIP code ${zipCode} to cache`)
             } else {
                 return new Response(`Failed to fetch ZIP code!`, {
                     status: 500,
                 })
             }
-        } catch (error) {
-            return new Response(`Error fetching ZIP code! ${error}`, {
+        } catch (error) {           
+            return new Response(JSON.stringify({
+                msg: `Error fetching ZIP code!`,
+                data: `${error.name + error.message}`
+            }), {
                 status: 500,
-            })
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     }    
     
@@ -84,9 +91,15 @@ export async function POST(request: Request) {
             })
         }
     } catch (error) {
-        return new Response(`Error fetching nearby ZIP codes! ${error}`, {
+        return new Response(JSON.stringify({
+            msg: `Error fetching nearby ZIP codes!`,
+            data: `${error.name + error.message}`
+        }), {
             status: 500,
-        })
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     //Cross-reference zip codes with CMS (Centers for Medicare & Medicaid Services) database to find hospitals in zip code
@@ -97,13 +110,11 @@ export async function POST(request: Request) {
             "operator": "="
         }
     ];
-
     const formattedPostalCodesArray = postalCodesArray.map((postalCode) => ({
         "property": "zip_code",
         "value": postalCode,
         "operator": "="
       }));
-
     const payload = {
         "conditions": [
             ...conditions,
@@ -123,27 +134,71 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify(payload)
     })
-
     try {
         if (fetchCMSData.ok) {
             const CMSData = await fetchCMSData.json();
-
-            const formattedResults = CMSData.results.map((result: Result) => ({
-                facility_name: result.facility_name,
-                address: result.address,
-                citytown: result.citytown,
-                state: result.state,
-                zip_code: result.zip_code,
-                countyparish: result.countyparish,
-                telephone_number: result.telephone_number,
-                score: result.score,
-                sample: result.sample,
-            }));
-
-            formattedData = {
-                count: formattedResults.length,
-                results: formattedResults,
-            };
+            const formattedResults = CMSData.results.map(async (result: Result) => {
+                const hospital = {
+                    facility_name: result.facility_name,
+                    address: result.address,
+                    citytown: result.citytown,
+                    state: result.state,
+                    zip_code: result.zip_code,
+                    countyparish: result.countyparish,
+                    telephone_number: result.telephone_number,
+                    hospital_latitude: null,
+                    hospital_longitude: null,
+                    score: result.score,
+                    sample: result.sample,
+                };
+          
+                //Now get lat and long for each hospital and add to data
+                const forwardGeocodeHospitalAddress = async (address: string) => {
+                    try {
+                        const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?autocomplete=false&types=address&access_token=${process.env.MAPBOX_API}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.features && data.features.length > 0) {
+                                // Access the coordinates from the first feature (hihgest relevancy)
+                                const [longitude, latitude] = data.features[0].center;
+                                return { latitude, longitude };
+                            } else {
+                                console.log(`No coordinates found for ${address}`)
+                                return new Response(`No coordinates found for ${address}`, {
+                                    status: 204,
+                                })
+                            }
+                        }
+                    } catch (error) {
+                        return new Response(JSON.stringify({
+                            msg: `Error forward fetching hospital coordinates!`,
+                            data: `${error.name + error.message}`
+                        }), {
+                            status: 500,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    }
+                };
+                const geocodedData: any = await forwardGeocodeHospitalAddress(`${hospital.address} + ${hospital.citytown} + ${hospital.state} + ${hospital.zip_code} + "United States"`);
+                
+                if (geocodedData) {
+                    hospital.hospital_latitude = geocodedData.latitude;
+                    hospital.hospital_longitude = geocodedData.longitude;
+                }
+          
+                return hospital;
+              });
+          
+              const formattedResultsWithCoordinates = await Promise.all(formattedResults);
+          
+              formattedData = {
+                count: formattedResultsWithCoordinates.length,
+                results: formattedResultsWithCoordinates,
+                startLatitude: latitude,
+                startLongitude: longitude,
+              };
             
         } else {
             return new Response(`Failed to cross-reference the CMS database!`, {
@@ -151,9 +206,15 @@ export async function POST(request: Request) {
             })
         }
     } catch (error) {
-        return new Response(`Error cross-referencing the CMS database! ${error}`, {
+        return new Response(JSON.stringify({
+            msg: `Error cross-referencing the CMS database!`,
+            data: `${error.name + error.message}`
+        }), {
             status: 500,
-        })
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     return NextResponse.json({ status: "success", data: { formattedData } });

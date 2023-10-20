@@ -15,6 +15,7 @@ env:
   OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
   GEONAMES_USERNAME: ${{ secrets.GEONAMES_USERNAME }}
   REDIS_URL: ${{ secrets.REDIS_URL }}
+  MAPBOX_API: ${{ secrets.MAPBOX_API }}
   
 jobs:
   lint_build:

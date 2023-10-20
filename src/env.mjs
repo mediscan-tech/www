@@ -14,6 +14,7 @@ export const env = createEnv({
     OPENCAGE_API_KEY: z.string().min(32),
     GEONAMES_USERNAME: z.string().min(8),
     REDIS_URL: z.string().min(90),
+    MAPBOX_API: z.string().min(90),
   },
 
   /**
@@ -37,6 +38,7 @@ export const env = createEnv({
     OPENCAGE_API_KEY: process.env.OPENCAGE_API_KEY,
     GEONAMES_USERNAME: process.env.GEONAMES_USERNAME,
     REDIS_URL: process.env.REDIS_URL,
+    MAPBOX_API: process.env.MAPBOX_API,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

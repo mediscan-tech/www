@@ -1,11 +1,28 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image'
+import { createRoot } from 'react-dom/client';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import Pin from '@/components/pin';
+import ControlPanel from '@/components/controlPanel';
+import Map, {
+    Marker,
+    Popup,
+    NavigationControl,
+    FullscreenControl,
+    ScaleControl,
+    GeolocateControl
+  } from 'react-map-gl';
 
-const LocationComponent = () => {
+export default function MapDisplayPage() {
   const [location, setLocation] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState(null);
+  const [hData, setHData] = useState(null);
+  const [startLatitude, setStartLatitude] = useState(null);
+  const [startLongitude, setStartLongitude] = useState(null);
+  const key = "pk.eyJ1IjoiZGV2ZWxpdGUiLCJhIjoiY2xucjJqMzN2MG8wOTJrbzE3MTlqMzlyNyJ9.jmFookpSLQ1vKGoMeLRX6g" //Okay to reveal as it is restricted to only our domain
 
   useEffect(() => {
     //Check device
@@ -33,33 +50,103 @@ const LocationComponent = () => {
             body: JSON.stringify(requestData),
           });
 
+          setError(null);
+
           if (response.ok) {
             const hData = await response.json();
-            console.log(hData.data)
+            setHData(hData)
+            if (hData && hData.data) {
+              const startLat = hData.data.formattedData.startLatitude;
+              const startLng = hData.data.formattedData.startLongitude;
+              setStartLatitude(startLat);
+              setStartLongitude(startLng);
+            } else {
+              setError(JSON.stringify({msg: 'hData is null or undefined.'}))
+            }
             setLocation({ latitude, longitude });
-            setError(null);
-          } else {
-            setError(new Error('Failed to fetch ZIP code from the server.'));
+          } else if (!response.ok) {
+            const errorData = await response.json()
+            setError(errorData);
           }
-
           setLocation({ latitude, longitude });
-          setError(null);
         },
         (err) => {
-          setError(err);
+          setError(JSON.stringify({msg: err}))
         }
       );
     } else {
-      setError(new Error('Geolocation is not available in your browser.'));
+      setError(JSON.stringify({msg: 'Geolocation is not available in your browser.'}))
     }
   }, []);
-  
+  const [popupInfo, setPopupInfo] = useState(null)
+
+  const markers = useMemo(() => { //TODO: maybe draw a 15m radius (slightly)
+    if (hData && hData.data) {
+      return hData.data.formattedData.results.map((result, index) => (
+        <Marker
+          key={`marker-${index}`}
+          longitude={ result.hospital_longitude }
+          latitude={ result.hospital_latitude }
+          anchor="bottom"
+          onClick={e => {
+            // If we let the click event propagates to the map, it will immediately close the popup with `closeOnClick: true`
+            e.originalEvent.stopPropagation();
+            setPopupInfo(result);
+          }}
+        >
+          <Pin/>
+        </Marker>
+      ));
+    }
+    return [];
+  }, [hData]);
+
   return (
     <div>
       {location ? (
         <div>
-          <p>Your latitude: {location.latitude}</p>
-          <p>Your longitude: {location.longitude}</p>
+          {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
+          
+          <Map
+            mapboxAccessToken = {key}
+            initialViewState = {{
+              longitude: startLongitude,
+              latitude: startLatitude,
+              zoom: 10
+            }}
+            style = {{width: 1200, height: 900}}
+            mapStyle = "mapbox://styles/mapbox/streets-v9"
+            doubleClickZoom ={true}
+            >
+            <Marker longitude={startLongitude} latitude={startLatitude} anchor="bottom">
+              <Image src="./my-location.svg" alt="Current Location" width="24" height="24"/>
+            </Marker>
+            {/* <GeolocateControl position="top-left"/> */}
+            <FullscreenControl position="top-left"/>
+            <NavigationControl position="top-left"/>
+            <ScaleControl position="bottom-left" unit="imperial"/>
+          
+            {markers}
+
+            {popupInfo && (
+            <Popup
+              anchor="top"
+              longitude={Number(popupInfo.hospital_longitude)}
+              latitude={Number(popupInfo.hospital_latitude)}
+              onClose={() => setPopupInfo(null)}
+            >
+            <div>
+              {popupInfo.facility_name}
+              <br/>
+              Phone #: {popupInfo.telephone_number}
+              <br/>
+              Average Wait Time: <strong>{popupInfo.score}</strong> minutes
+            </div>
+
+          </Popup>
+          )}
+          </Map>
+          <ControlPanel/>
         </div>
       ) : error && !isMobile ? (
         <div>
@@ -76,11 +163,9 @@ const LocationComponent = () => {
             Enable location access: Visit Settings &gt; Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
           </p>
         </div>
-      ) : (
-        <p>Fetching your location...</p>
+      ) : ( // Before location is found this is rendered
+        <div>Skeleton</div> //TODO: SKELETON HERE
       )}
-    </div>
+    </div> 
   );
 };
-
-export default LocationComponent;
