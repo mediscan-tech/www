@@ -5,7 +5,6 @@ import Image from 'next/image';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/components/pin';
 import { Skeleton } from "@/components/ui/skeleton";
-import ControlPanel from '@/components/controlPanel';
 import { DataTable } from "@/components/table/data-table";
 import { columns } from "@/components/table/columns";
 import Map, {
@@ -104,89 +103,140 @@ export default function MapDisplayPage() {
   }, [hData]);
 
   return (
-    <div className="map-display-container">
-      <div className="map-container">
-        {location ? (
-          <>
-            <div id="map" className="map" style={{ border: '5px solid #FFF', borderRadius: '10px' }}>
-              {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
-              <Map
-                mapboxAccessToken={key}
-                initialViewState={{
-                  longitude: startLongitude,
-                  latitude: startLatitude,
-                  zoom: isMobile ? 8 : 10, // Adjust zoom level for mobile
-                }}
-                style={{
-                  width: isMobile ? '100%' : '1200px', // Make the map width responsive
-                  height: isMobile ? '300px' : '900px', // Adjust map height for mobile
-                }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
-                doubleClickZoom={true}
-              >
-                <FullscreenControl position="top-right"/>
-                <NavigationControl position="top-right"/>
-                <ScaleControl position="bottom-left" unit="imperial"/>
-                
-                <Marker longitude={startLongitude} latitude={startLatitude} anchor="bottom">
-                  <Image src="./my-location.svg" alt="Current Location" width="24" height="24" />
-                </Marker>
-                {markers}
-                {popupInfo && (
-                  <Popup
-                    anchor="top"
-                    longitude={Number(popupInfo.hospital_longitude)}
-                    latitude={Number(popupInfo.hospital_latitude)}
-                    onClose={() => setPopupInfo(null)}
-                  >
-                    <style>
-                      {`
-                      .mapboxgl-popup-content {
-                        background-color: #141414;
-                        color: white;
-                      }
-                    `}
-                    </style>
-                    <div>
-                      {popupInfo.facility_name}
-                      <br />
-                      Phone #: {popupInfo.telephone_number}
-                      <br />
-                      Average Wait Time: <strong>{popupInfo.score}</strong> minutes
-                    </div>
-                  </Popup>
-                )}
-              </Map>
+      <div className="map-display-container">
+        <div className="map-container">
+          {location ? (
+            <>
+              <div id="map" className="map" style={{ border: '5px solid #FFF', borderRadius: '10px' }}>
+                {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
+                <Map
+                  mapboxAccessToken={key}
+                  initialViewState={{
+                    longitude: startLongitude,
+                    latitude: startLatitude,
+                    zoom: isMobile ? 8 : 10, // Adjust zoom level for mobile
+                  }}
+                  style={{
+                    width: isMobile ? '100%' : '1000px', // Make the map width responsive
+                    height: isMobile ? '300px' : '800px', //Adjust map height for mobile
+                  }}
+                  mapStyle="mapbox://styles/mapbox/streets-v9"
+                  doubleClickZoom={true}
+                >
+                  <FullscreenControl position="bottom-right"/> {/* TODO test if it works*/}
+                  <NavigationControl position="bottom-right"/>
+                  <ScaleControl position="bottom-left" unit="imperial"/>
+                  
+                  <Marker longitude={startLongitude} latitude={startLatitude} anchor="bottom">
+                    <Image src={"/images/my-location.png"} alt="Current Location" width="24" height="24" />
+                  </Marker>
+                  {markers}
+                  {popupInfo && (
+                    <Popup
+                      anchor="top"
+                      longitude={Number(popupInfo.hospital_longitude)}
+                      latitude={Number(popupInfo.hospital_latitude)}
+                      onClose={() => setPopupInfo(null)}
+                    >
+                      <style>
+                        {`
+                        .mapboxgl-popup-content {
+                          background-color: #141414;
+                          color: white;
+                        }
+                      `}
+                      </style>
+                      <div>
+                        {popupInfo.facility_name}
+                        <br />
+                        Phone #: {popupInfo.telephone_number} {/* TODO: Make this a link */}
+                        <br />
+                        Average Wait Time: <strong>{popupInfo.score}</strong> minutes
+                      </div>
+                    </Popup>
+                  )}
+                </Map>
+              </div>
+            </>
+          ) : error && !isMobile ? (
+            <div>
+              <p>Error: {error.message}</p>
+              <p>
+                To retry, please refresh the page and grant location access when
+                prompted.
+              </p>
             </div>
-          </>
-        ) : error && !isMobile ? (
-          <div>
-            <p>Error: {error.message}</p>
-            <p>
-              To retry, please refresh the page and grant location access when
-              prompted.
-            </p>
-          </div>
-        ) : error && isMobile ? (
-          <div>
-            <p>Error: {error.message}</p>
-            <p>
-              Enable location access: Visit Settings &gt; Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
-            </p>
-          </div>
-        ) : (
-          <Skeleton /> // TODO: SKELE HERE
-        )}
-      </div>
-      
-      <div className="data-container">
-        {hData && hData.data && hData.data.formattedData && hData.data.formattedData.results ? (
-          <DataTable columns={columns} data={hData.data.formattedData.results} />
-        ) : (
-          <p>No data available</p> //TODO: SKELE HERE
-        )}
-      </div>
+          ) : error && isMobile ? (
+            <div>
+              <p>Error: {error.message}</p>
+              <p>
+                Enable location access: Visit Settings &gt; Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
+              </p>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: isMobile ? '100%' : '1000px',
+                height: isMobile ? '300px' : '800px',
+                border: '5px solid #FFF',
+                borderRadius: '10px',
+              }}
+            >
+              <Skeleton className="relative w-full h-full">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#e6e8e6] via-[#f0f2f0] to-[#e6e8e6] animate-stripes"></div>
+              </Skeleton>
+            </div>
+          )}
+        </div>
+        
+        {/* Data Table */}
+        <div className="data-container">
+          {hData && hData.data && hData.data.formattedData && hData.data.formattedData.results ? (
+            <DataTable columns={columns} data={hData.data.formattedData.results} />
+          ) : (
+            <div>
+              {/* Search Filter Controls Skeleton with increased padding */}
+              <div className="flex items-center py-6">
+                <Skeleton className="w-3/4 h-8 mx-auto" />
+              </div>
 
-    </div>
+              <div className="border rounded-md">
+                <div className="p-6 skeleton-table">
+                  {/* Table Header Skeleton */}
+                  <div className="flex skeleton-table-row">
+                    <Skeleton className="w-1/4 h-10" />
+                    <Skeleton className="w-1/4 h-10" />
+                    <Skeleton className="w-1/4 h-10" />
+                    <Skeleton className="w-1/4 h-10" />
+                  </div>
+
+                  {/* Table Body Skeleton with four columns in each row */}
+                  {[...Array(6)].map((_, rowIndex) => (
+                    <div className="flex skeleton-table-row" key={rowIndex}>
+                      <div className="w-1/4 h-10">
+                        <Skeleton className="w-full h-8 mb-4" />
+                      </div>
+                      <div className="w-1/4 h-10">
+                        <Skeleton className="w-full h-8 mb-4" />
+                      </div>
+                      <div className="w-1/4 h-10">
+                        <Skeleton className="w-full h-8 mb-4 " />
+                      </div>
+                      <div className="w-1/4 h-10">
+                        <Skeleton className="w-full h-8 mb-4" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Pagination Controls Skeleton with increased padding */}
+              <div className="flex items-center justify-end py-6 space-x-2">
+                <Skeleton className="w-16 h-8" />
+                <Skeleton className="w-16 h-8" />
+              </div>
+            </div>
+            )}
+          </div>
+      </div>
   );
 }

@@ -32,10 +32,10 @@ export default function Hero() {
               <p className="mb-8 text-xl text-white" data-aos="zoom-y-out" data-aos-delay="150">Easily gain access to wait times for hospitals nearby and self diagnose to have the best medical experience</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
-                  <a className="w-full mb-4 text-white bg-blue-600 btn hover:bg-teal-500 sm:w-auto sm:mb-0" href="/map">Locate nearest hospitals</a>
+                  <a className="w-full mb-4 text-white bg-blue-600 btn hover:bg-blue-700 sm:w-auto sm:mb-0" href="/map">Locate nearby hospitals</a>
                 </div>
                 <div>
-                  <a className="w-full text-white bg-gray-900 btn hover:bg-gray-800 sm:w-auto sm:ml-4" href="#0">How it works</a>
+                  <a className="w-full text-white bg-gray-800 btn hover:bg-gray-800 sm:w-auto sm:ml-4" href="/diagnose">Self-diagnose</a>
                 </div>
               </div>
             </div>
