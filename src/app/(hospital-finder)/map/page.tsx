@@ -1,8 +1,12 @@
+"use client"
+
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/components/pin';
 import ControlPanel from '@/components/controlPanel';
+import { DataTable } from "@/components/table/data-table"
+import { columns } from "@/components/table/columns";
 import Map, {
     Marker,
     Popup,
@@ -76,7 +80,6 @@ export default function MapDisplayPage() {
     }
   }, []);
   const [popupInfo, setPopupInfo] = useState(null)
-
   const markers = useMemo(() => { //TODO: maybe draw a 15m radius (slightly)
     if (hData && hData.data) {
       return hData.data.formattedData.results.map((result, index) => (
@@ -97,53 +100,70 @@ export default function MapDisplayPage() {
     }
     return [];
   }, [hData]);
-
   return (
-    <div>
+    <div style={{ marginLeft: '0', marginRight: '0', width: '100%', padding: '0' }}>
       {location ? (
-        <div>
-          {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
-          <Map
-            mapboxAccessToken = {key}
-            initialViewState = {{
-              longitude: startLongitude,
-              latitude: startLatitude,
-              zoom: 10
-            }}
-            style = {{width: 1200, height: 900}}
-            mapStyle = "mapbox://styles/mapbox/streets-v9"
-            doubleClickZoom ={true}
-            >
-            <Marker longitude={startLongitude} latitude={startLatitude} anchor="bottom">
-              <Image src="./my-location.svg" alt="Current Location" width="24" height="24"/>
-            </Marker>
-            {/* <GeolocateControl position="top-left"/> */}
-            <FullscreenControl position="top-left"/>
-            <NavigationControl position="top-left"/>
-            <ScaleControl position="bottom-left" unit="imperial"/>
-          
-            {markers}
+        <>
+          <div>
+            {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
+            <Map
+              mapboxAccessToken = {key}
+              initialViewState = {{
+                longitude: startLongitude,
+                latitude: startLatitude,
+                zoom: 10
+              }}
+              style = {{
+                width: 900,
+                height: 750,
+                border: '5px solid #FFF', // Set the desired border width and color
+                borderRadius: '12px', // Optional: Add rounded corners to the border
+              }}
+              mapStyle = "mapbox://styles/mapbox/streets-v9"
+              doubleClickZoom ={true}
+              >
+              <Marker longitude={startLongitude} latitude={startLatitude} anchor="bottom">
+                <Image src="./my-location.svg" alt="Current Location" width="24" height="24"/>
+              </Marker>
+              {/* <GeolocateControl position="top-left"/> */}
+              <FullscreenControl position="top-left"/>
+              <NavigationControl position="top-left"/>
+              <ScaleControl position="bottom-left" unit="imperial"/>
+            
+              {markers}
 
-            {popupInfo && (
-            <Popup
-              anchor="top"
-              longitude={Number(popupInfo.hospital_longitude)}
-              latitude={Number(popupInfo.hospital_latitude)}
-              onClose={() => setPopupInfo(null)}
-            >
-            <div>
-              {popupInfo.facility_name}
-              <br/>
-              Phone #: {popupInfo.telephone_number}
-              <br/>
-              Average Wait Time: <strong>{popupInfo.score}</strong> minutes
-            </div>
-
-          </Popup>
-          )}
-          </Map>
+              {popupInfo && (
+                <Popup
+                  anchor="top"
+                  longitude={Number(popupInfo.hospital_longitude)}
+                  latitude={Number(popupInfo.hospital_latitude)}
+                  onClose={() => setPopupInfo(null)}
+                >
+                  <style>
+                    {`
+                      .mapboxgl-popup-content {
+                        background-color: #141414;
+                        color: white;
+                      }
+                    `}
+                  </style>
+                  <div>
+                    {popupInfo.facility_name}
+                    <br/>
+                    Phone #: {popupInfo.telephone_number}
+                    <br/>
+                    Average Wait Time: <strong>{popupInfo.score}</strong> minutes
+                  </div>
+                </Popup>
+              )}
+            </Map>
           <ControlPanel/>
-        </div>
+          </div>
+          
+          <div className="container py-10 mx-auto">
+            <DataTable columns={columns} data={hData.data.formattedData.results}/>
+          </div>
+        </>
       ) : error && !isMobile ? (
         <div>
           <p>Error: {error.message}</p>

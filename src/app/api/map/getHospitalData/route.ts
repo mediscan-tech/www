@@ -148,6 +148,7 @@ export async function POST(request: Request, res: NextApiResponse) {
                     telephone_number: result.telephone_number,
                     hospital_latitude: null,
                     hospital_longitude: null,
+                    formattedAddress: null,
                     score: result.score,
                     sample: result.sample,
                 };
@@ -186,6 +187,7 @@ export async function POST(request: Request, res: NextApiResponse) {
                 if (geocodedData) {
                     hospital.hospital_latitude = geocodedData.latitude;
                     hospital.hospital_longitude = geocodedData.longitude;
+                    hospital.formattedAddress= `${hospital.address}, ${hospital.citytown} ${hospital.state}, ${hospital.zip_code} UNITED STATES`;
                 }
           
                 return hospital;

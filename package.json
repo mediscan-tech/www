@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-slot": "^1.0.2",
     "@t3-oss/env-nextjs": "^0.7.1",
+    "@tanstack/react-table": "^8.10.7",
     "@types/mapbox-gl": "^2.7.17",
     "@uploadthing/react": "^5.7.0",
     "aos": "^2.3.4",
