@@ -81,6 +81,42 @@
     }
   }
    
+  /* Default styles for mobile (everything in columns) */
+  .map-display-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-container {
+    order: 1; /* Make the map container appear first */
+    margin-bottom: 20px;
+  }
+
+  .data-container {
+    order: 2; /* Make the data container appear second */
+  }
+
+  /* Media query for desktop (everything in rows) */
+  @media (min-width: 768px) {
+    .map-display-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .map-container {
+      order: 2; /* Make the map container appear in the middle */
+      flex: 1; /* Set the map container to take up 1/3 of the available space */
+      margin-right: 20px;
+    }
+
+    .data-container {
+      order: 1; /* Make the data container appear on the left */
+      flex: 2; /* Set the data container to take up 2/3 of the available space */
+      margin-right: 60px;
+      margin-left: 20px;
+    }
+  }
+
   @layer base {
     * {
       @apply border-border;

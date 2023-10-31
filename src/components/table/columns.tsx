@@ -1,6 +1,8 @@
 "use client"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
+import Link from 'next/link'
 
 export const columns: any = [
   {
@@ -8,8 +10,18 @@ export const columns: any = [
     header: "Hospital Name",
   },
   {
-    accessorKey: "formattedAddress",
-    header: "Address",
+    accessorKey: "directions",
+    header: "Directions to Hospital",
+    cell: ({ row }) => {
+      let url:any = row.getValue("directions")
+      return (
+        <div className="flex space-x-2">
+          <Button variant="outline" asChild>
+            <Link href={url} target="_blank">Get Directions</Link>
+          </Button>
+        </div>
+      )
+    },
   },
   {
     accessorKey: "score",
@@ -27,12 +39,16 @@ export const columns: any = [
     cell: ({ row }) => {
       let formatted = row.getValue("score")
       if (formatted === "Not Available") {
-        return <div className="font-medium text-right">{formatted}</div>
+        return <div>{formatted}</div>
       } else {
         formatted = Number(formatted)
-        return <div className="font-medium text-right">{formatted} minutes</div>
+        return <div>{formatted} minutes</div>
       }
        
     },
+  },
+  {
+    accessorKey: "formattedAddress",
+    header: "Address",
   },
 ]
