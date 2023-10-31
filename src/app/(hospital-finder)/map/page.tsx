@@ -1,8 +1,5 @@
-"use client";
-
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image'
-import { createRoot } from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/components/pin';
 import ControlPanel from '@/components/controlPanel';
@@ -106,7 +103,6 @@ export default function MapDisplayPage() {
       {location ? (
         <div>
           {error && <div className='errorClass' style={{ color: 'red' }}>{error.msg} {JSON.stringify(error.data)}</div>}
-          
           <Map
             mapboxAccessToken = {key}
             initialViewState = {{

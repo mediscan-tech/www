@@ -22,7 +22,7 @@ export default function Features() {
     <section className="relative">
 
       {/* Section background (needs .relative class on parent and next sibling elements) */}
-      <div className="absolute inset-0 mb-16 bg-gray-100 pointer-events-none" aria-hidden="true"></div>
+      <div className="absolute inset-0 mb-16 bg-[#1B1B1B] pointer-events-none" aria-hidden="true"></div>
       <div className="absolute left-0 right-0 w-px h-20 p-px m-auto transform -translate-y-1/2 bg-gray-200"></div>
 
       <div className="relative max-w-6xl px-4 mx-auto sm:px-6">
@@ -30,8 +30,8 @@ export default function Features() {
 
           {/* Section header */}
           <div className="max-w-3xl pb-12 mx-auto text-center md:pb-16">
-            <h1 className="mb-4 h2">Explore the solutions</h1>
-            <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
+            <h1 className="mb-4 h2">The Problem</h1>
+            <p className="text-xl text-white">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
           </div>
 
           {/* Section content */}
@@ -40,8 +40,8 @@ export default function Features() {
             {/* Content */}
             <div className="max-w-xl mx-auto md:max-w-none md:w-full md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
               <div className="mb-8 md:pr-4 lg:pr-12 xl:pr-16">
-                <h3 className="mb-3 h3">Powerful suite of tools</h3>
-                <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa.</p>
+                <h3 className="mb-3 h3">Powerful solution</h3>
+                <p className="text-xl text-white">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa.</p>
               </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
@@ -51,8 +51,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(1); }}
                 >
                   <div>
-                    <div className="mb-1 font-bold leading-snug tracking-tight">Building the Simple ecosystem</div>
-                    <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                    <div className="mb-1 font-bold leading-snug tracking-tight text-black">Building the Simple ecosystem</div>
+                    <div className="text-black">Take collaboration to the next level with security and administrative features built for teams.</div>
                   </div>
                   <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 ml-3 bg-white rounded-full shadow">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -66,8 +66,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(2); }}
                 >
                   <div>
-                    <div className="mb-1 font-bold leading-snug tracking-tight">Building the Simple ecosystem</div>
-                    <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                    <div className="mb-1 font-bold leading-snug tracking-tight text-black">Building the Simple ecosystem</div>
+                    <div className="text-black">Take collaboration to the next level with security and administrative features built for teams.</div>
                   </div>
                   <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 ml-3 bg-white rounded-full shadow">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -81,8 +81,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(3); }}
                 >
                   <div>
-                    <div className="mb-1 font-bold leading-snug tracking-tight">Building the Simple ecosystem</div>
-                    <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                    <div className="mb-1 font-bold leading-snug tracking-tight text-black">Building the Simple ecosystem</div>
+                    <div className="text-black">Take collaboration to the next level with security and administrative features built for teams.</div>
                   </div>
                   <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 ml-3 bg-white rounded-full shadow">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
