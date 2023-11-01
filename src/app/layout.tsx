@@ -23,6 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <link rel="icon" href="/favicon.ico"/>
       <body className={`${inter.variable} font-inter antialiased bg-[#141414] text-white tracking-tight`}>
         <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
           <Header/>

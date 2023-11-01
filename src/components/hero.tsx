@@ -27,7 +27,7 @@ export default function Hero() {
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Section header */}
           <div className="pb-12 text-center md:pb-16">
-            <h1 className="mb-4 text-5xl font-extrabold tracking-tighter md:text-6xl leading-tighter" data-aos="zoom-y-out">Healthcare at your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">fingertips</span></h1>
+            <h1 className="mb-4 text-5xl font-extrabold tracking-tighter md:text-6xl leading-tighter" data-aos="zoom-y-out">Healthcare at your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">fingertips!</span></h1>
             <div className="max-w-3xl mx-auto">
               <p className="mb-8 text-xl text-white" data-aos="zoom-y-out" data-aos-delay="150">Easily gain access to wait times for hospitals nearby and self diagnose to have the best medical experience</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
