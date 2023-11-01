@@ -148,6 +148,8 @@ export async function POST(request: Request, res: NextApiResponse) {
                     telephone_number: result.telephone_number,
                     hospital_latitude: null,
                     hospital_longitude: null,
+                    formattedAddress: null,
+                    directions: null,
                     score: result.score,
                     sample: result.sample,
                 };
@@ -159,7 +161,7 @@ export async function POST(request: Request, res: NextApiResponse) {
                         if (response.ok) {
                             const data = await response.json();
                             if (data.features && data.features.length > 0) {
-                                // Access the coordinates from the first feature (hihgest relevancy)
+                                // Access the coordinates from the first feature (highest relevancy)
                                 const [longitude, latitude] = data.features[0].center;
                                 return { latitude, longitude };
                             } else {
@@ -186,6 +188,8 @@ export async function POST(request: Request, res: NextApiResponse) {
                 if (geocodedData) {
                     hospital.hospital_latitude = geocodedData.latitude;
                     hospital.hospital_longitude = geocodedData.longitude;
+                    hospital.formattedAddress= `${hospital.address}, ${hospital.citytown} ${hospital.state}, ${hospital.zip_code} UNITED STATES`;
+                    hospital.directions = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${encodeURIComponent(hospital.formattedAddress)}"`
                 }
           
                 return hospital;
