@@ -80,6 +80,14 @@ export default function MapDisplayPage() {
     }
   }, []);
 
+  if (error) { //The mobile menu button blends into background when there is an error
+    const svgElement = document.getElementById('mobile-menu');
+    if (svgElement) {
+      // Update the className
+      svgElement.setAttribute('class', 'w-6 h-6 fill-current text-[#FFF]');
+    }
+  }
+
   const [popupInfo, setPopupInfo] = useState(null);
 
   const markers = useMemo(() => {
@@ -159,16 +167,24 @@ export default function MapDisplayPage() {
             </div>
           </>
         ) : error && !isMobile ? ( //not on mobile
-          <div>
-            <p>Error: {error.message}</p>
+          <div style={{
+            marginTop: '40px',
+            marginLeft: '30px',
+            marginRight: '30px',
+          }}>
+            <p>Error {error.message}</p>
             <p>
               To retry, please refresh the page and grant location access when
               prompted.
             </p>
           </div>
         ) : error && isMobile ? ( //on mobile
-          <div>
-            <p>Error: {error.message}</p>
+          <div style={{
+            marginTop: '100px',
+            marginLeft: '30px',
+            marginRight: '30px',
+          }}>
+            <p>Error {error.message}</p>
             <p>
               Enable location access: Visit Settings &gt; Find Your Browser &gt; Location, Enable while using app, and refresh our page for full functionality.
             </p>
