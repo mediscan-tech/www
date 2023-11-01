@@ -123,7 +123,7 @@ export default function MapDisplayPage() {
                   mapStyle="mapbox://styles/mapbox/streets-v9"
                   doubleClickZoom={true}
                 >
-                  <FullscreenControl position="bottom-right"/> {/* TODO test if it works*/}
+                  <FullscreenControl position="bottom-right"/>
                   <NavigationControl position="bottom-right"/>
                   <ScaleControl position="bottom-left" unit="imperial"/>
                   
@@ -149,9 +149,9 @@ export default function MapDisplayPage() {
                       <div>
                         {popupInfo.facility_name}
                         <br />
-                        Phone #: {popupInfo.telephone_number} {/* TODO: Make this a link */}
+                        Phone #: <a style={{ outline: 'none', userSelect: 'none' }} href={`tel:${popupInfo.telephone_number}`}><u>{popupInfo.telephone_number}</u></a>
                         <br />
-                        Average Wait Time: <strong>{popupInfo.score}</strong> minutes
+                        Average Wait Time: <u><strong>{popupInfo.score}</strong></u> minutes
                       </div>
                     </Popup>
                   )}
