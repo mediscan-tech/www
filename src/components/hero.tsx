@@ -30,6 +30,7 @@ export default function Hero() {
             <h1 className="mb-4 text-5xl font-extrabold tracking-tighter md:text-6xl leading-tighter" data-aos="zoom-y-out">Healthcare at your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">fingertips!</span></h1>
             <div className="max-w-3xl mx-auto">
               <p className="mb-8 text-xl text-white" data-aos="zoom-y-out" data-aos-delay="150">Easily gain access to wait times for hospitals nearby and self diagnose to have the best medical experience</p>
+              <p className="mb-8 text-white text-l" data-aos="zoom-y-out" data-aos-delay="150">*Hospital Wait Time Data is <u>Dynamic</u></p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
                   <a className="w-full mb-4 text-white bg-blue-600 btn hover:bg-blue-700 sm:w-auto sm:mb-0" href="/map">Locate nearby hospitals</a>
@@ -42,7 +43,7 @@ export default function Hero() {
           </div>
           {/* Hero image */}
           <ModalVideo
-            thumb={"/images/hero-image.png"}
+            thumb={"/images/hero-image.jpg"}
             thumbWidth={768}
             thumbHeight={432}
             thumbAlt="Modal video thumbnail"
