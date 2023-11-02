@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-export default function DefaultLayout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode
