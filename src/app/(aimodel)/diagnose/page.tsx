@@ -2,7 +2,6 @@
 
 import { UploadButton } from "@/utils/uploadthing";
 import { useState } from "react";
-import { RingLoader } from "react-spinners";
 export default function HomePage() {
   const [prediction, setPrediction] = useState("");
   const [loading, setLoading] = useState(false);
