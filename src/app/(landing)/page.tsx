@@ -1,11 +1,7 @@
-import Hero from '@/components/hero'
-import Features from '@/components/features'
-
 export default function Homepage() {
   return (
     <>
-      <Hero />
-      <Features />
+      <div className="font-extrabold text-6xl font-mont">hey</div>
     </>
   )
 }
