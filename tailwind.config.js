@@ -15,6 +15,14 @@ module.exports = {
         'geist-mono': ['var(--font-geist-mono)'],
         mont: ['var(--font-mont)'],
       },
+      colors: {
+        bg: {
+          DEFAULT: "#101606"
+        },
+        text: {
+          DEFAULT: "#b1dd40"
+        }
+      }
     },
   },
   plugins: [

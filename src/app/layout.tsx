@@ -37,9 +37,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <link rel="icon" href="/favicon.ico" />
-      <body className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} font-inter antialiased bg-[#141414] text-white tracking-tight`}>
+      <link rel="icon" href="/favicon.svg" style={{ color: "red" }} />
+      <body className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} font-geist antialiased bg-bg text-text tracking-tight`}>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )
