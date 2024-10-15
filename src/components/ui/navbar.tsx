@@ -1,10 +1,9 @@
 'use client'
-import Image from "next/image"
 import Logo from "./logo"
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 right-0 left-0 h-20 flex items-center">
+    <nav className="fixed top-0 right-0 left-0 h-20 flex items-center z-40">
       <button className="h-full pl-4 flex items-center">
         <Logo backgroundColor="transparent" className="w-12 h-12"></Logo>
         <p className="font-mont text-3xl">Mediscan</p>

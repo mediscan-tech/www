@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Footer from '@/components/ui/footer'
 import Navbar from '@/components/ui/navbar'
 import localFont from "next/font/local"
+import { BackgroundGradientAnimation } from '@/components/ui/background-gradient-animation'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,9 +40,14 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="/favicon.svg" style={{ color: "red" }} />
       <body className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} font-geist antialiased bg-bg text-text tracking-tight`}>
+        <div className='w-screen h-screen fixed top-0 bottom-0 right-0 left-0 opacity-25 z-0'>
+          <BackgroundGradientAnimation />
+        </div>
         <Navbar />
-        {children}
-        <Footer />
+        <div className='absolute z-20'>
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   )
