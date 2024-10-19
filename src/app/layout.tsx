@@ -40,9 +40,6 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="/favicon.svg" style={{ color: "red" }} />
       <body className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} font-geist antialiased bg-bg text-text tracking-tight`}>
-        <div className='w-screen h-screen fixed top-0 bottom-0 right-0 left-0 opacity-25 z-0'>
-          <BackgroundGradientAnimation />
-        </div>
         <Navbar />
         <div className='absolute z-20'>
           {children}
