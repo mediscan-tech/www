@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Logo from "./logo"
 import { cn } from "@/lib/utils";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "./navbar-menu";
+import { HoveredLink, Menu, MenuItem } from "./navbar-menu";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -20,7 +20,7 @@ export default function Navbar({ className }: { className?: string }) {
         ease: "easeInOut",
         duration: 1,
       }}
-      className={cn("fixed top-4 inset-x-0 max-w-6xl mx-auto z-50", className)}
+      className={cn("fixed top-4 inset-x-0 max-w-6xl mx-auto z-50 backdrop-blur-md", className)}
     >
       <Menu setActive={setActive}>
         <div className="relative">
@@ -30,7 +30,7 @@ export default function Navbar({ className }: { className?: string }) {
           </div>
           <Link href={"/"} className="absolute top-0 right-0 left-0 bottom-0 z-20"></Link>
         </div>
-        <div className="flex space-x-6 absolute w-full justify-center items-center -left-3 font-medium text-sm">
+        <div className="flex space-x-8 absolute w-full justify-center items-center -left-3 font-medium text-sm">
           <MenuItem setActive={setActive} active={active} item="Self-Diagnose" >
             <div className="flex flex-col space-y-4 text-md">
               <HoveredLink href="/mouth">Diagnose Mouth Disease</HoveredLink>
