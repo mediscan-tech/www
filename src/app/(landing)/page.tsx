@@ -7,7 +7,9 @@ export default function Homepage() {
       <div className="flex flex-col items-center ">
         <Hero />
 
-        {/* <div className="h-[80vh] w-full max-w-7xl mt-32 grid grid-cols-3 grid-rows-2">
+        {/* <div className="h-[80vh] w-full max-w-7xl mt-32 grid grid-cols-3 grid-rows-1 gap-4">
+          <CardSkeleton className="w-full h-full" children={""} />
+          <CardSkeleton className="w-full h-full" children={""} />
           <CardSkeleton className="w-full h-full" children={""} />
         </div> */}
 
