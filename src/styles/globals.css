@@ -64,3 +64,13 @@
     direction: rtl;
   }
 }
+
+@layer base {
+  h1 {
+    @apply text-text-light text-xl font-medium
+  }
+
+  p {
+    @apply text-sm
+  }
+}

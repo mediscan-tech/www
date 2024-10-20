@@ -21,13 +21,13 @@ const elements: DirectoryElement[] = [
   },
   {
     href: "/oral",
-    title: "Oral Conditions & Disease",
+    title: "Oral Wellness",
     description: "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     icon: <RiToothFill className="w-full h-full" color="#14616e" />
   },
   {
     href: "/hair",
-    title: "Hair Conditions & Disease",
+    title: "Hair & Scalp Conditions",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     icon: <MdFace className="w-full h-full" color="#14616e" />
   },
@@ -95,8 +95,8 @@ export default function DirectoryPage() {
                     </div>
                   </div>
                   <div className="flex flex-col h-56">
-                    <h1 className="text-text-light text-xl font-medium pt-4">{e.title}</h1>
-                    <p className="mt-2 text-sm">{e.description}</p>
+                    <h1 className="pt-4">{e.title}</h1>
+                    <p className="mt-2">{e.description}</p>
                   </div>
                 </CardSkeleton>
               </Link>
