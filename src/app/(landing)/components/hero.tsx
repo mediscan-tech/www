@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <div className="w-screen h-screen flex items-center justify-center relative">
-      <div className="relative aspect-square h-[100vh] w-[100vh] overflow-clip flex items-center justify-center pointer-events-none">
+      <div className="relative aspect-square h-[100vh] w-[200vh] overflow-clip flex items-center justify-center pointer-events-none">
         <div className="w-[100vw] h-[100vh] absolute scale-150">
           <Spline
             scene="/spline/hero.splinecode"
