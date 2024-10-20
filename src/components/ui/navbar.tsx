@@ -35,7 +35,7 @@ export default function Navbar({ className }: { className?: string }) {
           <Link href={"/#about"} className="hover:opacity-80 transition-all duration-200">About</Link>
           <Link href={"/#contact"} className="hover:opacity-80 transition-all duration-200">Contact</Link>
         </div>
-        <div className="border py-2 px-8 rounded-xl border-primary/80 bg-primary/10 text-text-light font-medium text-sm flex items-center justify-center relative">
+        <div className="border py-2 px-8 rounded-xl border-primary/80 bg-primary/10 text-primary font-medium text-sm flex items-center justify-center relative">
           Get Started!
           <Link href={"/directory"} className="absolute z-20 top-0 left-0 bottom-0 right-0"></Link>
         </div>
