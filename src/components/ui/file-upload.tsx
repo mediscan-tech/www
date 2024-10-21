@@ -46,7 +46,7 @@ export const FileUpload = ({
     multiple: false,
     noClick: true,
     accept: {
-      'image/png': ['.png']
+      "image/png": [".png"],
     },
     // onDrop: ,
     onDropAccepted: handleFileChange,
@@ -55,7 +55,7 @@ export const FileUpload = ({
     },
     onError: (error) => {
       console.log(error);
-    }
+    },
   });
 
   return (
@@ -63,7 +63,7 @@ export const FileUpload = ({
       <motion.div
         onClick={handleClick}
         whileHover="animate"
-        className="p-10 group/file block rounded-lg cursor-pointer w-full relative overflow-hidden"
+        className="group/file relative block w-full cursor-pointer overflow-hidden rounded-lg p-10"
       >
         <input
           ref={fileInputRef}
@@ -73,33 +73,30 @@ export const FileUpload = ({
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
-        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
-
-        </div>
+        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]"></div>
         <div className="flex flex-col items-center justify-center">
-          <h1 className="relative z-20">
-            Upload file
-          </h1>
+          <h1 className="relative z-20">Upload file</h1>
           <p className="relative z-20  mt-2">
             Drag and drop your files here or click to upload
           </p>
-          <div className="relative w-full mt-10 max-w-xl mx-auto">
-            {files.length > 0 && files[0] != null &&
+          <div className="relative mx-auto mt-10 w-full max-w-xl">
+            {files.length > 0 &&
+              files[0] != null &&
               files.map((file, idx) => (
                 <motion.div
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
-                    "relative overflow-hidden z-40 bg-bg-light border border-bg-extralight flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
+                    "relative z-40 mx-auto mt-4 flex w-full flex-col items-start justify-start overflow-hidden rounded-md border border-bg-extralight bg-bg-light p-4 md:h-24",
                     "shadow-sm"
                   )}
                 >
-                  <div className="flex justify-between w-full items-center gap-4">
+                  <div className="flex w-full items-center justify-between gap-4">
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       layout
-                      className="text-base text-text-light truncate max-w-xs"
+                      className="max-w-xs truncate text-base text-text-light"
                     >
                       {file.name}
                     </motion.p>
@@ -107,18 +104,18 @@ export const FileUpload = ({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       layout
-                      className="rounded-lg px-2 py-1 w-fit flex-shrink-0 text-sm shadow-input"
+                      className="shadow-input w-fit flex-shrink-0 rounded-lg px-2 py-1 text-sm"
                     >
                       {(file.size / (1024 * 1024)).toFixed(2)} MB
                     </motion.p>
                   </div>
 
-                  <div className="flex text-sm md:flex-row flex-col items-start md:items-center w-full mt-2 justify-between">
+                  <div className="mt-2 flex w-full flex-col items-start justify-between text-sm md:flex-row md:items-center">
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       layout
-                      className="px-2 py-0.5 rounded-md border border-primary/80 bg-primary/10 text-primary"
+                      className="rounded-md border border-primary/80 bg-primary/10 px-2 py-0.5 text-primary"
                     >
                       {file.type}
                     </motion.p>
@@ -144,7 +141,7 @@ export const FileUpload = ({
                   damping: 20,
                 }}
                 className={cn(
-                  "relative group-hover/file:shadow-2xl z-40 bg-bg-light border border-bg-extralight flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md",
+                  "relative z-40 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-bg-extralight bg-bg-light group-hover/file:shadow-2xl",
                   "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
                 )}
               >
@@ -152,7 +149,7 @@ export const FileUpload = ({
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-text-light flex flex-col items-center"
+                    className="flex flex-col items-center text-text-light"
                   >
                     Drop it!
                     <IconUpload className="h-4 w-4 text-text-light" />
@@ -166,7 +163,7 @@ export const FileUpload = ({
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
-                className="absolute opacity-0 border border-dashed border-text-light inset-0 z-30 bg-transparent flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md"
+                className="absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-dashed border-text-light bg-transparent opacity-0"
               ></motion.div>
             )}
           </div>

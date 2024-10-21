@@ -2,12 +2,12 @@
 @import 'tailwindcss/components'; */
 
 /* Additional styles */
-@import 'additional-styles/utility-patterns.css';
+@import "additional-styles/utility-patterns.css";
 /* @import 'additional-styles/range-slider.css';
 @import 'additional-styles/toggle-switch.css'; */
-@import 'additional-styles/theme.css';
+@import "additional-styles/theme.css";
 
-@import 'tailwindcss/utilities';
+@import "tailwindcss/utilities";
 
 @tailwind base;
 @tailwind components;
@@ -67,10 +67,10 @@
 
 @layer base {
   h1 {
-    @apply text-text-light text-xl font-medium
+    @apply text-xl font-medium text-text-light;
   }
 
   p {
-    @apply text-sm
+    @apply text-sm;
   }
 }

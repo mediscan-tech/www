@@ -11,10 +11,10 @@ export default function SkinModelPage() {
   };
 
   return (
-    <div className="h-screen pt-[104px] flex items-center justify-center">
-      <CardSkeleton className="w-full max-w-4xl mx-auto min-h-96">
+    <div className="flex h-screen items-center justify-center pt-[104px]">
+      <CardSkeleton className="mx-auto min-h-96 w-full max-w-4xl">
         <FileUpload onChange={handleFileUpload} />
       </CardSkeleton>
     </div>
-  )
+  );
 }

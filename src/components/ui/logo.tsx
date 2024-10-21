@@ -1,9 +1,32 @@
-export default function Logo(props: { color?: string, backgroundColor?: string, className?: string }) {
+export default function Logo(props: {
+  color?: string;
+  backgroundColor?: string;
+  className?: string;
+}) {
   return (
-    <svg className={props.className} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-      width="100%" viewBox="0 0 300 300" enableBackground="new 0 0 267 288" color="#14616e">
-      <rect width="100%" height="100%" rx="50" fill={props.backgroundColor ?? "#101606"} />
-      <path fill={props.color ?? "currentcolor"} transform="translate(35 23) scale(0.85, 0.85)" opacity="1.000000" stroke="none"
+    <svg
+      className={props.className}
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      x="0px"
+      y="0px"
+      width="100%"
+      viewBox="0 0 300 300"
+      enableBackground="new 0 0 267 288"
+      color="#14616e"
+    >
+      <rect
+        width="100%"
+        height="100%"
+        rx="50"
+        fill={props.backgroundColor ?? "#101606"}
+      />
+      <path
+        fill={props.color ?? "currentcolor"}
+        transform="translate(35 23) scale(0.85, 0.85)"
+        opacity="1.000000"
+        stroke="none"
         d="
       M174.172791,32.178658 
       	C184.157455,22.204363 193.148804,22.742550 201.675537,33.581760 
@@ -47,8 +70,13 @@ export default function Logo(props: { color?: string, backgroundColor?: string, 
       	C195.084900,216.280136 202.686966,216.614685 208.049179,208.110153 
       	C210.924561,203.549805 213.161621,198.384903 214.664749,193.196701 
       	C220.862747,171.803635 221.188019,149.873291 219.753891,126.909645 
-      z"/>
-      <path fill={props.color ?? "currentcolor"} transform="translate(35 23) scale(0.85, 0.85)" opacity="1.000000" stroke="none"
+      z"
+      />
+      <path
+        fill={props.color ?? "currentcolor"}
+        transform="translate(35 23) scale(0.85, 0.85)"
+        opacity="1.000000"
+        stroke="none"
         d="
       M94.696754,27.666901 
       	C67.185585,55.589630 54.293442,89.908051 50.878204,128.294769 
@@ -61,8 +89,13 @@ export default function Logo(props: { color?: string, backgroundColor?: string, 
       	C6.763572,130.640182 17.020832,95.137939 43.145004,64.146683 
       	C56.851696,47.886356 73.664268,35.583996 93.662552,27.056572 
       	C94.394867,27.383368 94.545815,27.525135 94.696754,27.666901 
-      z"/>
-      <path fill={props.color ?? "currentcolor"} transform="translate(35 23) scale(0.85, 0.85)" opacity="1.000000" stroke="none"
+      z"
+      />
+      <path
+        fill={props.color ?? "currentcolor"}
+        transform="translate(35 23) scale(0.85, 0.85)"
+        opacity="1.000000"
+        stroke="none"
         d="
       M240.948029,117.050888 
       	C242.689880,113.122368 243.995209,107.599297 248.299118,108.519928 
@@ -72,7 +105,8 @@ export default function Logo(props: { color?: string, backgroundColor?: string, 
       	C250.187408,181.946594 245.811813,182.062546 243.122940,176.327576 
       	C241.043625,171.892715 239.492233,167.050583 238.650665,162.224808 
       	C236.025940,147.173889 236.217484,132.168823 240.948029,117.050888 
-      z"/>
+      z"
+      />
     </svg>
-  )
+  );
 }
