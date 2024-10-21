@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="https://i.imgur.com/5LJxBt4.pngg" height="350" alt="AgentGPT Logo"/>
 </p>
@@ -12,15 +11,19 @@ The app is split into two main categories: Giving hospital wait times and predic
 Source Code for AI Model and API: https://github.com/mediscan-tech/model-api
 
 ---
+
 ## About our Data:
-Our data is completely dynamic. The dataset from [CMS](https://data.cms.gov/) is updated every few weeks, so our hospital wait times are updated automatically.
----
+
+## Our data is completely dynamic. The dataset from [CMS](https://data.cms.gov/) is updated every few weeks, so our hospital wait times are updated automatically.
+
 ## ✨ Demo
+
 For the best demo experience, visit [our site](https://mediscan.tech) :)
 
 [Demo Video](https://www.youtube.com/watch?v=ANMwVpiqOHk)
 
 ## 🚀 Website Tech Stack
+
 - ✅ **Bootstrapping**: [create-t3-app](https://create.t3.gg).
 - ✅ **Framework**: [NextJS 14](https://nextjs.org/) + [Typescript](https://www.typescriptlang.org/).
 - ✅ **Styling**: [TailwindCSS](https://tailwindcss.com) + [RadixUI](https://www.radix-ui.com/).
@@ -38,6 +41,7 @@ For the best demo experience, visit [our site](https://mediscan.tech) :)
 - ✅ **Hosting**: [Vercel](https://vercel.com/).
 
 ## 🤖 AI Model Tech Stack
+
 - ✅ **Language**: [Python](https://www.python.org/).
 - ✅ **ML Library**: [Tensorflow](https://www.tensorflow.org/).
 - ✅ **Datasets**: [Kaggle](https://www.kaggle.com/).
@@ -45,5 +49,7 @@ For the best demo experience, visit [our site](https://mediscan.tech) :)
 - ✅ **Hosting**: [DigitalOcean](https://www.digitalocean.com/).
 
 ---
-## 🙌 Contributors 
+
+## 🙌 Contributors
+
 <a href="https://github.com/mediscan-tech/www/graphs/contributors"> <img height="128" src="https://avatars.githubusercontent.com/u/67123306?v=4"/></a><a href="https://github.com/mediscan-tech/model-api/graphs/contributors"> <img height="128" src="https://avatars.githubusercontent.com/u/67066931?v=4"/></a>

@@ -8,35 +8,35 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap'
-})
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
-  display: "swap"
+  display: "swap",
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
-  display: "swap"
+  display: "swap",
 });
 const mont = localFont({
   src: "./fonts/MontBold.woff",
   variable: "--font-mont",
-  display: "swap"
+  display: "swap",
 });
 
 export const metadata = {
-  title: 'MediScan',
-}
+  title: "MediScan",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -52,5 +52,5 @@ export default function RootLayout({
         </ClerkProvider>
       </body>
     </html>
-  )
+  );
 }

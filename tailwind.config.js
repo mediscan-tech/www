@@ -9,32 +9,32 @@ const {
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
       fontFamily: {
-        inter: ['var(--font-inter)', 'sans-serif'],
-        geist: ['var(--font-geist-sans)'],
-        'geist-mono': ['var(--font-geist-mono)'],
-        mont: ['var(--font-mont)'],
+        inter: ["var(--font-inter)", "sans-serif"],
+        geist: ["var(--font-geist-sans)"],
+        "geist-mono": ["var(--font-geist-mono)"],
+        mont: ["var(--font-mont)"],
       },
       colors: {
         bg: {
           extralight: "#27272a",
           light: "#18181b",
-          DEFAULT: "#000000" //101606          
+          DEFAULT: "#000000", //101606
         },
         primary: {
-          DEFAULT: "#14616e" //b1dd40
+          DEFAULT: "#14616e", //b1dd40
         },
         text: {
           light: "#fafafa",
-          DEFAULT: "#a1a1aa"
-        }
+          DEFAULT: "#a1a1aa",
+        },
       },
       animation: {
         first: "moveVertical 30s ease infinite",
@@ -76,14 +76,11 @@ module.exports = {
           "100%": {
             transform: "translateY(-50%)",
           },
-        }
-      }
+        },
+      },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    addVariablesForColors
-  ],
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
 };
 
 function addVariablesForColors({ addBase, theme }) {

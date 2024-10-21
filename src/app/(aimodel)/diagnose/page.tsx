@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { UploadButton } from "@/utils/uploadthing";
 import { useState } from "react";
@@ -7,11 +7,14 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
+    <main className="flex min-h-screen flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         {prediction && (
           <div>
-            <p className="text-2xl"><strong>Prediction: </strong>{prediction}</p>
+            <p className="text-2xl">
+              <strong>Prediction: </strong>
+              {prediction}
+            </p>
           </div>
         )}
 
@@ -25,7 +28,9 @@ export default function HomePage() {
             onClientUploadComplete={async (res: any) => {
               if (res && Array.isArray(res) && res.length > 0) {
                 try {
-                  const response = await fetch(`/api/getPrediction?key=${res[0].key}`);
+                  const response = await fetch(
+                    `/api/getPrediction?key=${res[0].key}`
+                  );
                   if (response.ok) {
                     const data = await response.json(); // Parse the response as JSON
                     setPrediction(data.prediction);
@@ -49,9 +54,11 @@ export default function HomePage() {
 
         {!prediction && loading && (
           <div className="text-center">
-            <h1 className="text-2xl">Please wait 15-20 seconds for the AI to process...</h1>
+            <h1 className="text-2xl">
+              Please wait 15-20 seconds for the AI to process...
+            </h1>
             <div className="mt-4">
-              <div className="text-4xl animate-pulse">&#9679;</div>
+              <div className="animate-pulse text-4xl">&#9679;</div>
             </div>
           </div>
         )}
