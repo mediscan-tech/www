@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         <div>
           <h1 className="text-text-light text-xl font-medium pt-4">Large Language Models</h1>
-          <p className="mt-2 text-sm">General Diagnosis</p>
+          <p className="mt-2 text-sm">Diagnose By Symptom</p>
           <p className="mt-1 text-sm">First-Aid Advice</p>
           <p className="mt-1 text-sm">Health Risk Prediction</p>
         </div>
