@@ -74,12 +74,12 @@ export default function Navbar({ className }: { className?: string }) {
           </Link>
 
           {/* Clerk Authentication (SignIn or UserButton) */}
-            <SignedOut>
-              <SignInButton mode="modal" />
-            </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal" />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </Menu>
     </motion.div>

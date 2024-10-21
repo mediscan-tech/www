@@ -28,7 +28,7 @@ export default function OnboardingPage() {
   const router = useRouter(); // Initialize router for redirection
   const { user } = useUser();
   const [userType, setUserType] = useState<"doctor" | "patient" | null>(null);
-  
+
   const schema = userType === "doctor" ? doctorSchema : patientSchema;
   const {
     register,
@@ -79,17 +79,23 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-10 bg-black">
-      <div className="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-white text-center mb-4">Onboarding Form</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-black py-10">
+      <div className="w-full max-w-md rounded-lg bg-gray-800 p-6 shadow-lg">
+        <h1 className="mb-4 text-center text-2xl font-bold text-white">
+          Onboarding Form
+        </h1>
 
         <div className="mt-6">
-          <label className="font-medium text-white">Are you signing up as a doctor or patient?</label>
+          <label className="font-medium text-white">
+            Are you signing up as a doctor or patient?
+          </label>
           <div>
             <select
               value={userType ?? ""}
-              onChange={(e) => setUserType(e.target.value as "doctor" | "patient")}
-              className="border rounded px-4 py-2 w-full text-black"
+              onChange={(e) =>
+                setUserType(e.target.value as "doctor" | "patient")
+              }
+              className="w-full rounded border px-4 py-2 text-black"
             >
               <option value="">Select...</option>
               <option value="doctor">Doctor</option>
@@ -107,9 +113,13 @@ export default function OnboardingPage() {
                   placeholder="Bob Joe"
                   type="text"
                   {...register("name")}
-                  className="border px-4 py-2 rounded w-full text-black"
+                  className="w-full rounded border px-4 py-2 text-black"
                 />
-                {errors.name && <p className="text-red-500">{(errors.name as any)?.message}</p>}
+                {errors.name && (
+                  <p className="text-red-500">
+                    {(errors.name as any)?.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -118,9 +128,13 @@ export default function OnboardingPage() {
                   placeholder="1234567890"
                   type="text"
                   {...register("phoneNumber")}
-                  className="border px-4 py-2 rounded w-full text-black"
+                  className="w-full rounded border px-4 py-2 text-black"
                 />
-                {errors.phoneNumber && <p className="text-red-500">{(errors.phoneNumber as any)?.message}</p>}
+                {errors.phoneNumber && (
+                  <p className="text-red-500">
+                    {(errors.phoneNumber as any)?.message}
+                  </p>
+                )}
               </div>
 
               {userType === "doctor" && (
@@ -131,9 +145,13 @@ export default function OnboardingPage() {
                       placeholder="Bachelor of Dental Surgery"
                       type="text"
                       {...register("degree")}
-                      className="border px-4 py-2 rounded w-full text-black"
+                      className="w-full rounded border px-4 py-2 text-black"
                     />
-                    {errors.degree && <p className="text-red-500">{(errors.degree as any)?.message}</p>}
+                    {errors.degree && (
+                      <p className="text-red-500">
+                        {(errors.degree as any)?.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -142,28 +160,34 @@ export default function OnboardingPage() {
                       placeholder="Mercy Hospital St. Louis"
                       type="text"
                       {...register("practiceLocation")}
-                      className="border px-4 py-2 rounded w-full text-black"
+                      className="w-full rounded border px-4 py-2 text-black"
                     />
-                    {errors.practiceLocation && <p className="text-red-500">{(errors.practiceLocation as any)?.message}</p>}
+                    {errors.practiceLocation && (
+                      <p className="text-red-500">
+                        {(errors.practiceLocation as any)?.message}
+                      </p>
+                    )}
                   </div>
                 </>
               )}
 
               {userType === "patient" && (
                 <div>
-                  <label className="text-white">Pre-existing Health Condition (Optional)</label>
+                  <label className="text-white">
+                    Pre-existing Health Condition (Optional)
+                  </label>
                   <input
                     placeholder="Ex: Melanoma, Gingivitis, Pitting"
                     type="text"
                     {...register("healthCondition")}
-                    className="border px-4 py-2 rounded w-full text-black"
+                    className="w-full rounded border px-4 py-2 text-black"
                   />
                 </div>
               )}
 
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-6 py-2 rounded"
+                className="rounded bg-blue-500 px-6 py-2 text-white"
               >
                 Submit
               </button>
