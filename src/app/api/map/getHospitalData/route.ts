@@ -86,6 +86,7 @@ export async function POST(request: Request, res: NextApiResponse) {
             }
             
         } else {
+            console.log("NOOO 0.1")
             return new Response(`Failed to fetch nearby ZIP codes!`, {
                 status: 500,
             })
@@ -101,7 +102,7 @@ export async function POST(request: Request, res: NextApiResponse) {
             }
         });
     }
-
+    
     //Cross-reference zip codes with CMS (Centers for Medicare & Medicaid Services) database to find hospitals in zip code
     const conditions = [
         {
@@ -110,11 +111,13 @@ export async function POST(request: Request, res: NextApiResponse) {
             "operator": "="
         }
     ];
+
     const formattedPostalCodesArray = postalCodesArray.map((postalCode) => ({
         "property": "zip_code",
         "value": postalCode,
         "operator": "="
       }));
+
     const payload = {
         "conditions": [
             ...conditions,
@@ -125,7 +128,7 @@ export async function POST(request: Request, res: NextApiResponse) {
         ],
         "limit": 500
     };
-
+    
     const fetchCMSData = await fetch('https://data.cms.gov/provider-data/api/1/datastore/query/yv7e-xc69/0', {
         method: 'POST',
         headers: {
@@ -134,10 +137,12 @@ export async function POST(request: Request, res: NextApiResponse) {
         },
         body: JSON.stringify(payload)
     })
+
+
     try {
         if (fetchCMSData.ok) {
             const CMSData = await fetchCMSData.json();
-            const formattedResults = CMSData.results.map(async (result: Result) => {
+            const formattedResults = await CMSData.results.map(async (result: Result) => {
                 const hospital = {
                     facility_name: result.facility_name,
                     address: result.address,
@@ -153,6 +158,8 @@ export async function POST(request: Request, res: NextApiResponse) {
                     score: result.score,
                     sample: result.sample,
                 };
+
+                console.log('formattedResults!!!\n\n\n\n', formattedResults);
           
                 //Now get lat and long for each hospital and add to data
                 const forwardGeocodeHospitalAddress = async (address: string) => {
@@ -205,6 +212,7 @@ export async function POST(request: Request, res: NextApiResponse) {
               };
             
         } else {
+            console.log("NOOO1")
             return new Response(`Failed to cross-reference the CMS database!`, {
                 status: 500,
             })

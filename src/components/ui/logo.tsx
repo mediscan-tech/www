@@ -1,7 +1,7 @@
 export default function Logo(props: { color?: string, backgroundColor?: string, className?: string }) {
   return (
     <svg className={props.className} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-      width="100%" viewBox="0 0 300 300" enable-background="new 0 0 267 288" color="#14616e">
+      width="100%" viewBox="0 0 300 300" enableBackground="new 0 0 267 288" color="#14616e">
       <rect width="100%" height="100%" rx="50" fill={props.backgroundColor ?? "#101606"} />
       <path fill={props.color ?? "currentcolor"} transform="translate(35 23) scale(0.85, 0.85)" opacity="1.000000" stroke="none"
         d="
