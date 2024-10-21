@@ -11,6 +11,8 @@ async function fetchKey(key: string | null): Promise<ImageData | null> {
     const mongoClient = await clientPromise;
     const db = mongoClient.db("mediscan");
     const collection = db.collection("images");
+    //const doctor = db.collection("doctors");
+    //console.log(doctor);
     await new Promise((resolve) => setTimeout(resolve, 10000));
     const ut_keyDoc: WithId<Document> | null = await collection.findOne({ ut_key: key });
     
