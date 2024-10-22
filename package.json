@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "npx prettier --write --loglevel=silent . && next build",
-    "dev": "node server.js",
+    "dev": "next dev",
     "lint": "next lint",
-    "start": "NODE_ENV=production node server.js"
+    "start": "next start"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.5",
