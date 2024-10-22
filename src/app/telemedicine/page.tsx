@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoDesktop } from "react-icons/io5";
 import { DateTimePickerV2 } from "@/components/date-time";
+//import Lobby from '@/components/telemedicine/Lobby'
+//import ControlPanel from '@/components/telemedicine/ControlPanel'
+//import Chat from '@/components/telemedicine/Chat'
+//import Status from '@/components/telemedicine/Status'
 
 interface Doctor {
   clerk_id: string;
