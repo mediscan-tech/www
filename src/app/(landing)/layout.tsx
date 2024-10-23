@@ -1,15 +1,13 @@
-'use client'
+"use client";
 
 export default function HomeLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
-      <main className="grow">
-        {children}
-      </main>
+      <main className="grow">{children}</main>
     </>
-  )
+  );
 }

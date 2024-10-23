@@ -7,7 +7,7 @@ export default function UserButton() {
   const { isLoaded } = useUser();
 
   if (!isLoaded) {
-    return <Skeleton className="w-[50px] h-[50px] rounded-full" />;
+    return <Skeleton className="h-[50px] w-[50px] rounded-full" />;
   }
 
   return (

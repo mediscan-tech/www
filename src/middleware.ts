@@ -3,10 +3,13 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 const isPublicRoute = createRouteMatcher([
   "/",
   "/spline(.*)",
-  "/favicon.svg",
-  "/map", // anyone can see /my-list/[slug], but not /my-list without auth
-  "/diagnose",
+  "/images(.*)",
+  "/directory",
+  "/map",
+  "/favicon.ico",
   "/api(.*)",
+  "/favicon.svg",
+  "/diagnose",
 ]);
 
 export default clerkMiddleware((auth, request) => {

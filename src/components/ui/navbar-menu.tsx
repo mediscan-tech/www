@@ -28,7 +28,7 @@ export const MenuItem = ({
     <button onMouseEnter={() => setActive(item)} className="relative ">
       <motion.p
         transition={{ duration: 0.3 }}
-        className="hover:opacity-80 transition-all duration-200"
+        className="transition-all duration-200 hover:opacity-80"
       >
         {item}
       </motion.p>
@@ -39,15 +39,15 @@ export const MenuItem = ({
           transition={transition}
         >
           {active === item && (
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
+            <div className="absolute left-1/2 top-[calc(100%_+_1.2rem)] -translate-x-1/2 transform pt-4">
               <motion.div
                 transition={transition}
                 layoutId="active" // layoutId ensures smooth animation
-                className="bg-bg-light/80 backdrop-blur-md rounded-2xl overflow-hidden border border-bg-extralight shadow-xl"
+                className="overflow-hidden rounded-2xl border border-bg-extralight bg-bg-light/80 shadow-xl backdrop-blur-md"
               >
                 <motion.div
                   layout // layout ensures smooth animation
-                  className="w-max h-full p-4"
+                  className="h-full w-max p-4"
                 >
                   {children}
                 </motion.div>
@@ -70,7 +70,7 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)} // resets the state
-      className="relative items-center justify-between rounded-2xl border bg-bg-light/80 border-bg-extralight shadow-input flex space-x-4 px-8 h-[72px]"
+      className="shadow-input relative flex h-[72px] items-center justify-between space-x-4 rounded-2xl border border-bg-extralight bg-bg-light/80 px-8"
     >
       {children}
     </nav>
@@ -98,10 +98,10 @@ export const ProductItem = ({
         className="flex-shrink-0 rounded-md shadow-2xl"
       />
       <div>
-        <h4 className="text-xl font-bold mb-1 text-black dark:text-white">
+        <h4 className="mb-1 text-xl font-bold text-black dark:text-white">
           {title}
         </h4>
-        <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">
+        <p className="max-w-[10rem] text-sm text-neutral-700 dark:text-neutral-300">
           {description}
         </p>
       </div>
@@ -111,10 +111,7 @@ export const ProductItem = ({
 
 export const HoveredLink = ({ children, ...rest }: any) => {
   return (
-    <Link
-      {...rest}
-      className="hover:opacity-80 transition-all duration-200"
-    >
+    <Link {...rest} className="transition-all duration-200 hover:opacity-80">
       {children}
     </Link>
   );

@@ -5,4 +5,4 @@ type DirectoryElement = {
   title: string;
   description: string;
   icon?: ReactNode;
-}
+};

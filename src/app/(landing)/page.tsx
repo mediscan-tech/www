@@ -16,5 +16,5 @@ export default function Homepage() {
         <div className="h-screen"></div>
       </div>
     </>
-  )
+  );
 }

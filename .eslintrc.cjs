@@ -28,7 +28,7 @@ const config = {
     "@typescript-eslint/no-explicit-any": "warn",
     "prefer-const": "warn",
     "@typescript-eslint/no-extra-semi": "warn",
-    
+
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
