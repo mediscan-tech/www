@@ -19,7 +19,7 @@ export default function TempVideoCall() {
 
   useEffect(() => {
     const initializeConnection = async () => {
-      socketRef.current = io("http://localhost:3000");
+      socketRef.current = io("http://localhost:3001");
 
       socketRef.current.on("connect", () => {
         console.log("Connected to Socket.IO server");

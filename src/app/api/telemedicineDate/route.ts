@@ -18,13 +18,14 @@ export async function POST(req: Request) {
     }
 
     // Insert the meeting data into the schedules collection
-    const result = await db.collection("schedules").insertOne({
-      patientClerkId,
-      doctorClerkId,
-      meetingDateTime,
-      timeZone,
-      createdAt: new Date(),
-    });
+    // In the POST function
+const result = await db.collection("schedules").insertOne({
+  patientClerkId,
+  doctorClerkId,
+  meetingDateTime: new Date(meetingDateTime).toISOString(),
+  timeZone,
+  createdAt: new Date(),
+});
 
     if (result.acknowledged) {
       return NextResponse.json(

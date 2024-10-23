@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoDesktop } from "react-icons/io5";
 import { DateTimePickerV2 } from "@/components/date-time";
-//import Lobby from '@/components/telemedicine/Lobby'
-//import ControlPanel from '@/components/telemedicine/ControlPanel'
-//import Chat from '@/components/telemedicine/Chat'
-//import Status from '@/components/telemedicine/Status'
+import { useRouter } from "next/navigation";
+import { useSession } from "@clerk/nextjs";
+import { format, toZonedTime } from "date-fns-tz";
 
 interface Doctor {
   clerk_id: string;
@@ -31,6 +30,11 @@ export default function TelemedicinePage() {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [schedules, setSchedules] = useState([]);
+  const router = useRouter();
+  const { session } = useSession();
+  const clerkId = session?.user?.id;
+  const [upcomingMeeting, setUpcomingMeeting] = useState(null);
 
   // Fetch doctors from the API
   useEffect(() => {
@@ -46,6 +50,44 @@ export default function TelemedicinePage() {
 
     fetchDoctors();
   }, []);
+
+  useEffect(() => {
+    const fetchSchedulesAndCheckMeetings = async () => {
+      try {
+        const response = await fetch("/api/schedules");
+        const data = await response.json();
+        setSchedules(data);
+  
+        const currentTime = new Date();
+
+        // Check for upcoming meetings
+        const upcomingMeeting = data.find((schedule) => {
+          const meetingTimeUTC = new Date(schedule.meetingDateTime);
+          const localMeetingTime = toZonedTime(meetingTimeUTC, schedule.timeZone); // Convert to user's timezone
+          const timeDiff = localMeetingTime.getTime() - currentTime.getTime();
+          return (
+            (schedule.patientClerkId === clerkId || schedule.doctorClerkId === clerkId) &&
+            timeDiff >= -30 * 60 * 1000 && // Show for 30 minutes after the start time
+            timeDiff <= 5 * 60 * 1000 // Start showing 5 minutes before the meeting
+          );
+        });
+  
+        setUpcomingMeeting(upcomingMeeting || null);
+      } catch (error) {
+        console.error("Error fetching schedules:", error);
+      }
+    };
+  
+    fetchSchedulesAndCheckMeetings();
+    const intervalId = setInterval(fetchSchedulesAndCheckMeetings, 10000); // Check every 10 seconds
+  
+    return () => clearInterval(intervalId);
+  }, [clerkId]);
+  
+
+  const handleJoinMeeting = () => {
+    router.push('/temp');
+  };
 
   const handleDoctorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedName = event.target.value;
@@ -162,6 +204,25 @@ export default function TelemedicinePage() {
                 )}
               </div>
             )}
+          </motion.div>
+        )}
+        {upcomingMeeting && (
+          <motion.div
+            initial={{ y: "25%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ ease: "easeInOut", duration: 1 }}
+            className="mt-8 text-center"
+          >
+            <h2 className="text-2xl font-semibold">Upcoming Meeting</h2>
+            <p className="mt-2 text-lg">
+              Meeting Time: {format(new Date(upcomingMeeting.meetingDateTime), 'yyyy-MM-dd HH:mm:ss', { timeZone: upcomingMeeting.timeZone })}
+            </p>
+            <button
+              onClick={handleJoinMeeting}
+              className="mt-4 rounded-md bg-blue-500 p-2 text-white"
+            >
+              Join Meeting
+            </button>
           </motion.div>
         )}
       </div>
