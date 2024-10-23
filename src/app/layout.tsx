@@ -1,13 +1,31 @@
 import '../styles/globals.css'
 import { Inter } from 'next/font/google'
-import Header from '@/components/ui/header'
 import Footer from '@/components/ui/footer'
+import Navbar from '@/components/ui/navbar'
+import localFont from "next/font/local"
+import { BackgroundGradientAnimation } from '@/components/ui/background-gradient-animation'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap'
 })
+
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  display: "swap"
+});
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  display: "swap"
+});
+const mont = localFont({
+  src: "./fonts/MontBold.woff",
+  variable: "--font-mont",
+  display: "swap"
+});
 
 export const metadata = {
   title: 'MediScan',
@@ -20,14 +38,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <link rel="icon" href="/favicon.ico"/>
-        <body className={`${inter.variable} font-inter antialiased bg-[#141414] text-white tracking-tight`}>
-          <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
-            <Header/>
-            {children}
-            <Footer/>
-          </div>
-        </body>
+      <link rel="icon" href="/favicon.svg" style={{ color: "red" }} />
+      <body className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} font-geist antialiased bg-bg text-text tracking-tight`}>
+        <Navbar />
+        <div className='absolute z-20'>
+          {children}
+          <Footer />
+        </div>
+      </body>
     </html>
   )
 }

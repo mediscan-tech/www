@@ -1,26 +1,41 @@
 export default function Footer() {
   return (
-    <footer>
-      <div className="max-w-6xl px-4 mx-auto sm:px-6">
-
-        {/* Bottom area */}
-        <div className="py-4 border-t border-gray-200 md:flex md:items-center md:justify-between md:py-8">
-
-          {/* Social as */}
-          <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
-            <li className="ml-4">
-              <a href="https://github.com/mediscan-tech" className="flex items-center justify-center text-gray-600 transition duration-150 ease-in-out bg-white rounded-full shadow hover:text-gray-900 hover:bg-white-100" aria-label="Github">
-                <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 8.2c-4.4 0-8 3.6-8 8 0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4V22c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8.6-.2 1.3-.3 2-.3s1.4.1 2 .3c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.7-3.7 3.9.3.4.6.9.6 1.6v2.2c0 .2.1.5.6.4 3.2-1.1 5.5-4.1 5.5-7.6-.1-4.4-3.7-8-8.1-8z" />
-                </svg>
-              </a>
-            </li>
-          </ul>
-
-          {/* Copyrights note */}
-          <div className="mr-4 text-sm text-gray-600">&copy; Built with 💖 by <u><a href="https://github.com/navincodesalot/">navincodesalot</a></u> and <u><a href="https://github.com/Richp16">richp16</a></u><br/>Initial Template by <u><a href="https://cruip.com/simple/">cruip.com</a></u></div>
+    <div className="relative border-t-2 border-bg-light bg-bg-light/40 pt-8 flex flex-col items-center">
+      <div className="absolute top-0 right-0 left-0 bottom-0 w-full h-full bg-bg -z-10"></div>
+      <div className="flex w-[85vw] justify-between">
+        <div>
+          <h1 className="text-text-light text-xl font-medium pt-4">Contact</h1>
+          <p className="mt-2 text-sm">john.doe@mediscan.tech</p>
+          <p className="mt-1 text-sm">(234) 567 8910</p>
+        </div>
+        <div>
+          <h1 className="text-text-light text-xl font-medium pt-4">Large Language Models</h1>
+          <p className="mt-2 text-sm">Diagnose By Symptom</p>
+          <p className="mt-1 text-sm">First-Aid Advice</p>
+          <p className="mt-1 text-sm">Health Risk Prediction</p>
+        </div>
+        <div>
+          <h1 className="text-text-light text-xl font-medium pt-4">Machine Learning Models</h1>
+          <p className="mt-2 text-sm">Hair & Scalp Conditions</p>
+          <p className="mt-1 text-sm">Oral Wellness</p>
+          <p className="mt-1 text-sm">Skin Conditions & Disease</p>
+        </div>
+        <div>
+          <h1 className="text-text-light text-xl font-medium pt-4">More From Mediscan</h1>
+          <p className="mt-2 text-sm">Nearby Hospital Wait Times</p>
+          <p className="mt-1 text-sm">Telemedicine Service</p>
         </div>
       </div>
-    </footer>
+      <div className="bg-bg-light h-0.5 w-[90vw] my-8"></div>
+      <div className="relative h-[13vw] w-screen flex items-center justify-center overflow-clip opacity-70">
+        <div className="absolute z-10 top-0 right-0 left-0 bottom-0 w-full h-full bg-gradient-to-b from-transparent to-bg"></div>
+        <p className="text-[16vw] font-extrabold font-mont text-primary translate-y-[0.75vw] translate-x-[0.5vw]">MEDISCAN</p>
+      </div>
+      <div className="h-24 z-40 flex items-center justify-center w-screen bg-bg">
+        <div className="w-[85vw] h-12 flex">
+
+        </div>
+      </div>
+    </div>
   )
 }
