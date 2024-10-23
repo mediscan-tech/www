@@ -22,6 +22,13 @@ module.exports = {
         "geist-mono": ["var(--font-geist-mono)"],
         mont: ["var(--font-mont)"],
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100vw', // add required value here
+          }
+        }
+      },
       colors: {
         bg: {
           extralight: "#27272a",
@@ -80,7 +87,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+  plugins: [require("tailwindcss-animate"), addVariablesForColors, require('@tailwindcss/typography'),],
 };
 
 function addVariablesForColors({ addBase, theme }) {

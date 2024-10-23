@@ -11,7 +11,7 @@ const groq = createOpenAI({
 export async function POST(req: Request) {
   const { messages } = await req.json();
   const result = await streamText({
-    model: groq("llama-3.1-8b-instant"),
+    model: groq("llama-3.1-8b-instant"), //llama-3.1-8b-instant
     messages,
   });
 

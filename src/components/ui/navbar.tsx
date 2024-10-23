@@ -31,11 +31,12 @@ export default function Navbar({ className }: { className?: string }) {
         duration: 1,
       }}
       className={cn(
-        "fixed inset-x-0 top-4 z-50 mx-auto max-w-7xl backdrop-blur-sm",
+        "fixed inset-x-0 top-4 z-50 mx-auto px-4 max-w-7xl",
         className
       )}
     >
       <Menu setActive={setActive}>
+        <div className="absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-xl -z-10 backdrop-blur-sm"></div>
         {/* Left Side: Logo and Links */}
         <div className="relative flex items-center">
           <Logo backgroundColor="transparent" className="h-10 w-10" />
@@ -74,12 +75,14 @@ export default function Navbar({ className }: { className?: string }) {
           </Link>
 
           {/* Clerk Authentication (SignIn or UserButton) */}
-          <SignedOut>
-            <SignInButton mode="modal" />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <div className="h-10 w-10">
+            <SignedOut>
+              <SignInButton mode="modal" />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
         </div>
       </Menu>
     </motion.div>

@@ -70,7 +70,10 @@
     @apply text-xl font-medium text-text-light;
   }
 
-  p {
-    @apply text-sm;
+  p,
+  ul,
+  ol,
+  li {
+    @apply text-[16px] text-text font-medium;
   }
 }

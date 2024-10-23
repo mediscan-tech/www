@@ -17,8 +17,8 @@ export default function UserButton() {
         appearance={{
           elements: {
             userButtonAvatarBox: {
-              height: "3rem",
-              width: "3rem",
+              height: "100%",
+              width: "100%",
             },
           },
         }}
