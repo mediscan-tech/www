@@ -1,6 +1,6 @@
 "use client";
 
-export default function HomeLayout({
+export default function Layout({
   children,
 }: {
   children: React.ReactNode;
