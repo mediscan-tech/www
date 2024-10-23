@@ -36,7 +36,7 @@ export async function POST(request: Request, res: NextApiResponse) {
 
   let latitude = data.latitude;
   let longitude = data.longitude;
-  let zipCode: string | null = null;
+  let zipCode: string | null | unknown = null;
   let postalCodesArray = [];
   let formattedData: {
     count: number;
