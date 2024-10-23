@@ -1,12 +1,8 @@
-'use client'
+"use client";
 
-import Footer from "@/components/ui/footer"
+import Footer from "@/components/ui/footer";
 
-export default function Layout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <main className="grow">
@@ -14,5 +10,5 @@ export default function Layout({
         <Footer />
       </main>
     </>
-  )
+  );
 }
