@@ -24,7 +24,7 @@ export const ourFileRouter = {
       formData.append('image', imageBlob, file.name);
 
       try {
-        const apiResponse = await fetch('https://api.mediscan.tech/predict', {
+        const apiResponse = await fetch('https://api.mediscan.care/predict', {
           method: 'POST',
           body: formData,
         });
