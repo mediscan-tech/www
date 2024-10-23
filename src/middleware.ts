@@ -4,9 +4,12 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/spline(.*)",
   "/images(.*)",
+  "/directory",
   "/map",
   "/favicon.ico",
   "/api(.*)",
+  "/favicon.svg",
+  "/diagnose",
 ]);
 
 export default clerkMiddleware((auth, request) => {

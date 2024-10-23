@@ -4,6 +4,8 @@ import Footer from "@/components/ui/footer";
 import Navbar from "@/components/ui/navbar";
 import localFont from "next/font/local";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,11 +44,14 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} bg-bg font-geist tracking-tight text-text antialiased`}
       >
-        <Navbar />
-        <div className="absolute z-20">
-          {children}
-          <Footer />
-        </div>
+        <ClerkProvider>
+          <Navbar />
+          <div className="absolute z-20">
+            {children}
+            <Toaster />
+            <Footer />
+          </div>
+        </ClerkProvider>
       </body>
     </html>
   );
