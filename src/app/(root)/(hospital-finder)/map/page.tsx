@@ -24,7 +24,7 @@ export default function MapDisplayPage() {
   const [startLatitude, setStartLatitude] = useState(null);
   const [startLongitude, setStartLongitude] = useState(null);
   const key =
-    "pk.eyJ1IjoiZGV2ZWxpdGUyIiwiYSI6ImNtMXU2Z3QzbjA5bDAyam9xY3o4M2xsZmwifQ.uwe5Mp4i2RyNnaa832At9A"; // Okay to reveal as it is restricted to only our domain
+    "pk.eyJ1IjoiZGV2ZWxpdGUyIiwiYSI6ImNtMmxrNGRlZjBjeXMyam9qdzBhcmNqZjkifQ.fJisPgZbWfysfoC-WxLcSg"; // Okay to reveal as it is restricted to only our domain
 
   useEffect(() => {
     // Check device

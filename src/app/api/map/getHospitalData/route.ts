@@ -36,7 +36,7 @@ export async function POST(request: Request, res: NextApiResponse) {
 
   let latitude = data.latitude;
   let longitude = data.longitude;
-  let zipCode: string | null | unknown = null;
+  let zipCode: string | unknown | null = null;
   let postalCodesArray = [];
   let formattedData: {
     count: number;
@@ -106,7 +106,6 @@ export async function POST(request: Request, res: NextApiResponse) {
         postalCodesArray.push(getNearbyZipCodesData.postalCodes[i].postalCode);
       }
     } else {
-      console.log("NOOO 0.1");
       return new Response(`Failed to fetch nearby ZIP codes!`, {
         status: 500,
       });
@@ -134,13 +133,11 @@ export async function POST(request: Request, res: NextApiResponse) {
       operator: "=",
     },
   ];
-
   const formattedPostalCodesArray = postalCodesArray.map((postalCode) => ({
     property: "zip_code",
     value: postalCode,
     operator: "=",
   }));
-
   const payload = {
     conditions: [
       ...conditions,
@@ -163,80 +160,75 @@ export async function POST(request: Request, res: NextApiResponse) {
       body: JSON.stringify(payload),
     }
   );
-
   try {
     if (fetchCMSData.ok) {
       const CMSData = await fetchCMSData.json();
-      const formattedResults = await CMSData.results.map(
-        async (result: Result) => {
-          const hospital = {
-            facility_name: result.facility_name,
-            address: result.address,
-            citytown: result.citytown,
-            state: result.state,
-            zip_code: result.zip_code,
-            countyparish: result.countyparish,
-            telephone_number: result.telephone_number,
-            hospital_latitude: null,
-            hospital_longitude: null,
-            formattedAddress: null,
-            directions: null,
-            score: result.score,
-            sample: result.sample,
-          };
+      const formattedResults = CMSData.results.map(async (result: Result) => {
+        const hospital = {
+          facility_name: result.facility_name,
+          address: result.address,
+          citytown: result.citytown,
+          state: result.state,
+          zip_code: result.zip_code,
+          countyparish: result.countyparish,
+          telephone_number: result.telephone_number,
+          hospital_latitude: null,
+          hospital_longitude: null,
+          formattedAddress: null,
+          directions: null,
+          score: result.score,
+          sample: result.sample,
+        };
 
-          console.log("formattedResults!!!\n\n\n\n", formattedResults);
-
-          //Now get lat and long for each hospital and add to data
-          const forwardGeocodeHospitalAddress = async (address: string) => {
-            try {
-              const response = await fetch(
-                `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?autocomplete=false&types=address&access_token=${process.env.MAPBOX_API}`
-              );
-              if (response.ok) {
-                const data = await response.json();
-                if (data.features && data.features.length > 0) {
-                  // Access the coordinates from the first feature (highest relevancy)
-                  const [longitude, latitude] = data.features[0].center;
-                  return { latitude, longitude };
-                } else {
-                  console.log(`No coordinates found for ${address}`);
-                  return new Response(`No coordinates found for ${address}`, {
-                    status: 204,
-                  });
-                }
+        //Now get lat and long for each hospital and add to data
+        const forwardGeocodeHospitalAddress = async (address: string) => {
+          try {
+            const response = await fetch(
+              `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?autocomplete=false&types=address&access_token=${process.env.MAPBOX_API}`
+            );
+            if (response.ok) {
+              const data = await response.json();
+              if (data.features && data.features.length > 0) {
+                // Access the coordinates from the first feature (highest relevancy)
+                const [longitude, latitude] = data.features[0].center;
+                return { latitude, longitude };
+              } else {
+                console.log(`No coordinates found for ${address}`);
+                return new Response(`No coordinates found for ${address}`, {
+                  status: 204,
+                });
               }
-            } catch (error) {
-              return new Response(
-                JSON.stringify({
-                  msg: `Error forward fetching hospital coordinates!`,
-                  data: `${error.name + error.message}`,
-                }),
-                {
-                  status: 500,
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
             }
-          };
-          const geocodedData: any = await forwardGeocodeHospitalAddress(
-            `${hospital.address} + ${hospital.citytown} + ${hospital.state} + ${hospital.zip_code} + "United States"`
-          );
-
-          if (geocodedData) {
-            hospital.hospital_latitude = geocodedData.latitude;
-            hospital.hospital_longitude = geocodedData.longitude;
-            hospital.formattedAddress = `${hospital.address}, ${hospital.citytown} ${hospital.state}, ${hospital.zip_code} UNITED STATES`;
-            hospital.directions = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${encodeURIComponent(
-              hospital.formattedAddress
-            )}"`;
+          } catch (error) {
+            return new Response(
+              JSON.stringify({
+                msg: `Error forward fetching hospital coordinates!`,
+                data: `${error.name + error.message}`,
+              }),
+              {
+                status: 500,
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
           }
+        };
+        const geocodedData: any = await forwardGeocodeHospitalAddress(
+          `${hospital.address} + ${hospital.citytown} + ${hospital.state} + ${hospital.zip_code} + "United States"`
+        );
 
-          return hospital;
+        if (geocodedData) {
+          hospital.hospital_latitude = geocodedData.latitude;
+          hospital.hospital_longitude = geocodedData.longitude;
+          hospital.formattedAddress = `${hospital.address}, ${hospital.citytown} ${hospital.state}, ${hospital.zip_code} UNITED STATES`;
+          hospital.directions = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${encodeURIComponent(
+            hospital.formattedAddress
+          )}"`;
         }
-      );
+
+        return hospital;
+      });
 
       const formattedResultsWithCoordinates = await Promise.all(
         formattedResults
@@ -249,7 +241,6 @@ export async function POST(request: Request, res: NextApiResponse) {
         startLongitude: longitude,
       };
     } else {
-      console.log("NOOO1");
       return new Response(`Failed to cross-reference the CMS database!`, {
         status: 500,
       });

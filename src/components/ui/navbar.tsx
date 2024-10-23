@@ -31,7 +31,7 @@ export default function Navbar({ className }: { className?: string }) {
         duration: 1,
       }}
       className={cn(
-        "fixed inset-x-0 top-4 z-50 mx-auto max-w-7xl px-4 backdrop-blur-sm",
+        "fixed inset-x-0 top-4 z-50 mx-auto max-w-7xl backdrop-blur-sm",
         className
       )}
     >

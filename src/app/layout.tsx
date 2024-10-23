@@ -49,7 +49,6 @@ export default function RootLayout({
           <div className="absolute z-20">
             {children}
             <Toaster />
-            <Footer />
           </div>
         </ClerkProvider>
       </body>
