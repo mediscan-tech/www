@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { TextHoverEffect } from "./text-hover-effect";
-
 export default function Footer() {
   return (
     <div className="flex flex-col items-center border-t-2 border-bg-light bg-bg-light/40 pt-8">

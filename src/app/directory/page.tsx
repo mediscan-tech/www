@@ -35,8 +35,8 @@ const elements: DirectoryElement[] = [
     icon: <MdFace className="h-full w-full" color="#14616e" />,
   },
   {
-    href: "/general",
-    title: "General Diagnosis",
+    href: "/symptom",
+    title: "Diagnose By Symptom",
     description:
       "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     icon: <FaCommentMedical className="h-full w-full" color="#14616e" />,
