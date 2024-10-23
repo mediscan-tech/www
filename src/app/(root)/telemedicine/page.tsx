@@ -95,7 +95,7 @@ export default function TelemedicinePage() {
   }, [clerkId]);
 
   const handleJoinMeeting = () => {
-    router.push("/temp");
+    router.push("/room");
   };
 
   const handleDoctorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
