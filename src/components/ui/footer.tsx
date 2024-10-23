@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { TextHoverEffect } from "./text-hover-effect";
-
 export default function Footer() {
   return (
-    <div className="border-t-2 border-bg-light bg-bg-light/40 pt-8 flex flex-col items-center">
+    <div className="relative border-t-2 border-bg-light bg-bg-light/40 pt-8 flex flex-col items-center">
+      <div className="absolute top-0 right-0 left-0 bottom-0 w-full h-full bg-bg -z-10"></div>
       <div className="flex w-[85vw] justify-between">
         <div>
           <h1 className="text-text-light text-xl font-medium pt-4">Contact</h1>
