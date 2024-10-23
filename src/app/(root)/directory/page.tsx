@@ -35,14 +35,14 @@ const elements: DirectoryElement[] = [
     icon: <MdFace className="h-full w-full" color="#14616e" />,
   },
   {
-    href: "/symptom",
+    href: "/diagnosis",
     title: "Diagnose By Symptom",
     description:
       "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     icon: <FaCommentMedical className="h-full w-full" color="#14616e" />,
   },
   {
-    href: "/first-aid",
+    href: "/diagnosis",
     title: "Tailored First-Aid Advice",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
