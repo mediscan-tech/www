@@ -9,6 +9,7 @@ import { z } from "zod";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
+import crypto from "crypto";
 import {
   Form,
   FormControl,
@@ -72,6 +73,7 @@ export function DateTimePickerV2({
     }
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const roomID = crypto.randomBytes(5).toString("hex");
 
     try {
       const response = await fetch("/api/telemedicineDate", {
@@ -86,6 +88,9 @@ export function DateTimePickerV2({
             timeZone: userTimeZone,
           }),
           timeZone: userTimeZone,
+          roomID,
+          patientName: user.fullName,
+          doctorName: selectedDoctor.name,
         }),
       });
 
@@ -94,7 +99,7 @@ export function DateTimePickerV2({
           title: "Success! 🎉",
           description: `Meeting scheduled with ${
             selectedDoctor.name
-          } at: ${format(data.datetime, "PPP, p")}`,
+          } at: ${format(data.datetime, "PPP, p")}. Room ID: ${roomID}`,
           duration: 10000,
         });
         // Automatically redirect to /directory after a short delay

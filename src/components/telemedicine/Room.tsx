@@ -1,16 +1,31 @@
-// components/telemedicine/Room.tsx
 import React, { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import Peer from "peerjs";
+import { Mic, MicOff, Video, VideoOff } from "lucide-react";
 
 interface RoomProps {
   stream: MediaStream | null;
   socket: Socket;
   peer: Peer | null;
   roomId: string;
+  isAudioEnabled: boolean;
+  isVideoEnabled: boolean;
+  toggleAudio: () => void;
+  toggleVideo: () => void;
+  onLeaveRoom: () => void;
 }
 
-const Room: React.FC<RoomProps> = ({ stream, socket, peer, roomId }) => {
+const Room: React.FC<RoomProps> = ({
+  stream,
+  socket,
+  peer,
+  roomId,
+  isAudioEnabled,
+  isVideoEnabled,
+  toggleAudio,
+  toggleVideo,
+  onLeaveRoom,
+}) => {
   const [peers, setPeers] = useState<Record<string, MediaStream>>({});
   const userVideoRef = useRef<HTMLVideoElement>(null);
 
@@ -73,9 +88,7 @@ const Room: React.FC<RoomProps> = ({ stream, socket, peer, roomId }) => {
         </div>
         {Object.entries(peers).map(([userId, stream]) => (
           <div key={userId}>
-            <h2 className="mb-2 text-xl font-semibold">
-              Peer Video ({userId})
-            </h2>
+            <h2 className="mb-2 text-xl font-semibold">Peer Video</h2>
             <video
               autoPlay
               playsInline
@@ -87,6 +100,41 @@ const Room: React.FC<RoomProps> = ({ stream, socket, peer, roomId }) => {
           </div>
         ))}
       </div>
+      {/* Control buttons for audio and video */}
+      <div className="mb-2 flex space-x-2 pt-12">
+        <button
+          onClick={toggleVideo}
+          className={`flex items-center rounded p-2 ${
+            isVideoEnabled ? "bg-blue-500" : "bg-red-500"
+          } text-white`}
+        >
+          {isVideoEnabled ? (
+            <Video className="mr-2 h-5 w-5" />
+          ) : (
+            <VideoOff className="mr-2 h-5 w-5" />
+          )}
+          {isVideoEnabled ? "Disable Video" : "Enable Video"}
+        </button>
+        <button
+          onClick={toggleAudio}
+          className={`flex items-center rounded p-2 ${
+            isAudioEnabled ? "bg-blue-500" : "bg-red-500"
+          } text-white`}
+        >
+          {isAudioEnabled ? (
+            <Mic className="mr-2 h-5 w-5" />
+          ) : (
+            <MicOff className="mr-2 h-5 w-5" />
+          )}
+          {isAudioEnabled ? "Mute Audio" : "Unmute Audio"}
+        </button>
+      </div>
+      <button
+        onClick={onLeaveRoom} // Leave room button
+        className="mt-4 w-1/2 rounded bg-red-500 p-2 text-white"
+      >
+        Leave Room
+      </button>
     </div>
   );
 };

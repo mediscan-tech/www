@@ -6,6 +6,7 @@ import { DateTimePickerV2 } from "@/components/date-time";
 import { useRouter } from "next/navigation";
 import { useSession } from "@clerk/nextjs";
 import { format, toZonedTime } from "date-fns-tz";
+import crypto from "crypto";
 
 interface Doctor {
   clerk_id: string;
@@ -31,12 +32,13 @@ export default function TelemedicinePage() {
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [schedules, setSchedules] = useState([]);
+  const [roomID, setRoomID] = useState<string | null>(null);
   const router = useRouter();
   const { session } = useSession();
   const clerkId = session?.user?.id;
+  const patientName = session?.user?.fullName || "Patient";
   const [upcomingMeeting, setUpcomingMeeting] = useState(null);
 
-  // Fetch doctors from the API
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -76,6 +78,10 @@ export default function TelemedicinePage() {
           );
         });
 
+        if (upcomingMeeting) {
+          setRoomID(upcomingMeeting.roomID || null);
+        }
+
         setUpcomingMeeting(upcomingMeeting || null);
       } catch (error) {
         console.error("Error fetching schedules:", error);
@@ -109,7 +115,6 @@ export default function TelemedicinePage() {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-start pb-20">
       {" "}
-      {/* Ensure footer doesn't overlap */}
       <div className="w-full max-w-7xl px-4 pt-40">
         <motion.div
           initial={{ y: "25%", opacity: 0 }}
@@ -217,6 +222,16 @@ export default function TelemedicinePage() {
             className="mt-8 text-center"
           >
             <h2 className="text-2xl font-semibold">Upcoming Meeting</h2>
+
+            {/* Conditionally display doctor's or patient's name */}
+            <p className="mt-2 text-lg">
+              {clerkId === upcomingMeeting.patientClerkId ? (
+                <>Upcoming Meeting with Dr. {upcomingMeeting.doctorName}</>
+              ) : (
+                <>Upcoming Meeting with {upcomingMeeting.patientName}</>
+              )}
+            </p>
+
             <p className="mt-2 text-lg">
               Meeting Time:{" "}
               {format(
@@ -225,12 +240,28 @@ export default function TelemedicinePage() {
                 { timeZone: upcomingMeeting.timeZone }
               )}
             </p>
-            <button
+
+            {/* Display Meeting ID */}
+            {roomID && (
+              <div className="mt-2">
+                <p className="text-lg">
+                  <strong>Room ID: </strong>
+                  {roomID}
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Please copy this Room ID and paste it in the Room ID field
+                  after clicking Join Meeting.
+                </p>
+              </div>
+            )}
+
+            {/* Join Meeting button */}
+            <motion.button
               onClick={handleJoinMeeting}
               className="mt-4 rounded-md bg-blue-500 p-2 text-white"
             >
               Join Meeting
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </div>

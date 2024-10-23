@@ -1,4 +1,3 @@
-// components/telemedicine/Lobby.tsx
 import React, { useRef, useEffect } from "react";
 
 interface LobbyProps {
@@ -10,6 +9,7 @@ interface LobbyProps {
   onJoinRoom: () => void;
   roomId: string;
   setRoomId: (id: string) => void;
+  onLeaveLobby: () => void;
 }
 
 const Lobby: React.FC<LobbyProps> = ({
@@ -21,6 +21,7 @@ const Lobby: React.FC<LobbyProps> = ({
   onJoinRoom,
   roomId,
   setRoomId,
+  onLeaveLobby,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -64,6 +65,12 @@ const Lobby: React.FC<LobbyProps> = ({
         className="w-1/2 rounded bg-green-500 p-2 text-white"
       >
         Join Room
+      </button>
+      <button
+        onClick={onLeaveLobby}
+        className="mt-2 w-1/2 rounded bg-red-500 p-2 text-white"
+      >
+        Leave Lobby
       </button>
     </div>
   );

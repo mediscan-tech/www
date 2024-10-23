@@ -6,24 +6,37 @@ export async function POST(req: Request) {
   const db = mongoClient.db("mediscan");
 
   try {
-    const { patientClerkId, doctorClerkId, meetingDateTime, timeZone } =
-      await req.json();
+    const {
+      patientClerkId,
+      doctorClerkId,
+      meetingDateTime,
+      timeZone,
+      roomID,
+      patientName,
+      doctorName,
+    } = await req.json();
 
-    // Validate input
-    if (!patientClerkId || !doctorClerkId || !meetingDateTime || !timeZone) {
+    if (
+      !patientClerkId ||
+      !doctorClerkId ||
+      !meetingDateTime ||
+      !timeZone ||
+      !roomID
+    ) {
       return NextResponse.json(
         { message: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    // Insert the meeting data into the schedules collection
-    // In the POST function
     const result = await db.collection("schedules").insertOne({
       patientClerkId,
       doctorClerkId,
       meetingDateTime: new Date(meetingDateTime).toISOString(),
       timeZone,
+      roomID,
+      patientName,
+      doctorName,
       createdAt: new Date(),
     });
 

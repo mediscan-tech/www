@@ -10,6 +10,7 @@ import { useMediaStream } from "@/hooks/useMediaStream";
 
 export default function TempVideoCall() {
   const [isLobby, setIsLobby] = useState(true);
+  const [inRoom, setInRoom] = useState(false);
   const [roomId, setRoomId] = useState("");
   const socketRef = useRef<any>(null);
   const peerRef = useRef<Peer | null>(null);
@@ -19,7 +20,7 @@ export default function TempVideoCall() {
 
   useEffect(() => {
     const initializeConnection = async () => {
-      socketRef.current = io("http://localhost:3001");
+      socketRef.current = io("https://video.mediscan.care/");
 
       socketRef.current.on("connect", () => {
         console.log("Connected to Socket.IO server");
@@ -54,8 +55,21 @@ export default function TempVideoCall() {
     });
   };
 
+  const joinRoom = () => {
+    setInRoom(true);
+  };
+
+  const leaveLobby = () => {
+    router.push("/telemedicine");
+  };
+
+  const leaveRoom = () => {
+    router.push("/telemedicine");
+    setInRoom(false);
+  };
+
   return (
-    <div className="p-4">
+    <div className="p-4 pb-16 pt-32">
       {isLobby ? (
         <Lobby
           stream={stream}
@@ -66,6 +80,7 @@ export default function TempVideoCall() {
           onJoinRoom={handleJoinRoom}
           roomId={roomId}
           setRoomId={setRoomId}
+          onLeaveLobby={leaveLobby}
         />
       ) : (
         <Room
@@ -73,6 +88,11 @@ export default function TempVideoCall() {
           socket={socketRef.current}
           peer={peerRef.current}
           roomId={roomId}
+          isAudioEnabled={isAudioEnabled}
+          isVideoEnabled={isVideoEnabled}
+          toggleAudio={toggleAudio}
+          toggleVideo={toggleVideo}
+          onLeaveRoom={leaveRoom}
         />
       )}
     </div>
