@@ -57,36 +57,39 @@ export default function TelemedicinePage() {
         const response = await fetch("/api/schedules");
         const data = await response.json();
         setSchedules(data);
-  
+
         const currentTime = new Date();
 
         // Check for upcoming meetings
         const upcomingMeeting = data.find((schedule) => {
           const meetingTimeUTC = new Date(schedule.meetingDateTime);
-          const localMeetingTime = toZonedTime(meetingTimeUTC, schedule.timeZone); // Convert to user's timezone
+          const localMeetingTime = toZonedTime(
+            meetingTimeUTC,
+            schedule.timeZone
+          ); // Convert to user's timezone
           const timeDiff = localMeetingTime.getTime() - currentTime.getTime();
           return (
-            (schedule.patientClerkId === clerkId || schedule.doctorClerkId === clerkId) &&
+            (schedule.patientClerkId === clerkId ||
+              schedule.doctorClerkId === clerkId) &&
             timeDiff >= -30 * 60 * 1000 && // Show for 30 minutes after the start time
             timeDiff <= 5 * 60 * 1000 // Start showing 5 minutes before the meeting
           );
         });
-  
+
         setUpcomingMeeting(upcomingMeeting || null);
       } catch (error) {
         console.error("Error fetching schedules:", error);
       }
     };
-  
+
     fetchSchedulesAndCheckMeetings();
     const intervalId = setInterval(fetchSchedulesAndCheckMeetings, 10000); // Check every 10 seconds
-  
+
     return () => clearInterval(intervalId);
   }, [clerkId]);
-  
 
   const handleJoinMeeting = () => {
-    router.push('/temp');
+    router.push("/temp");
   };
 
   const handleDoctorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -215,7 +218,12 @@ export default function TelemedicinePage() {
           >
             <h2 className="text-2xl font-semibold">Upcoming Meeting</h2>
             <p className="mt-2 text-lg">
-              Meeting Time: {format(new Date(upcomingMeeting.meetingDateTime), 'yyyy-MM-dd HH:mm:ss', { timeZone: upcomingMeeting.timeZone })}
+              Meeting Time:{" "}
+              {format(
+                new Date(upcomingMeeting.meetingDateTime),
+                "yyyy-MM-dd HH:mm:ss",
+                { timeZone: upcomingMeeting.timeZone }
+              )}
             </p>
             <button
               onClick={handleJoinMeeting}
