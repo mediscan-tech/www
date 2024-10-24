@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import Peer from "peerjs";
 import { Mic, MicOff, Video, VideoOff } from "lucide-react";
+import { AiOutlineAudio, AiOutlineAudioMuted } from "react-icons/ai";
+import { IoVideocamOutline, IoVideocamOffOutline } from "react-icons/io5";
 
 interface RoomProps {
   stream: MediaStream | null;
@@ -27,13 +29,17 @@ const Room: React.FC<RoomProps> = ({
   onLeaveRoom,
 }) => {
   const [peers, setPeers] = useState<Record<string, MediaStream>>({});
-  const userVideoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!stream || !peer || !socket) return;
 
-    if (userVideoRef.current) {
-      userVideoRef.current.srcObject = stream;
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+    if (videoRef2.current && stream) {
+      videoRef2.current.srcObject = stream;
     }
 
     socket.on("user:joined", ({ id, name }) => {
@@ -74,67 +80,35 @@ const Room: React.FC<RoomProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-4 text-2xl font-bold">Room: {roomId}</h1>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Your Video</h2>
-          <video
-            ref={userVideoRef}
-            muted
-            autoPlay
-            playsInline
-            className="w-full"
-          />
+      <div className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen flex items-start">
+        <video ref={videoRef} autoPlay muted playsInline className="absolute w-full h-full -z-10 bg-transparent" />
+        <video ref={videoRef2} autoPlay muted playsInline className="absolute w-full h-full -z-20 bg-transparent scale-150 blur-xl opacity-50" />
+      </div>
+      <div className="fixed bottom-0 right-0 left-0 h-20 w-full backdrop-blur-3xl flex bg-bg/80 border-t-2 border-bg-extralight p-4 justify-between space-x-4">
+        <button
+          onClick={onLeaveRoom}
+          className="w-48 px-8 h-full flex items-center justify-center border font-bold text-red-500 bg-red-500/10 border-red-500/80 rounded-lg p-2"
+        >
+          Leave Lobby
+        </button>
+
+        <div className="space-x-4">
+          <button onClick={toggleVideo} className={`h-full aspect-square border rounded-lg p-1 ${isVideoEnabled ? "border-primary bg-primary/10" : "border-red-500 bg-red-500/10"}`}>
+            {isVideoEnabled ?
+              <IoVideocamOutline className="w-full h-full text-primary" /> :
+              <IoVideocamOffOutline className="w-full h-full text-red-500" />
+            }
+          </button>
+
+          <button onClick={toggleAudio} className={`h-full aspect-square border rounded-lg p-1 ${isAudioEnabled ? "border-primary bg-primary/10" : "border-red-500 bg-red-500/10"}`}>
+            {isAudioEnabled ?
+              <AiOutlineAudio className="w-full h-full text-primary" /> :
+              <AiOutlineAudioMuted className="w-full h-full text-red-500" />
+            }
+          </button>
         </div>
-        {Object.entries(peers).map(([userId, stream]) => (
-          <div key={userId}>
-            <h2 className="mb-2 text-xl font-semibold">Peer Video</h2>
-            <video
-              autoPlay
-              playsInline
-              ref={(el) => {
-                if (el) el.srcObject = stream;
-              }}
-              className="w-full"
-            />
-          </div>
-        ))}
       </div>
-      {/* Control buttons for audio and video */}
-      <div className="mb-2 flex space-x-2 pt-12">
-        <button
-          onClick={toggleVideo}
-          className={`flex items-center rounded p-2 ${
-            isVideoEnabled ? "bg-blue-500" : "bg-red-500"
-          } text-white`}
-        >
-          {isVideoEnabled ? (
-            <Video className="mr-2 h-5 w-5" />
-          ) : (
-            <VideoOff className="mr-2 h-5 w-5" />
-          )}
-          {isVideoEnabled ? "Disable Video" : "Enable Video"}
-        </button>
-        <button
-          onClick={toggleAudio}
-          className={`flex items-center rounded p-2 ${
-            isAudioEnabled ? "bg-blue-500" : "bg-red-500"
-          } text-white`}
-        >
-          {isAudioEnabled ? (
-            <Mic className="mr-2 h-5 w-5" />
-          ) : (
-            <MicOff className="mr-2 h-5 w-5" />
-          )}
-          {isAudioEnabled ? "Mute Audio" : "Unmute Audio"}
-        </button>
-      </div>
-      <button
-        onClick={onLeaveRoom} // Leave room button
-        className="mt-4 w-1/2 rounded bg-red-500 p-2 text-white"
-      >
-        Leave Room
-      </button>
+
     </div>
   );
 };
