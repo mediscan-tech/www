@@ -10,9 +10,21 @@ export default function AIModelsHero() {
   return (
     <div className="relative flex flex-col h-screen w-screen items-center justify-center">
       <div className="pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip">
-        <div className="absolute h-[100vh] w-[100vw] scale-125">
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            ease: "easeInOut",
+            duration: 2,
+            delay: 0,
+          }}
+          className="absolute h-[100vh] w-[100vw] scale-125">
           <Spline scene="https://prod.spline.design/z1gEIeKXgTijNQTE/scene.splinecode" />
-        </div>
+        </motion.div>
       </div>
       <div className="absolute flex h-screen w-screen flex-col items-center justify-center">
         <motion.h1
@@ -69,10 +81,10 @@ export default function AIModelsHero() {
           delay: 2,
         }}
         className="relative h-12 w-48"
-        onClick={() => router.push("/schedule")}
+        onClick={() => router.push("/ai-models/self-diagnose")}
       >
         <CardSkeleton className="absolute bottom-16 mt-6 flex items-center justify-center space-x-1 whitespace-nowrap rounded-lg px-6 py-2 pr-4 font-semibold text-text">
-          Start Connecting <FaLongArrowAltRight className="h-4 w-4" />
+          Self-Diagnose <FaLongArrowAltRight className="h-4 w-4" />
         </CardSkeleton>
       </motion.button>
     </div >

@@ -1,5 +1,6 @@
 import CardSkeleton from "@/components/ui/card-skeleton";
 import Hero from "./components/hero";
+import DirectoryPage from "../directory/page";
 
 export default function Homepage() {
   return (
@@ -7,13 +8,11 @@ export default function Homepage() {
       <div className="flex flex-col items-center ">
         <Hero />
 
-        {/* <div className="h-[80vh] w-full max-w-7xl mt-32 grid grid-cols-3 grid-rows-1 gap-4">
-          <CardSkeleton className="w-full h-full" children={""} />
-          <CardSkeleton className="w-full h-full" children={""} />
-          <CardSkeleton className="w-full h-full" children={""} />
-        </div> */}
+        <h1 className="text-6xl font-bold translate-y-24 text-text-light">Our Features</h1>
 
-        <div className="h-screen"></div>
+        <DirectoryPage />
+
+        <div className="h-[20vh]"></div>
       </div>
     </>
   );
