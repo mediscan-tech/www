@@ -107,7 +107,7 @@ export default function TelemedicinePage() {
             (schedule.patientClerkId === clerkId ||
               schedule.doctorClerkId === clerkId) &&
             timeDiff >= -30 * 60 * 1000 && // Show for 30 minutes after the start time
-            timeDiff <= 500000 * 60 * 1000 // Start showing 5 minutes before the meeting
+            timeDiff <= 5 * 60 * 1000 // Start showing 5 minutes before the meeting
           );
         });
 
