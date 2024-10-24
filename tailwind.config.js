@@ -25,9 +25,9 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: '100vw', // add required value here
-          }
-        }
+            maxWidth: "100vw", // add required value here
+          },
+        },
       },
       colors: {
         bg: {
@@ -87,7 +87,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), addVariablesForColors, require('@tailwindcss/typography'),],
+  plugins: [
+    require("tailwindcss-animate"),
+    addVariablesForColors,
+    require("@tailwindcss/typography"),
+  ],
 };
 
 function addVariablesForColors({ addBase, theme }) {

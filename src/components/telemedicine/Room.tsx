@@ -80,35 +80,62 @@ const Room: React.FC<RoomProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen flex items-start">
-        <video ref={videoRef} autoPlay muted playsInline className="absolute w-full h-full -z-10 bg-transparent" />
-        <video ref={videoRef2} autoPlay muted playsInline className="absolute w-full h-full -z-20 bg-transparent scale-150 blur-xl opacity-50" />
+      <div className="fixed bottom-0 left-0 right-0 top-0 flex h-screen w-screen items-start">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          className="absolute -z-10 h-full w-full bg-transparent"
+        />
+        <video
+          ref={videoRef2}
+          autoPlay
+          muted
+          playsInline
+          className="absolute -z-20 h-full w-full scale-150 bg-transparent opacity-50 blur-xl"
+        />
       </div>
-      <div className="fixed bottom-0 right-0 left-0 h-20 w-full backdrop-blur-3xl flex bg-bg/80 border-t-2 border-bg-extralight p-4 justify-between space-x-4">
+      <div className="fixed bottom-0 left-0 right-0 flex h-20 w-full justify-between space-x-4 border-t-2 border-bg-extralight bg-bg/80 p-4 backdrop-blur-3xl">
         <button
           onClick={onLeaveRoom}
-          className="w-48 px-8 h-full flex items-center justify-center border font-bold text-red-500 bg-red-500/10 border-red-500/80 rounded-lg p-2"
+          className="flex h-full w-48 items-center justify-center rounded-lg border border-red-500/80 bg-red-500/10 p-2 px-8 font-bold text-red-500"
         >
           Leave Lobby
         </button>
 
         <div className="space-x-4">
-          <button onClick={toggleVideo} className={`h-full aspect-square border rounded-lg p-1 ${isVideoEnabled ? "border-primary bg-primary/10" : "border-red-500 bg-red-500/10"}`}>
-            {isVideoEnabled ?
-              <IoVideocamOutline className="w-full h-full text-primary" /> :
-              <IoVideocamOffOutline className="w-full h-full text-red-500" />
-            }
+          <button
+            onClick={toggleVideo}
+            className={`aspect-square h-full rounded-lg border p-1 ${
+              isVideoEnabled
+                ? "border-primary bg-primary/10"
+                : "border-red-500 bg-red-500/10"
+            }`}
+          >
+            {isVideoEnabled ? (
+              <IoVideocamOutline className="h-full w-full text-primary" />
+            ) : (
+              <IoVideocamOffOutline className="h-full w-full text-red-500" />
+            )}
           </button>
 
-          <button onClick={toggleAudio} className={`h-full aspect-square border rounded-lg p-1 ${isAudioEnabled ? "border-primary bg-primary/10" : "border-red-500 bg-red-500/10"}`}>
-            {isAudioEnabled ?
-              <AiOutlineAudio className="w-full h-full text-primary" /> :
-              <AiOutlineAudioMuted className="w-full h-full text-red-500" />
-            }
+          <button
+            onClick={toggleAudio}
+            className={`aspect-square h-full rounded-lg border p-1 ${
+              isAudioEnabled
+                ? "border-primary bg-primary/10"
+                : "border-red-500 bg-red-500/10"
+            }`}
+          >
+            {isAudioEnabled ? (
+              <AiOutlineAudio className="h-full w-full text-primary" />
+            ) : (
+              <AiOutlineAudioMuted className="h-full w-full text-red-500" />
+            )}
           </button>
         </div>
       </div>
-
     </div>
   );
 };

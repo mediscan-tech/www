@@ -20,8 +20,8 @@ export default function Navbar({ className }: { className?: string }) {
 
   return (
     <>
-      <div className="fixed inset-x-0 top-4 z-50 mx-auto px-4 w-full h-[72px]">
-        <div className="w-full h-full rounded-2xl backdrop-blur-sm"></div>
+      <div className="fixed inset-x-0 top-4 z-50 mx-auto h-[72px] w-full px-4">
+        <div className="h-full w-full rounded-2xl backdrop-blur-sm"></div>
       </div>
       <motion.div
         initial={{
@@ -34,10 +34,7 @@ export default function Navbar({ className }: { className?: string }) {
           ease: "easeInOut",
           duration: 1,
         }}
-        className={cn(
-          "fixed inset-x-0 top-4 z-50 mx-auto px-4",
-          className
-        )}
+        className={cn("fixed inset-x-0 top-4 z-50 mx-auto px-4", className)}
       >
         <Menu setActive={setActive}>
           {/* Left Side: Logo and Links */}
@@ -72,7 +69,7 @@ export default function Navbar({ className }: { className?: string }) {
           {/* Right Side: Get Started Button and Clerk Authentication */}
           <div className="flex items-center space-x-4">
             <Link href={"/directory"}>
-              <div className="rounded-xl border border-primary/80 bg-primar/5 px-8 py-2 text-sm font-medium text-primary">
+              <div className="bg-primar/5 rounded-xl border border-primary/80 px-8 py-2 text-sm font-medium text-primary">
                 Get Started!
               </div>
             </Link>

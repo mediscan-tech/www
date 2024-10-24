@@ -44,9 +44,12 @@ export default function TelemedicinePage() {
   const [userType, setUserType] = useState<"doctor" | "patient" | null>(null);
   const userId = user?.id;
   const [doctorEmail, setDoctorEmail] = useState<string | null>(null);
-  const [doctorProfilePicture, setDoctorProfilePicture] = useState<string | null>(null);
+  const [doctorProfilePicture, setDoctorProfilePicture] = useState<
+    string | null
+  >(null);
 
-  const userEmail = user?.emailAddresses?.[0]?.emailAddress || "No email available";
+  const userEmail =
+    user?.emailAddresses?.[0]?.emailAddress || "No email available";
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -62,14 +65,18 @@ export default function TelemedicinePage() {
     fetchDoctors();
   }, []);
 
-  const handleDoctorChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDoctorChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedName = event.target.value;
     const doctor = doctors.find((doc) => doc.name === selectedName);
     setSelectedDoctor(doctor || null);
 
     if (doctor) {
       try {
-        const response = await fetch(`/api/getDoctorInfo?clerkId=${doctor.clerk_id}`);
+        const response = await fetch(
+          `/api/getDoctorInfo?clerkId=${doctor.clerk_id}`
+        );
         const data = await response.json();
         setDoctorEmail(data.email);
         setDoctorProfilePicture(data.profilePicture);
@@ -133,51 +140,58 @@ export default function TelemedicinePage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center py-[104px] justify-center">
-
+    <div className="flex min-h-screen w-full flex-col items-center justify-center py-[104px]">
       {upcomingMeeting && (
         <>
           <CardSkeleton className="w-full max-w-md p-6">
-            <div
-              className="text-center"
-            >
-              <h1 className="text-center text-2xl font-bold text-text-light mb-2">
+            <div className="text-center">
+              <h1 className="mb-2 text-center text-2xl font-bold text-text-light">
                 Upcoming Appointment
               </h1>
 
-              <div className="w-full flex flex-col items-center">
-                <div className="px-3 py-1 border border-bg-extralight bg-bg-light w-fit rounded-full flex justify-center items-center">{roomID} <button onClick={() => navigator.clipboard.writeText(roomID)} className="pl-1"><RiFileCopyLine className="w-5 h-5" /></button></div>
+              <div className="flex w-full flex-col items-center">
+                <div className="flex w-fit items-center justify-center rounded-full border border-bg-extralight bg-bg-light px-3 py-1">
+                  {roomID}{" "}
+                  <button
+                    onClick={() => navigator.clipboard.writeText(roomID)}
+                    className="pl-1"
+                  >
+                    <RiFileCopyLine className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
-              <p className="text-sm mt-2">You have an appointment scheduled with {clerkId === upcomingMeeting.patientClerkId ? (
-                <>Dr. {upcomingMeeting.doctorName}</>
-              ) : (
-                <>{upcomingMeeting.patientName}</>
-              )} at {new Date(upcomingMeeting.meetingDateTime).toLocaleString()}. Please copy the above room code and proceed to the join meeting page.</p>
+              <p className="mt-2 text-sm">
+                You have an appointment scheduled with{" "}
+                {clerkId === upcomingMeeting.patientClerkId ? (
+                  <>Dr. {upcomingMeeting.doctorName}</>
+                ) : (
+                  <>{upcomingMeeting.patientName}</>
+                )}{" "}
+                at {new Date(upcomingMeeting.meetingDateTime).toLocaleString()}.
+                Please copy the above room code and proceed to the join meeting
+                page.
+              </p>
 
               {/* Join Meeting button */}
               <button
                 onClick={handleJoinMeeting}
-                className="mt-4 rounded-lg bg-primary/10 px-6 py-1.5 text-primary font-bold border border-primary/80"
+                className="mt-4 rounded-lg border border-primary/80 bg-primary/10 px-6 py-1.5 font-bold text-primary"
               >
                 Join Meeting
               </button>
             </div>
           </CardSkeleton>
-          <div className="w-full h-px bg-bg-extralight max-w-lg my-8"></div>
+          <div className="my-8 h-px w-full max-w-lg bg-bg-extralight"></div>
         </>
       )}
 
       <CardSkeleton className="w-full max-w-md p-6">
-        <h1 className="text-center text-2xl font-bold text-text-light mb-4">
+        <h1 className="mb-4 text-center text-2xl font-bold text-text-light">
           Schedule Virtual Appointment
         </h1>
 
         <label>Select a doctor</label>
-        <select
-          id="doctor-select"
-          onChange={handleDoctorChange}
-          className=""
-        >
+        <select id="doctor-select" onChange={handleDoctorChange} className="">
           <option value="">-- Choose a Doctor --</option>
           {doctors.map((doctor, index) => (
             <option key={index} value={doctor.name}>
@@ -185,50 +199,60 @@ export default function TelemedicinePage() {
             </option>
           ))}
         </select>
-        {
-          selectedDoctor && selectedDoctor.name && doctorEmail ? (
-            <>
-              {!showDateTimePicker ? (
-                <button
-                  onClick={handleScheduleMeeting}
-                  className="mt-4 w-full rounded-lg bg-primary/10 border-primary/80 p-2 text-primary font-bold border"
-                >
-                  Schedule with Dr. {selectedDoctor.name}
-                </button>
-              ) : (
-                <div />
-              )}
-            </>
-          ) : (
-            <div></div>
-          )
-        }
+        {selectedDoctor && selectedDoctor.name && doctorEmail ? (
+          <>
+            {!showDateTimePicker ? (
+              <button
+                onClick={handleScheduleMeeting}
+                className="mt-4 w-full rounded-lg border border-primary/80 bg-primary/10 p-2 font-bold text-primary"
+              >
+                Schedule with Dr. {selectedDoctor.name}
+              </button>
+            ) : (
+              <div />
+            )}
+          </>
+        ) : (
+          <div></div>
+        )}
       </CardSkeleton>
 
-      {
-        doctorProfilePicture && selectedDoctor && doctorEmail ?
-          <CardSkeleton className="w-full max-w-md p-6 mt-4 flex items-center">
-            <img
-              src={doctorProfilePicture}
-              alt={`${selectedDoctor.name}'s profile`}
-              className="w-24 h-full rounded-2xl"
-            />
-            <div className="w-full pl-6">
-              <h1 className="text-xl font-bold text-text-light mb-1">Dr. {selectedDoctor.name}</h1>
-              <p className="text-sm mb-2">This doctor studied {selectedDoctor.degree} and currently works at {selectedDoctor.practiceLocation}.</p>
-              <div className="flex space-x-1 items-center">
-                <MdOutlineMailOutline className="w-4 h-4 text-text " />
-                <a target="_blank" href={`mailto:${doctorEmail}`} className="text-xs">{doctorEmail}</a>
-              </div>
+      {doctorProfilePicture && selectedDoctor && doctorEmail ? (
+        <CardSkeleton className="mt-4 flex w-full max-w-md items-center p-6">
+          <img
+            src={doctorProfilePicture}
+            alt={`${selectedDoctor.name}'s profile`}
+            className="h-full w-24 rounded-2xl"
+          />
+          <div className="w-full pl-6">
+            <h1 className="mb-1 text-xl font-bold text-text-light">
+              Dr. {selectedDoctor.name}
+            </h1>
+            <p className="mb-2 text-sm">
+              This doctor studied {selectedDoctor.degree} and currently works at{" "}
+              {selectedDoctor.practiceLocation}.
+            </p>
+            <div className="flex items-center space-x-1">
+              <MdOutlineMailOutline className="h-4 w-4 text-text " />
+              <a
+                target="_blank"
+                href={`mailto:${doctorEmail}`}
+                className="text-xs"
+              >
+                {doctorEmail}
+              </a>
             </div>
-          </CardSkeleton> : <div />
-      }
+          </div>
+        </CardSkeleton>
+      ) : (
+        <div />
+      )}
 
       {showDateTimePicker && (
         <CardSkeleton className="mt-4 w-full max-w-md p-6">
           {/* DateTimePicker */}
           {showDateTimePicker && (
-            <div className="mt-4 -translate-y-2 flex flex-col items-center">
+            <div className="mt-4 flex -translate-y-2 flex-col items-center">
               <DateTimePickerV2
                 onDateChange={handleDateChange}
                 selectedDate={selectedDate}

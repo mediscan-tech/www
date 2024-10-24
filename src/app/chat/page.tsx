@@ -8,7 +8,8 @@ import { IoPerson } from "react-icons/io5";
 import { useSearchParams } from "next/navigation";
 
 export default function DiagnosisFromSymptoms() {
-  const { messages, input, handleInputChange, handleSubmit, setInput } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, setInput } =
+    useChat();
 
   const messagesEndRef = useRef(null);
   const params = useSearchParams();
@@ -17,8 +18,8 @@ export default function DiagnosisFromSymptoms() {
 
   useEffect(() => {
     let dataString = "";
-    params.keys().forEach(key => {
-      dataString += `${key}: ${params.get(key)}. `
+    params.keys().forEach((key) => {
+      dataString += `${key}: ${params.get(key)}. `;
     });
     setInput(dataString);
   }, []);
@@ -43,21 +44,35 @@ export default function DiagnosisFromSymptoms() {
 
   return (
     <>
-      <div className="h-screen w-screen py-[88px] relative">
-        <div className="fixed top-0 right-0 left-0 h-20 bg-bg z-20"></div>
-        <div className="fixed bottom-0 right-0 left-0 h-20 bg-bg z-10"></div>
-        <div className="w-full flex flex-col space-y-8 items-center py-12 pb-32">
-          {messages.slice(1).map(m => (
-            <div key={m.id} className="w-full flex flex-col items-center  px-4 pl-[72px] ">
-              <div className="w-full max-w-6xl relative ">
-                <div className="absolute -translate-x-[56px] ">{
-                  m.role == "user" ?
-                    <div className="border border-bg-extralight bg-bg-light rounded-full flex items-center justify-center p-2 w-10 h-10"><IoPerson className="w-full h-full" color="#14616e" /></div> :
-                    <Logo backgroundColor="transparent" className="w-10 p-1 border border-bg-extralight bg-bg-light rounded-full flex items-center justify-center" />
-                }</div>
-                <ReactMarkdown className="
-              prose min-h-10 h-full flex flex-col justify-center space-y-4 py-auto w-full prose-strong:text-text-light prose-ol:before:text-white prose-li:marker:text-text
-              ">{m.content}</ReactMarkdown>
+      <div className="relative h-screen w-screen py-[88px]">
+        <div className="fixed left-0 right-0 top-0 z-20 h-20 bg-bg"></div>
+        <div className="fixed bottom-0 left-0 right-0 z-10 h-20 bg-bg"></div>
+        <div className="flex w-full flex-col items-center space-y-8 py-12 pb-32">
+          {messages.slice(1).map((m) => (
+            <div
+              key={m.id}
+              className="flex w-full flex-col items-center  px-4 pl-[72px] "
+            >
+              <div className="relative w-full max-w-6xl ">
+                <div className="absolute -translate-x-[56px] ">
+                  {m.role == "user" ? (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-extralight bg-bg-light p-2">
+                      <IoPerson className="h-full w-full" color="#14616e" />
+                    </div>
+                  ) : (
+                    <Logo
+                      backgroundColor="transparent"
+                      className="flex w-10 items-center justify-center rounded-full border border-bg-extralight bg-bg-light p-1"
+                    />
+                  )}
+                </div>
+                <ReactMarkdown
+                  className="
+              py-auto prose flex h-full min-h-10 w-full flex-col justify-center space-y-4 prose-strong:text-text-light prose-ol:before:text-white prose-li:marker:text-text
+              "
+                >
+                  {m.content}
+                </ReactMarkdown>
               </div>
             </div>
           ))}
@@ -65,14 +80,17 @@ export default function DiagnosisFromSymptoms() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="w-full fixed flex justify-center bottom-0 pb-10 z-50">
+      <form
+        onSubmit={handleSubmit}
+        className="fixed bottom-0 z-50 flex w-full justify-center pb-10"
+      >
         <input
-          className="w-full max-w-7xl placeholder:text-text/60 h-12 mx-4 bg-bg-light/80 border border-bg-extralight rounded-full px-8 outline-none"
+          className="mx-4 h-12 w-full max-w-7xl rounded-full border border-bg-extralight bg-bg-light/80 px-8 outline-none placeholder:text-text/60"
           value={input}
           placeholder="Send a Message"
           onChange={handleInputChange}
         />
       </form>
     </>
-  )
+  );
 }

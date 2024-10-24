@@ -80,14 +80,12 @@ export default function OnboardingPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-black py-10">
       <CardSkeleton className="w-full max-w-md p-6">
-        <h1 className="text-center text-2xl font-bold text-text-light pb-4">
+        <h1 className="pb-4 text-center text-2xl font-bold text-text-light">
           Onboarding Form
         </h1>
 
         <div>
-          <label>
-            Are you signing up as a doctor or patient?
-          </label>
+          <label>Are you signing up as a doctor or patient?</label>
           <div>
             <select
               value={userType ?? ""}
@@ -111,7 +109,6 @@ export default function OnboardingPage() {
                   placeholder="Bob Joe"
                   type="text"
                   {...register("name")}
-
                 />
                 {errors.name && (
                   <p className="text-red-500">
@@ -128,7 +125,6 @@ export default function OnboardingPage() {
                       placeholder="Bachelor of Dental Surgery"
                       type="text"
                       {...register("degree")}
-
                     />
                     {errors.degree && (
                       <p className="text-red-500">
@@ -143,7 +139,6 @@ export default function OnboardingPage() {
                       placeholder="Mercy Hospital St. Louis"
                       type="text"
                       {...register("practiceLocation")}
-
                     />
                     {errors.practiceLocation && (
                       <p className="text-red-500">
@@ -156,21 +151,18 @@ export default function OnboardingPage() {
 
               {userType === "patient" && (
                 <div>
-                  <label>
-                    Pre-existing Health Condition (Optional)
-                  </label>
+                  <label>Pre-existing Health Condition (Optional)</label>
                   <input
                     placeholder="Ex: Melanoma, Gingivitis, Pitting"
                     type="text"
                     {...register("healthCondition")}
-
                   />
                 </div>
               )}
 
               <button
                 type="submit"
-                className="bg-primary/10 border border-primary/80 font-bold rounded-lg mt-2 px-6 py-2 text-primary"
+                className="mt-2 rounded-lg border border-primary/80 bg-primary/10 px-6 py-2 font-bold text-primary"
               >
                 Submit
               </button>

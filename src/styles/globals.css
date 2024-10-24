@@ -74,16 +74,16 @@
   ul,
   ol,
   li {
-    @apply text-[16px] text-text font-medium;
+    @apply text-[16px] font-medium text-text;
   }
 
   input,
   select,
   textarea {
-    @apply bg-bg-light w-full rounded-lg px-2 py-1.5 border border-bg-extralight outline-none placeholder:text-text/50
+    @apply w-full rounded-lg border border-bg-extralight bg-bg-light px-2 py-1.5 outline-none placeholder:text-text/50;
   }
 
   label {
-    @apply text-sm pl-1
+    @apply pl-1 text-sm;
   }
 }

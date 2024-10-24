@@ -39,7 +39,7 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="/favicon.svg" style={{ color: "red" }} />
       <body
-        className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} bg-bg font-geist tracking-tight text-text antialiased overflow-y-auto overflow-x-clip`}
+        className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} overflow-y-auto overflow-x-clip bg-bg font-geist tracking-tight text-text antialiased`}
       >
         <ClerkProvider>
           <div className="absolute z-20">

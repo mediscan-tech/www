@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import CardSkeleton from "@/components/ui/card-skeleton";
 
-// Zod Schema 
+// Zod Schema
 const formSchema = z.object({
   age: z
     .string()
@@ -17,17 +17,23 @@ const formSchema = z.object({
     .refine((val) => val >= 0 && val <= 120, {
       message: "Age must be between 0 and 120",
     }),
-  gender: z.enum(["Male", "Female", "Other"], { required_error: "Gender is required" }),
+  gender: z.enum(["Male", "Female", "Other"], {
+    required_error: "Gender is required",
+  }),
   heightFeet: z
     .string()
     .min(1, "Height (feet) is required")
     .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val >= 0 && val <= 8, { message: "Feet must be a number between 0 and 8" }),
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 8, {
+      message: "Feet must be a number between 0 and 8",
+    }),
   heightInches: z
     .string()
     .min(1, "Height (inches) is required")
     .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val >= 0 && val <= 11, { message: "Inches must be a number between 0 and 11" }),
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 11, {
+      message: "Inches must be a number between 0 and 11",
+    }),
   weight: z
     .string()
     .min(1, "Weight is required")
@@ -41,7 +47,9 @@ const formSchema = z.object({
   conscious: z
     .string()
     .transform((val) => val === "true")
-    .refine((val) => typeof val === "boolean", { message: "Conscious must be a boolean value" }),
+    .refine((val) => typeof val === "boolean", {
+      message: "Conscious must be a boolean value",
+    }),
   firstAid: z.string().optional(),
   currentSymptoms: z.string().min(1, "Current symptoms are required"),
   symptomDuration: z.string().min(1, "Duration of symptom is required"),
@@ -66,12 +74,11 @@ export default function DiagnosisForm() {
 
   const onSubmit = async (data: any) => {
     try {
-
       const params = new URLSearchParams();
 
       console.log(Object.keys(data));
 
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         params.append(key, data[key]);
       });
 
@@ -80,7 +87,6 @@ export default function DiagnosisForm() {
       // setTimeout(() => {
       //   router.push("/chat");
       // }, 2000);
-
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
@@ -91,11 +97,12 @@ export default function DiagnosisForm() {
     }
   };
 
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-black py-10 pt-32">
       <CardSkeleton className="w-full max-w-md p-6">
-        <h1 className="mb-4 text-center text-2xl font-bold text-white">Diagnosis By Symptom</h1>
+        <h1 className="mb-4 text-center text-2xl font-bold text-white">
+          Diagnosis By Symptom
+        </h1>
         <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4">
             <div>
@@ -105,23 +112,27 @@ export default function DiagnosisForm() {
                 placeholder="Enter your age"
                 {...register("age")}
               />
-              {errors.age?.message && <p className="text-red-500">{(errors.age as any)?.message}</p>}
+              {errors.age?.message && (
+                <p className="text-red-500">{(errors.age as any)?.message}</p>
+              )}
             </div>
 
             <div>
               <label>Gender</label>
-              <select
-                {...register("gender")}
-              >
+              <select {...register("gender")}>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
               </select>
-              {errors.gender?.message && <p className="text-red-500">{(errors.gender as any)?.message}</p>}
+              {errors.gender?.message && (
+                <p className="text-red-500">
+                  {(errors.gender as any)?.message}
+                </p>
+              )}
             </div>
 
             <div>
-              <label >Height</label>
+              <label>Height</label>
               <div className="flex items-center gap-2">
                 <input
                   type="number"
@@ -135,8 +146,16 @@ export default function DiagnosisForm() {
                   {...register("heightInches")}
                 />
               </div>
-              {errors.heightFeet?.message && <p className="text-red-500">{(errors.heightFeet as any)?.message}</p>}
-              {errors.heightInches?.message && <p className="text-red-500">{(errors.heightInches as any)?.message}</p>}
+              {errors.heightFeet?.message && (
+                <p className="text-red-500">
+                  {(errors.heightFeet as any)?.message}
+                </p>
+              )}
+              {errors.heightInches?.message && (
+                <p className="text-red-500">
+                  {(errors.heightInches as any)?.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -146,7 +165,11 @@ export default function DiagnosisForm() {
                 placeholder="Enter your weight in pounds"
                 {...register("weight")}
               />
-              {errors.weight?.message && <p className="text-red-500">{(errors.weight as any)?.message}</p>}
+              {errors.weight?.message && (
+                <p className="text-red-500">
+                  {(errors.weight as any)?.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -156,7 +179,9 @@ export default function DiagnosisForm() {
                 {...register("injuryDescription")}
               />
               {errors.injuryDescription?.message && (
-                <p className="text-red-500">{(errors.injuryDescription as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.injuryDescription as any)?.message}
+                </p>
               )}
             </div>
 
@@ -168,20 +193,22 @@ export default function DiagnosisForm() {
                 {...register("injuryDuration")}
               />
               {errors.injuryDuration?.message && (
-                <p className="text-red-500">{(errors.injuryDuration as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.injuryDuration as any)?.message}
+                </p>
               )}
             </div>
 
             <div>
               <label>Is the person conscious?</label>
-              <select
-                {...register("conscious")}
-              >
+              <select {...register("conscious")}>
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
               {errors.conscious?.message && (
-                <p className="text-red-500">{(errors.conscious as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.conscious as any)?.message}
+                </p>
               )}
             </div>
 
@@ -190,10 +217,11 @@ export default function DiagnosisForm() {
               <textarea
                 placeholder="Describe any first aid administered"
                 {...register("firstAid")}
-
               />
               {errors.firstAid?.message && (
-                <p className="text-red-500">{(errors.firstAid as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.firstAid as any)?.message}
+                </p>
               )}
             </div>
 
@@ -202,10 +230,11 @@ export default function DiagnosisForm() {
               <textarea
                 placeholder="List current symptoms"
                 {...register("currentSymptoms")}
-
               />
               {errors.currentSymptoms?.message && (
-                <p className="text-red-500">{(errors.currentSymptoms as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.currentSymptoms as any)?.message}
+                </p>
               )}
             </div>
 
@@ -215,25 +244,25 @@ export default function DiagnosisForm() {
                 type="text"
                 placeholder="e.g., 3 days"
                 {...register("symptomDuration")}
-
               />
               {errors.symptomDuration?.message && (
-                <p className="text-red-500">{(errors.symptomDuration as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.symptomDuration as any)?.message}
+                </p>
               )}
             </div>
 
             <div>
               <label>Severity of Symptom</label>
-              <select
-                {...register("symptomSeverity")}
-
-              >
+              <select {...register("symptomSeverity")}>
                 <option value="Mild">Mild</option>
                 <option value="Moderate">Moderate</option>
                 <option value="Severe">Severe</option>
               </select>
               {errors.symptomSeverity?.message && (
-                <p className="text-red-500">{(errors.symptomSeverity as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.symptomSeverity as any)?.message}
+                </p>
               )}
             </div>
 
@@ -242,10 +271,11 @@ export default function DiagnosisForm() {
               <textarea
                 placeholder="Describe family medical history (if relevant)"
                 {...register("familyHistory")}
-
               />
               {errors.familyHistory?.message && (
-                <p className="text-red-500">{(errors.familyHistory as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.familyHistory as any)?.message}
+                </p>
               )}
             </div>
 
@@ -254,16 +284,17 @@ export default function DiagnosisForm() {
               <textarea
                 placeholder="List current medications"
                 {...register("currentMedications")}
-
               />
               {errors.currentMedications?.message && (
-                <p className="text-red-500">{(errors.currentMedications as any)?.message}</p>
+                <p className="text-red-500">
+                  {(errors.currentMedications as any)?.message}
+                </p>
               )}
             </div>
 
             <button
               type="submit"
-              className=" w-full rounded-lg text-primary font-bold border py-2 bg-primary/10 border-primary/80 "
+              className=" w-full rounded-lg border border-primary/80 bg-primary/10 py-2 font-bold text-primary "
             >
               Recieve Diagnosis
             </button>

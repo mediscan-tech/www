@@ -97,8 +97,9 @@ export function DateTimePickerV2({
       if (response.ok) {
         toast({
           title: "Success! 🎉",
-          description: `Meeting scheduled with ${selectedDoctor.name
-            } at: ${format(data.datetime, "PPP, p")}. Room ID: ${roomID}`,
+          description: `Meeting scheduled with ${
+            selectedDoctor.name
+          } at: ${format(data.datetime, "PPP, p")}. Room ID: ${roomID}`,
           duration: 10000,
         });
         // Automatically redirect to /directory after a short delay
@@ -137,14 +138,14 @@ export function DateTimePickerV2({
                       <FormControl>
                         <Button
                           variant={"outline"}
-                          className="border rounded-lg border-bg-extralight bg-bg-light w-64"
+                          className="w-64 rounded-lg border border-bg-extralight bg-bg-light"
                         >
                           {field.value ? (
                             `${format(field.value, "PPP")}`
                           ) : (
                             <span>Pick a date</span>
                           )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-text-light" />
+                          <CalendarIcon className="ml-auto h-4 w-4 text-text-light opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -199,7 +200,7 @@ export function DateTimePickerV2({
                         }
                       }}
                     >
-                      <SelectTrigger className="w-[120px] h-full border border-bg-extralight rounded-lg bg-bg-light">
+                      <SelectTrigger className="h-full w-[120px] rounded-lg border border-bg-extralight bg-bg-light">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-white">
@@ -232,8 +233,17 @@ export function DateTimePickerV2({
               )}
             />
           </div>
-          <Button className="mt-4 w-full border border-primary/80 font-bold text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-all duration-300" type="submit">Schedule Appointment</Button>
-          <p className="text-xs pt-1 text-center">By clicking this button, you are scheduling a virtual appointment with {selectedDoctor.name} at {selectedDate ? selectedDate.toLocaleString() : ""}.</p>
+          <Button
+            className="mt-4 w-full rounded-lg border border-primary/80 bg-primary/10 font-bold text-primary transition-all duration-300 hover:bg-primary/20"
+            type="submit"
+          >
+            Schedule Appointment
+          </Button>
+          <p className="pt-1 text-center text-xs">
+            By clicking this button, you are scheduling a virtual appointment
+            with {selectedDoctor.name} at{" "}
+            {selectedDate ? selectedDate.toLocaleString() : ""}.
+          </p>
         </form>
       </Form>
     </>
