@@ -1,6 +1,5 @@
-// src/app/api/getDoctorEmail.ts
 import { NextResponse } from "next/server";
-import { clerkClient } from "@clerk/nextjs/server"; // Use the Clerk SDK for server-side operations
+import { clerkClient } from "@clerk/nextjs/server"; 
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -11,11 +10,11 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Fetch the user from Clerk using the Clerk SDK
     const user = await clerkClient.users.getUser(clerkId);
     const email = user?.emailAddresses?.[0]?.emailAddress;
+    const profilePicture = user?.imageUrl;
 
-    return NextResponse.json({ email });
+    return NextResponse.json({ email, profilePicture });
   } catch (error) {
     console.error("Error fetching user email:", error);
     return NextResponse.json(

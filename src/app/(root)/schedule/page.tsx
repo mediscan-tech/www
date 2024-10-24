@@ -42,6 +42,7 @@ export default function TelemedicinePage() {
   const [userType, setUserType] = useState<"doctor" | "patient" | null>(null);
   const userId = user?.id;
   const [doctorEmail, setDoctorEmail] = useState<string | null>(null);
+  const [doctorProfilePicture, setDoctorProfilePicture] = useState<string | null>(null); 
 
   const userEmail = user?.emailAddresses?.[0]?.emailAddress || "No email available";
 
@@ -66,10 +67,10 @@ export default function TelemedicinePage() {
 
     if (doctor) {
       try {
-        // Fetch the doctor's email using the Clerk ID
-        const response = await fetch(`/api/getDoctorEmail?clerkId=${doctor.clerk_id}`);
+        const response = await fetch(`/api/getDoctorInfo?clerkId=${doctor.clerk_id}`);
         const data = await response.json();
         setDoctorEmail(data.email);
+        setDoctorProfilePicture(data.profilePicture);
       } catch (error) {
         console.error("Error fetching doctor's email:", error);
       }
@@ -150,25 +151,34 @@ export default function TelemedicinePage() {
           ))}
         </select>
         {
-          selectedDoctor && selectedDoctor.name && doctorEmail ?
+          selectedDoctor && selectedDoctor.name && doctorEmail ? (
             <>
+              {/* Display the doctor's profile picture */}
+              {doctorProfilePicture && (
+                <img
+                  src={doctorProfilePicture}
+                  alt={`${selectedDoctor.name}'s profile`}
+                  className="w-24 h-24 rounded-full mt-2 mx-auto"
+                />
+              )}
               <p className="text-xs mt-2 pl-1">
                 {selectedDoctor.name} works at {selectedDoctor.practiceLocation} with a degree in {selectedDoctor.degree}. Contact {selectedDoctor.name} at {doctorEmail}.
               </p>
-              {!showDateTimePicker ?
+              {!showDateTimePicker ? (
                 <button
                   onClick={handleScheduleMeeting}
-                  className=" mt-4 w-full rounded-lg bg-primary/10 border-primary/80 p-2 text-primary font-bold border"
+                  className="mt-4 w-full rounded-lg bg-primary/10 border-primary/80 p-2 text-primary font-bold border"
                 >
                   Schedule with {selectedDoctor.name}
                 </button>
-                : <div />
-              }
+              ) : (
+                <div />
+              )}
             </>
-            : <div></div>
-
+          ) : (
+            <div></div>
+          )
         }
-
       </CardSkeleton>
 
       {showDateTimePicker && (
