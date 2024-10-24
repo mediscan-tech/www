@@ -6,6 +6,7 @@ import { DateTimePickerV2 } from "@/components/date-time";
 import { useRouter } from "next/navigation";
 import { useSession } from "@clerk/nextjs";
 import { format, toZonedTime } from "date-fns-tz";
+import CardSkeleton from "@/components/ui/card-skeleton";
 
 interface Doctor {
   clerk_id: string;
@@ -112,67 +113,29 @@ export default function TelemedicinePage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-start pb-20">
-      {" "}
-      <div className="w-full max-w-7xl px-4 pt-40">
-        <motion.div
-          initial={{ y: "25%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ease: "easeInOut", duration: 1 }}
-          className="mb-6 flex justify-center"
-        >
-          <IoDesktop className="h-24 w-24 text-teal-600" />
-        </motion.div>
+    <div className="flex min-h-screen w-full flex-col items-center justify-center">
+      <CardSkeleton className="w-full max-w-md  p-6">
+        <h1 className="text-center text-2xl font-bold text-text-light mb-6">
+          Schedule Virtual Appointment
+        </h1>
+        <label>Select a doctor</label>
 
-        <motion.h1
-          initial={{ y: "25%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ease: "easeInOut", duration: 1, delay: 0.1 }}
-          className="text-center text-6xl font-bold"
+        <select
+          id="doctor-select"
+          onChange={handleDoctorChange}
+          className=""
         >
-          Welcome to the Telemedicine Page
-        </motion.h1>
-
-        <motion.p
-          initial={{ y: "25%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ease: "easeInOut", duration: 1, delay: 0.3 }}
-          className="mt-4 text-center text-lg"
-        >
-          Here you can find doctors from our database, select one to have a
-          meeting with, and schedule a meeting time with them. They can answer
-          any questions you have or give you a free consultation!
-        </motion.p>
-
-        <motion.div
-          initial={{ y: "25%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ease: "easeInOut", duration: 1, delay: 0.5 }}
-          className="mt-8 flex flex-col items-center"
-        >
-          <label htmlFor="doctor-select" className="mb-4 text-xl font-semibold">
-            Select a Doctor:
-          </label>
-          <select
-            id="doctor-select"
-            onChange={handleDoctorChange}
-            className="rounded-md border border-gray-300 p-2 text-black"
-          >
-            <option value="">-- Choose a Doctor --</option>
-            {doctors.map((doctor, index) => (
-              <option key={index} value={doctor.name}>
-                {doctor.name}
-              </option>
-            ))}
-          </select>
-        </motion.div>
+          <option value="">-- Choose a Doctor --</option>
+          {doctors.map((doctor, index) => (
+            <option key={index} value={doctor.name}>
+              {doctor.name}
+            </option>
+          ))}
+        </select>
 
         {/* Doctor Details */}
         {selectedDoctor && (
-          <motion.div
-            initial={{ y: "25%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ ease: "easeInOut", duration: 1, delay: 0.7 }}
+          <div
             className="mt-8 text-center"
           >
             <h2 className="text-2xl font-semibold">{selectedDoctor.name}</h2>
@@ -189,12 +152,12 @@ export default function TelemedicinePage() {
             </p>
 
             {/* Schedule a Virtual Meeting button */}
-            <motion.button
+            <button
               onClick={handleScheduleMeeting}
               className="mt-4 rounded-md bg-green-500 p-2 text-white"
             >
               Schedule a Virtual Meeting with {selectedDoctor.name}
-            </motion.button>
+            </button>
 
             {/* DateTimePicker */}
             {showDateTimePicker && (
@@ -211,13 +174,10 @@ export default function TelemedicinePage() {
                 )}
               </div>
             )}
-          </motion.div>
+          </div>
         )}
         {upcomingMeeting && (
-          <motion.div
-            initial={{ y: "25%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ ease: "easeInOut", duration: 1 }}
+          <div
             className="mt-8 text-center"
           >
             <h2 className="text-2xl font-semibold">Upcoming Meeting</h2>
@@ -255,15 +215,15 @@ export default function TelemedicinePage() {
             )}
 
             {/* Join Meeting button */}
-            <motion.button
+            <button
               onClick={handleJoinMeeting}
               className="mt-4 rounded-md bg-blue-500 p-2 text-white"
             >
               Join Meeting
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
         )}
-      </div>
+      </CardSkeleton>
     </div>
   );
 }
