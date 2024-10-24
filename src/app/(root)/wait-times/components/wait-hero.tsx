@@ -25,7 +25,7 @@ export default function WaitTimesHero() {
           }}
           className="absolute h-[100vh] w-[100vw] scale-150"
         >
-          <Spline scene="https://prod.spline.design/u1caiztgiYlmyqcc/scene.splinecode" />
+          <Spline scene="/spline/circle.splinecode" />
         </motion.div>
       </div>
       <div className="absolute flex h-screen w-screen flex-col items-center justify-center">
