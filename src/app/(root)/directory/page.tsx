@@ -18,7 +18,7 @@ const elements: DirectoryElement[] = [
     title: "Skin Conditions & Disease",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-    icon: <GiHand className="h-full w-full" color="#14616e" />,
+    icon: <MdFace className="h-full w-full" color="#14616e" />,
   },
   {
     href: "/oral",
@@ -29,10 +29,10 @@ const elements: DirectoryElement[] = [
   },
   {
     href: "/hair",
-    title: "Hair & Scalp Conditions",
+    title: "Nail Conditions",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-    icon: <MdFace className="h-full w-full" color="#14616e" />,
+    icon: <GiHand className="h-full w-full" color="#14616e" />,
   },
   {
     href: "/diagnosis",
@@ -40,20 +40,6 @@ const elements: DirectoryElement[] = [
     description:
       "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     icon: <FaCommentMedical className="h-full w-full" color="#14616e" />,
-  },
-  {
-    href: "/diagnosis",
-    title: "Tailored First-Aid Advice",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-    icon: <BsFillBandaidFill className="h-full w-full" color="#14616e" />,
-  },
-  {
-    href: "/risk",
-    title: "Health Risk Prediction",
-    description:
-      "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-    icon: <PiHeartbeatFill className="h-full w-full" color="#14616e" />,
   },
   {
     href: "/wait",
