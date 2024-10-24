@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import Peer from "peerjs";
 import { useRouter } from "next/navigation";
+import { useMediaStream } from "@/hooks/useMediaStream";
 import Lobby from "@/components/telemedicine/Lobby";
 import Room from "@/components/telemedicine/Room";
-import { useMediaStream } from "@/hooks/useMediaStream";
 
 export default function TempVideoCall() {
   const [isLobby, setIsLobby] = useState(true);
@@ -60,12 +60,11 @@ export default function TempVideoCall() {
   };
 
   const leaveLobby = () => {
-    router.push("/telemedicine");
+    router.push("/schedule");
   };
 
   const leaveRoom = () => {
-    router.push("/telemedicine");
-    setInRoom(false);
+    router.refresh();
   };
 
   return (
