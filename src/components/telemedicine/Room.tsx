@@ -80,6 +80,21 @@ const Room: React.FC<RoomProps> = ({
 
   return (
     <div className="flex flex-col items-center">
+      <div className="fixed top-0 right-0 z-30">
+        {Object.entries(peers).map(([userId, stream]) => (
+          <div key={userId}>
+            <h2 className="mb-2 text-xl font-semibold">Peer Video</h2>
+            <video
+              autoPlay
+              playsInline
+              ref={(el) => {
+                if (el) el.srcObject = stream;
+              }}
+              className="w-full"
+            />
+          </div>
+        ))}
+      </div>
       <div className="fixed bottom-0 left-0 right-0 top-0 flex h-screen w-screen items-start">
         <video
           ref={videoRef}
@@ -107,11 +122,10 @@ const Room: React.FC<RoomProps> = ({
         <div className="space-x-4">
           <button
             onClick={toggleVideo}
-            className={`aspect-square h-full rounded-lg border p-1 ${
-              isVideoEnabled
-                ? "border-primary bg-primary/10"
-                : "border-red-500 bg-red-500/10"
-            }`}
+            className={`aspect-square h-full rounded-lg border p-1 ${isVideoEnabled
+              ? "border-primary bg-primary/10"
+              : "border-red-500 bg-red-500/10"
+              }`}
           >
             {isVideoEnabled ? (
               <IoVideocamOutline className="h-full w-full text-primary" />
@@ -122,11 +136,10 @@ const Room: React.FC<RoomProps> = ({
 
           <button
             onClick={toggleAudio}
-            className={`aspect-square h-full rounded-lg border p-1 ${
-              isAudioEnabled
-                ? "border-primary bg-primary/10"
-                : "border-red-500 bg-red-500/10"
-            }`}
+            className={`aspect-square h-full rounded-lg border p-1 ${isAudioEnabled
+              ? "border-primary bg-primary/10"
+              : "border-red-500 bg-red-500/10"
+              }`}
           >
             {isAudioEnabled ? (
               <AiOutlineAudio className="h-full w-full text-primary" />
