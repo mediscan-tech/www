@@ -61,10 +61,9 @@ export default function WaitTimesHero() {
             duration: 1,
             delay: 2,
           }}
-          className=" max-w-lg pt-8 text-center text-lg font-medium leading-6 text-text-light/80 drop-shadow-xl"
+          className="max-w-xl pt-8 text-center text-lg font-medium leading-6 text-text-light/80 drop-shadow-xl"
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id
-          posuere neque. Nulla non aliquet tellus.
+          Access accurate hospital wait times, updated regularly, near you.
         </motion.h2>
       </div>
       <motion.button

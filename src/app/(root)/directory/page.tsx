@@ -21,8 +21,25 @@ export default function DirectoryPage() {
               Telemedicine
             </h1>
             <p className="z-20 w-full px-8 text-center text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              lobortis augue vel massa pellentesque, a sodales ipsum rhoncus.{" "}
+              Schedule and join real time video consultations with doctors.{" "}
+            </p>
+          </CardSkeleton>
+        </button>
+        <button onClick={() => router.push("/ai-models/")}>
+          <CardSkeleton className="relative flex h-full w-full flex-col items-center justify-center overflow-clip bg-bg">
+            <Image
+              src="/images/ai-models.png"
+              alt=""
+              height="10000"
+              width="10000"
+              className="absolute h-full w-full scale-90 object-contain opacity-50"
+            ></Image>
+            <h1 className="z-20 flex items-center justify-center p-4 text-5xl font-extrabold">
+              Self-Diagnose
+            </h1>
+            <p className="z-20 w-full px-8 text-center text-sm">
+              Powerful AI Models that can detect disesaes along with an AI
+              powered chatbot.{" "}
             </p>
           </CardSkeleton>
         </button>
@@ -39,30 +56,10 @@ export default function DirectoryPage() {
               Wait Times
             </h1>
             <p className="z-20 w-full px-8 text-center text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              lobortis augue vel massa pellentesque, a sodales ipsum rhoncus.{" "}
+              Access accurate hospital wait times, updated regularly, near you.{" "}
             </p>
           </CardSkeleton>
         </button>
-        <button onClick={() => router.push("/ai-models/")}>
-          <CardSkeleton className="relative flex h-full w-full flex-col items-center justify-center overflow-clip bg-bg">
-            <Image
-              src="/images/ai-models.png"
-              alt=""
-              height="10000"
-              width="10000"
-              className="absolute h-full w-full  scale-90 object-contain opacity-50"
-            ></Image>
-            <h1 className="z-20 flex items-center justify-center p-4 text-5xl font-extrabold">
-              Self-Diagnose
-            </h1>
-            <p className="z-20 w-full px-8 text-center text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              lobortis augue vel massa pellentesque, a sodales ipsum rhoncus.{" "}
-            </p>
-          </CardSkeleton>
-        </button>
-
       </div>
     </div>
   );

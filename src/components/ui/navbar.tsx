@@ -75,9 +75,11 @@ export default function Navbar({ className }: { className?: string }) {
             </Link>
 
             {/* Clerk Authentication (SignIn or UserButton) */}
-            <div className="h-10 w-10">
+            <div className="h-10 ">
               <SignedOut>
-                <SignInButton mode="modal" />
+                <div className="flex h-full items-center justify-center whitespace-nowrap rounded-xl border border-primary/80 px-8 text-primary">
+                  <SignInButton mode="modal" />
+                </div>
               </SignedOut>
               <SignedIn>
                 <UserButton />

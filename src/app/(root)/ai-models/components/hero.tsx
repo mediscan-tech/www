@@ -8,7 +8,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 export default function AIModelsHero() {
   const router = useRouter();
   return (
-    <div className="relative flex flex-col h-screen w-screen items-center justify-center">
+    <div className="relative flex h-screen w-screen flex-col items-center justify-center">
       <div className="pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip">
         <motion.div
           initial={{
@@ -22,7 +22,8 @@ export default function AIModelsHero() {
             duration: 2,
             delay: 0,
           }}
-          className="absolute h-[100vh] w-[100vw] scale-125">
+          className="absolute h-[100vh] w-[100vw] scale-125"
+        >
           <Spline scene="https://prod.spline.design/z1gEIeKXgTijNQTE/scene.splinecode" />
         </motion.div>
       </div>
@@ -59,12 +60,11 @@ export default function AIModelsHero() {
             duration: 1,
             delay: 2,
           }}
-          className=" max-w-lg pt-8 text-center text-lg font-medium leading-6 text-text-light/80 drop-shadow-xl"
+          className="max-w-lg pt-8 text-center text-lg font-medium leading-6  text-text-light/80 drop-shadow-xl"
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id
-          posuere neque. Nulla non aliquet tellus.
+          Powerful AI Models that can detect disesaes along with an AI powered
+          chatbot
         </motion.h2>
-
       </div>
       <motion.div
         initial={{
@@ -80,7 +80,8 @@ export default function AIModelsHero() {
           duration: 1,
           delay: 2,
         }}
-        className="w-full absolute bottom-16 flex space-x-4 justify-center items-center">
+        className="absolute bottom-16 flex w-full items-center justify-center space-x-4"
+      >
         <button onClick={() => router.push("/diagnosis")}>
           <CardSkeleton className="flex w-48 items-center justify-center space-x-1 whitespace-nowrap rounded-lg px-6 py-2 font-semibold text-text">
             AI-Assistant
@@ -92,6 +93,6 @@ export default function AIModelsHero() {
           </CardSkeleton>
         </button>
       </motion.div>
-    </div >
+    </div>
   );
 }

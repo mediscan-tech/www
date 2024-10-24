@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center">
+    <div className="relative flex items-center justify-center w-screen h-screen">
       <div className="pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip">
         <div className="absolute h-[100vh] w-[100vw] scale-150">
           <Spline scene="/spline/hero.splinecode" />
         </div>
       </div>
-      <div className="absolute flex h-screen w-screen flex-col items-center justify-center">
+      <div className="absolute flex flex-col items-center justify-center w-screen h-screen">
         <motion.h1
           initial={{
             y: "50%",
@@ -43,10 +43,9 @@ export default function Hero() {
             duration: 1,
             delay: 2,
           }}
-          className=" max-w-lg pt-8 text-center text-lg font-medium leading-6 text-text-light/80 drop-shadow-xl"
+          className="max-w-xl pt-8 text-lg font-medium leading-6 text-center text-text-light/80 drop-shadow-xl"
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id
-          posuere neque. Nulla non aliquet tellus.
+          Easily self-diagnose with our AI-powered chatbot and disease detection models, setup video conferences with doctors, and get updated and accurate wait times of hospitals in your area.
         </motion.h2>
       </div>
     </div>
