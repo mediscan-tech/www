@@ -116,7 +116,7 @@ const Room: React.FC<RoomProps> = ({
           onClick={onLeaveRoom}
           className="flex h-full w-48 items-center justify-center rounded-lg border border-red-500/80 bg-red-500/10 p-2 px-8 font-bold text-red-500"
         >
-          Leave Lobby
+          Leave Room
         </button>
 
         <div className="space-x-4">
