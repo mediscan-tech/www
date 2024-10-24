@@ -2,6 +2,8 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongo/mongodb";
 
+export const revalidate = 0;
+
 export async function GET() {
   const mongoClient = await clientPromise;
   const db = mongoClient.db("mediscan");
