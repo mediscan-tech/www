@@ -2,31 +2,17 @@
 import CardSkeleton from "@/components/ui/card-skeleton";
 import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-export default function TelemedicineHero() {
+export default function AIModelsHero() {
   const router = useRouter();
   return (
-    <div className="relative flex h-screen w-screen flex-col items-center justify-center">
-      <div className="pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip opacity-70">
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          transition={{
-            ease: "easeInOut",
-            duration: 2,
-            delay: 1,
-          }}
-          className="absolute h-[100vh] w-[100vw] scale-150"
-        >
-          <Spline scene="/spline/telemedicine.splinecode" />
-        </motion.div>
+    <div className="relative flex flex-col h-screen w-screen items-center justify-center">
+      <div className="pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip">
+        <div className="absolute h-[100vh] w-[100vw] scale-125">
+          <Spline scene="https://prod.spline.design/z1gEIeKXgTijNQTE/scene.splinecode" />
+        </div>
       </div>
       <div className="absolute flex h-screen w-screen flex-col items-center justify-center">
         <motion.h1
@@ -45,7 +31,7 @@ export default function TelemedicineHero() {
           }}
           className="flex max-w-3xl items-center justify-center bg-gradient-to-br from-text-light from-50% to-primary bg-clip-text text-center text-6xl font-bold leading-[72px] text-transparent drop-shadow-xl"
         >
-          Healthcare from the comfort of your home.
+          Self-diagnose in <br /> seconds.
         </motion.h1>
         <motion.h2
           initial={{
@@ -66,6 +52,7 @@ export default function TelemedicineHero() {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id
           posuere neque. Nulla non aliquet tellus.
         </motion.h2>
+
       </div>
       <motion.button
         initial={{
@@ -88,6 +75,6 @@ export default function TelemedicineHero() {
           Start Connecting <FaLongArrowAltRight className="h-4 w-4" />
         </CardSkeleton>
       </motion.button>
-    </div>
+    </div >
   );
 }
