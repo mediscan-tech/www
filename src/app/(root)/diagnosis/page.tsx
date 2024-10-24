@@ -76,7 +76,7 @@ export default function DiagnosisForm() {
     try {
       const params = new URLSearchParams();
 
-      console.log(Object.keys(data));
+      // console.log(Object.keys(data));
 
       Object.keys(data).forEach((key) => {
         params.append(key, data[key]);
@@ -294,7 +294,7 @@ export default function DiagnosisForm() {
 
             <button
               type="submit"
-              className=" w-full rounded-lg border border-primary/80 bg-primary/10 py-2 font-bold text-primary "
+              className="w-full rounded-lg border border-primary/80 bg-primary/10 py-2 font-bold text-primary"
             >
               Recieve Diagnosis
             </button>

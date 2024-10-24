@@ -25,7 +25,7 @@ export default function DiagnosisFromSymptoms() {
   }, []);
 
   useEffect(() => {
-    console.log(input);
+    // console.log(input);
     if (hasSentInitialMessage != true) {
       handleSubmit();
     }
@@ -66,11 +66,7 @@ export default function DiagnosisFromSymptoms() {
                     />
                   )}
                 </div>
-                <ReactMarkdown
-                  className="
-              py-auto prose flex h-full min-h-10 w-full flex-col justify-center space-y-4 prose-strong:text-text-light prose-ol:before:text-white prose-li:marker:text-text
-              "
-                >
+                <ReactMarkdown className="py-auto prose flex h-full min-h-10 w-full flex-col  justify-center space-y-4 prose-strong:text-text-light prose-ol:before:text-white prose-li:marker:text-text">
                   {m.content}
                 </ReactMarkdown>
               </div>

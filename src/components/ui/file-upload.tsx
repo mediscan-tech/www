@@ -84,7 +84,8 @@ export const FileUpload = ({
         <div className="flex flex-col items-center justify-center">
           <h1 className="relative z-20">Upload file</h1>
           <p className="relative z-20 mt-2">
-            Drag and drop your files here or click to upload
+            Drag and drop your files here or click to upload to run a
+            prediction!
           </p>
           <div className="relative mx-auto mt-10 w-full max-w-xl">
             {files.length > 0 &&
