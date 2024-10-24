@@ -5,5 +5,5 @@ export default function TelemedicinePage() {
     <div className="min-h-screen w-full">
       <TelemedicineHero />
     </div>
-  )
+  );
 }

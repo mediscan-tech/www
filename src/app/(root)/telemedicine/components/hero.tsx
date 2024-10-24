@@ -9,8 +9,8 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 export default function TelemedicineHero() {
   const router = useRouter();
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center flex-col">
-      <div className="opacity-70 pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip">
+    <div className="relative flex h-screen w-screen flex-col items-center justify-center">
+      <div className="pointer-events-none relative flex aspect-square h-[100vh] w-[200vh] items-center justify-center overflow-clip opacity-70">
         <motion.div
           initial={{
             opacity: 0,
@@ -23,7 +23,8 @@ export default function TelemedicineHero() {
             duration: 2,
             delay: 1,
           }}
-          className="absolute h-[100vh] w-[100vw] scale-150">
+          className="absolute h-[100vh] w-[100vw] scale-150"
+        >
           <Spline scene="https://prod.spline.design/B12s16wv01nFpDmV/scene.splinecode" />
         </motion.div>
       </div>
@@ -80,8 +81,12 @@ export default function TelemedicineHero() {
           duration: 1,
           delay: 2,
         }}
-        className="w-48 h-12 relative" onClick={() => router.push("/schedule")}>
-        <CardSkeleton className="whitespace-nowrap mt-6 py-2 px-6 rounded-lg font-semibold text-text absolute bottom-16 flex justify-center items-center space-x-1 pr-4">Start Connecting <FaLongArrowAltRight className="w-4 h-4" /></CardSkeleton>
+        className="relative h-12 w-48"
+        onClick={() => router.push("/schedule")}
+      >
+        <CardSkeleton className="absolute bottom-16 mt-6 flex items-center justify-center space-x-1 whitespace-nowrap rounded-lg px-6 py-2 pr-4 font-semibold text-text">
+          Start Connecting <FaLongArrowAltRight className="h-4 w-4" />
+        </CardSkeleton>
       </motion.button>
     </div>
   );

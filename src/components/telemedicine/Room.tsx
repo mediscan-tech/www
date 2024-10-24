@@ -80,8 +80,8 @@ const Room: React.FC<RoomProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="fixed top-4 right-4 z-30">
-        <div className="w-96 h-96">
+      <div className="fixed right-4 top-4 z-30">
+        <div className="h-96 w-96">
           <video
             ref={videoRef2}
             autoPlay
@@ -90,7 +90,6 @@ const Room: React.FC<RoomProps> = ({
             className="w-full rounded-2xl border-2 border-bg-extralight"
           />
         </div>
-
       </div>
       <div className="fixed bottom-0 left-0 right-0 top-0 flex h-screen w-screen items-start">
         <video
@@ -113,7 +112,6 @@ const Room: React.FC<RoomProps> = ({
               if (el) el.srcObject = stream;
             }
           }}
-
           className="absolute -z-20 h-full w-full scale-150 bg-transparent opacity-50 blur-xl"
         />
       </div>
@@ -128,10 +126,11 @@ const Room: React.FC<RoomProps> = ({
         <div className="space-x-4">
           <button
             onClick={toggleVideo}
-            className={`aspect-square h-full rounded-lg border p-1 ${isVideoEnabled
+            className={`aspect-square h-full rounded-lg border p-1 ${
+              isVideoEnabled
                 ? "border-primary bg-primary/10"
                 : "border-red-500 bg-red-500/10"
-              }`}
+            }`}
           >
             {isVideoEnabled ? (
               <IoVideocamOutline className="h-full w-full text-primary" />
@@ -142,10 +141,11 @@ const Room: React.FC<RoomProps> = ({
 
           <button
             onClick={toggleAudio}
-            className={`aspect-square h-full rounded-lg border p-1 ${isAudioEnabled
+            className={`aspect-square h-full rounded-lg border p-1 ${
+              isAudioEnabled
                 ? "border-primary bg-primary/10"
                 : "border-red-500 bg-red-500/10"
-              }`}
+            }`}
           >
             {isAudioEnabled ? (
               <AiOutlineAudio className="h-full w-full text-primary" />
