@@ -2,12 +2,14 @@
 
 import CardSkeleton from "@/components/ui/card-skeleton";
 import { FileUpload } from "@/components/ui/file-upload";
-import { useEffect, useState } from "react";
+import ParticleSwarmLoader from "@/components/ui/particle-swarm-loader";
+import { useState } from "react";
 
 export default function SkinModelPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [model, setModel] = useState("skin");
   const [generation, setGeneration] = useState(null);
+  const [disease, setDisease] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFileUpload = async (files: File[]) => {
@@ -36,10 +38,14 @@ export default function SkinModelPage() {
 
         const result = await response.json();
 
+        console.log(result);
+
         let groqBody = {
           model_type: model,
           predicted_class_name: result.predicted_class,
         };
+
+        setDisease(result.predicted_class);
 
         const getCompletionFromGroq = await fetch("/api/self-diagnose-gen", {
           method: "POST",
@@ -86,10 +92,20 @@ export default function SkinModelPage() {
         </CardSkeleton>
 
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="mt-4 flex items-center justify-center">
+            <ParticleSwarmLoader />
+          </div>
         ) : generation ? (
           <div className="mt-4">
-            <h2 className="text-xl font-bold">Generation Result:</h2>
+            <br />
+            <h2 className="text-xl font-bold">Self-Diagnosis Prediction:</h2>
+            <h3>
+              <u>
+                <strong>{disease}</strong>
+              </u>
+            </h3>
+            <br />
+            <h2 className="text-xl font-bold">About This Condition:</h2>
             <p>{generation}</p>
           </div>
         ) : null}

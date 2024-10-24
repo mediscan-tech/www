@@ -4,9 +4,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Pin from "@/components/pin";
-import { Skeleton } from "@/components/ui/skeleton";
-import { DataTable } from "@/components/table/data-table";
-import { columns } from "@/components/table/columns";
+// import { Skeleton } from "@/components/ui/skeleton";
+// import { DataTable } from "@/components/table/data-table";
+// import { columns } from "@/components/table/columns";
 import Map, {
   Marker,
   Popup,
@@ -17,6 +17,7 @@ import Map, {
 } from "react-map-gl";
 import CardSkeleton from "@/components/ui/card-skeleton";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import ParticleSwarmLoaderBigMap from "@/components/ui/particle-swarm-loader-big-for-map";
 
 export default function MapDisplayPage() {
   const [location, setLocation] = useState(null);
@@ -150,7 +151,7 @@ export default function MapDisplayPage() {
             hData.data.formattedData &&
             hData.data.formattedData.results ? (
               <CardSkeleton className="flex w-96 items-center border border-bg-extralight bg-bg-light/90 p-4">
-                <div className="mr-4 flex aspect-square h-16 flex-col  items-center justify-center rounded-full border border-primary bg-primary/10 font-mont">
+                <div className="mr-4 flex aspect-square h-16 flex-col items-center justify-center rounded-full border border-primary bg-primary/10 font-mont">
                   <p className=" flex h-4 translate-y-2.5 items-center justify-center text-3xl text-text-light">
                     {hData.data.formattedData.results[hospital].score !=
                     "Not Available"
@@ -257,10 +258,15 @@ export default function MapDisplayPage() {
             marginTop: "40px",
             marginLeft: "30px",
             marginRight: "30px",
+            height: "calc(100vh - 40px)", // Adjust this if you have a header or footer
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <p>Error {error.message}</p>
-          <p>
+          <p style={{ textAlign: "center" }}>Error {error.message}</p>
+          <p style={{ textAlign: "center" }}>
             To retry, please refresh the page and grant location access when
             prompted.
           </p>
@@ -271,27 +277,26 @@ export default function MapDisplayPage() {
             marginTop: "100px",
             marginLeft: "30px",
             marginRight: "30px",
+            height: "calc(100vh - 100px)", // Adjust this if you have a header or footer
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <p>Error {error.message}</p>
-          <p>
+          <p style={{ textAlign: "center" }}>Error {error.message}</p>
+          <p style={{ textAlign: "center" }}>
             Enable location access: Visit Settings &gt; Find Your Browser &gt;
             Location, Enable while using app, and refresh our page for full
             functionality.
           </p>
         </div>
       ) : (
-        <div
-          style={{
-            width: isMobile ? "100%" : "1000px",
-            height: isMobile ? "300px" : "800px",
-            border: "5px solid #FFF",
-            borderRadius: "10px",
-          }}
-        >
-          <Skeleton className="relative h-full w-full">
+        <div>
+          {/* <Skeleton className="relative w-full h-full">
             <div className="animate-stripes absolute left-0 top-0 h-full w-full bg-gradient-to-r from-[#e6e8e6] via-[#f0f2f0] to-[#e6e8e6]"></div>
-          </Skeleton>
+          </Skeleton> */}
+          <ParticleSwarmLoaderBigMap />
         </div>
       )}
     </div>
