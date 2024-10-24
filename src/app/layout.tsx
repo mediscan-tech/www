@@ -45,7 +45,6 @@ export default function RootLayout({
         className={`${inter.variable} ${geistMono.variable} ${geistSans.variable} ${mont.variable} bg-bg font-geist tracking-tight text-text antialiased`}
       >
         <ClerkProvider>
-          <Navbar />
           <div className="absolute z-20">
             {children}
             <Toaster />

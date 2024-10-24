@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <main className="grow">
-        <Navbar className="max-w-7xl" />
+        <Navbar />
         {children}
         <Footer />
       </main>
