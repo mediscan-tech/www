@@ -97,9 +97,9 @@ export default function SkinModelPage() {
           </div>
         ) : generation ? (
           <CardSkeleton className="mb-48 mt-4 p-6">
-            <p>{disease}</p>
+            <p>Self-Diagnosis Prediction</p>
             <h1 className="mb-2 text-2xl font-bold text-text-light">
-              Self-Diagnosis Prediction:
+              {disease}
             </h1>
             <p className="text-sm">{generation}</p>
           </CardSkeleton>
