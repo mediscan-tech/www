@@ -82,11 +82,11 @@ export default function OnboardingPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-black py-10">
       <CardSkeleton className="w-full max-w-md p-6">
-        <h1 className="text-center text-2xl font-bold text-text-light">
+        <h1 className="text-center text-2xl font-bold text-text-light pb-4">
           Onboarding Form
         </h1>
 
-        <div className="mt-4">
+        <div>
           <label>
             Are you signing up as a doctor or patient?
           </label>

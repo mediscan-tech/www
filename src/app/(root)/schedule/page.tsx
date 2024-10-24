@@ -115,7 +115,7 @@ export default function TelemedicinePage() {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center">
       <CardSkeleton className="w-full max-w-md  p-6">
-        <h1 className="text-center text-2xl font-bold text-text-light mb-6">
+        <h1 className="text-center text-2xl font-bold text-text-light mb-4">
           Schedule Virtual Appointment
         </h1>
         <label>Select a doctor</label>
@@ -132,98 +132,86 @@ export default function TelemedicinePage() {
             </option>
           ))}
         </select>
-
-        {/* Doctor Details */}
-        {selectedDoctor && (
-          <div
-            className="mt-8 text-center"
-          >
-            <h2 className="text-2xl font-semibold">{selectedDoctor.name}</h2>
-            <p className="mt-2 text-lg">
-              <strong>Degree:</strong> {selectedDoctor.degree}
-            </p>
-            <p className="mt-2 text-lg">
-              <strong>Phone:</strong>{" "}
-              {formatPhoneNumber(selectedDoctor.phoneNumber)}
-            </p>
-            <p className="mt-2 text-lg">
-              <strong>Practice Location:</strong>{" "}
-              {selectedDoctor.practiceLocation}
-            </p>
-
-            {/* Schedule a Virtual Meeting button */}
-            <button
-              onClick={handleScheduleMeeting}
-              className="mt-4 rounded-md bg-green-500 p-2 text-white"
-            >
-              Schedule a Virtual Meeting with {selectedDoctor.name}
-            </button>
-
-            {/* DateTimePicker */}
-            {showDateTimePicker && (
-              <div className="mt-4 flex flex-col items-center">
-                <DateTimePickerV2
-                  onDateChange={handleDateChange}
-                  selectedDate={selectedDate}
-                  selectedDoctor={selectedDoctor}
-                />
-                {selectedDate && (
-                  <p className="mt-2 text-lg">
-                    Selected Date: {selectedDate.toLocaleDateString()}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-        {upcomingMeeting && (
-          <div
-            className="mt-8 text-center"
-          >
-            <h2 className="text-2xl font-semibold">Upcoming Meeting</h2>
-
-            {/* Conditionally display doctor's or patient's name */}
-            <p className="mt-2 text-lg">
-              {clerkId === upcomingMeeting.patientClerkId ? (
-                <>Upcoming Meeting with Dr. {upcomingMeeting.doctorName}</>
-              ) : (
-                <>Upcoming Meeting with {upcomingMeeting.patientName}</>
-              )}
-            </p>
-
-            <p className="mt-2 text-lg">
-              Meeting Time:{" "}
-              {format(
-                new Date(upcomingMeeting.meetingDateTime),
-                "yyyy-MM-dd HH:mm:ss",
-                { timeZone: upcomingMeeting.timeZone }
-              )}
-            </p>
-
-            {/* Display Meeting ID */}
-            {roomID && (
-              <div className="mt-2">
-                <p className="text-lg">
-                  <strong>Room ID: </strong>
-                  {roomID}
-                </p>
-                <p className="mt-1 text-sm text-gray-500">
-                  Please copy this Room ID and paste it in the Room ID field
-                  after clicking Join Meeting.
-                </p>
-              </div>
-            )}
-
-            {/* Join Meeting button */}
-            <button
-              onClick={handleJoinMeeting}
-              className="mt-4 rounded-md bg-blue-500 p-2 text-white"
-            >
-              Join Meeting
-            </button>
-          </div>
-        )}
       </CardSkeleton>
+
+      {selectedDoctor && (
+        <CardSkeleton
+          className="mt-4 w-full max-w-md p-6"
+        >
+          <h1 className="text-2xl font-bold text-text-light">{selectedDoctor.name}</h1>
+          <p className="text-sm">{selectedDoctor.name} works at {selectedDoctor.practiceLocation} with a degree in {selectedDoctor.degree}.</p>
+          {/* Schedule a Virtual Meeting button */}
+          <button
+            onClick={handleScheduleMeeting}
+            className="mt-4 rounded-md bg-green-500 p-2 text-white"
+          >
+            Schedule with {selectedDoctor.name}
+          </button>
+
+          {/* DateTimePicker */}
+          {showDateTimePicker && (
+            <div className="mt-4 h-96 flex flex-col items-center">
+              <DateTimePickerV2
+                onDateChange={handleDateChange}
+                selectedDate={selectedDate}
+                selectedDoctor={selectedDoctor}
+              />
+              {selectedDate && (
+                <p className="mt-2 text-lg">
+                  Selected Date: {selectedDate.toLocaleDateString()}
+                </p>
+              )}
+            </div>
+          )}
+        </CardSkeleton>
+      )}
+      {upcomingMeeting && (
+        <div
+          className="mt-8 text-center"
+        >
+          <h2 className="text-2xl font-semibold">Upcoming Meeting</h2>
+
+          {/* Conditionally display doctor's or patient's name */}
+          <p className="mt-2 text-lg">
+            {clerkId === upcomingMeeting.patientClerkId ? (
+              <>Upcoming Meeting with Dr. {upcomingMeeting.doctorName}</>
+            ) : (
+              <>Upcoming Meeting with {upcomingMeeting.patientName}</>
+            )}
+          </p>
+
+          <p className="mt-2 text-lg">
+            Meeting Time:{" "}
+            {format(
+              new Date(upcomingMeeting.meetingDateTime),
+              "yyyy-MM-dd HH:mm:ss",
+              { timeZone: upcomingMeeting.timeZone }
+            )}
+          </p>
+
+          {/* Display Meeting ID */}
+          {roomID && (
+            <div className="mt-2">
+              <p className="text-lg">
+                <strong>Room ID: </strong>
+                {roomID}
+              </p>
+              <p className="mt-1 text-sm text-gray-500">
+                Please copy this Room ID and paste it in the Room ID field
+                after clicking Join Meeting.
+              </p>
+            </div>
+          )}
+
+          {/* Join Meeting button */}
+          <button
+            onClick={handleJoinMeeting}
+            className="mt-4 rounded-md bg-blue-500 p-2 text-white"
+          >
+            Join Meeting
+          </button>
+        </div>
+      )}
     </div>
   );
 }
