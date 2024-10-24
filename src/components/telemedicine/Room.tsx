@@ -80,27 +80,18 @@ const Room: React.FC<RoomProps> = ({
       socket.off("user:disconnected");
     };
   }, [stream, peer, socket]);
-
+  
   return (
     <div className="flex flex-col items-center">
       <div className="fixed right-4 top-4 z-30">
         <div className="h-96 w-96">
-          {/* Conditionally show video or profile picture */}
-          {isVideoEnabled ? (
-            <video
-              ref={videoRef2}
-              autoPlay
-              muted
-              playsInline
-              className="w-full rounded-2xl border-2 border-bg-extralight"
-            />
-          ) : (
-            <img
-              src={profilePicture}
-              alt="User Profile"
-              className="w-full h-full rounded-2xl border-2 border-bg-extralight object-cover"
-            />
-          )}
+          <video
+            ref={videoRef2}
+            autoPlay
+            muted
+            playsInline
+            className="w-full rounded-2xl border-2 border-bg-extralight"
+          />
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 top-0 flex h-screen w-screen items-start">
