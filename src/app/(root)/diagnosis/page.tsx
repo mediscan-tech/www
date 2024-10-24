@@ -17,8 +17,24 @@ const formSchema = z.object({
       message: "Age must be between 0 and 120",
     }),
   gender: z.enum(["Male", "Female", "Other"], { required_error: "Gender is required" }),
-  height: z.string().min(1, "Height is required"),
-  weight: z.string().min(1, "Weight is required"),
+  heightFeet: z
+    .string()
+    .min(1, "Height (feet) is required")
+    .transform((val) => Number(val))
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 8, { message: "Feet must be a number between 0 and 8" }),
+  heightInches: z
+    .string()
+    .min(1, "Height (inches) is required")
+    .transform((val) => Number(val))
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 11, { message: "Inches must be a number between 0 and 11" }),
+  weight: z
+    .string()
+    .min(1, "Weight is required")
+    .transform((val) => Number(val))
+    .refine((val) => !isNaN(val), { message: "Weight must be a valid member" })
+    .refine((val) => val >= 0 && val <= 500, {
+      message: "Age must be between 0 and 500",
+    }),
   injuryDescription: z.string().optional(),
   injuryDuration: z.string().optional(),
   conscious: z
@@ -105,20 +121,30 @@ export default function DiagnosisForm() {
 
             <div>
               <label className="text-white">Height</label>
-              <input
-                type="text"
-                placeholder="Enter your height in feet and inches (Ex: 5'7)"
-                {...register("height")}
-                className="w-full rounded border px-4 py-2 text-black"
-              />
-              {errors.height?.message && <p className="text-red-500">{(errors.height as any)?.message}</p>}
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  placeholder="Feet"
+                  {...register("heightFeet")}
+                  className="w-1/3 rounded border px-4 py-2 text-black"
+                />
+                <span className="text-white">'</span>
+                <input
+                  type="number"
+                  placeholder="Inches"
+                  {...register("heightInches")}
+                  className="w-1/3 rounded border px-4 py-2 text-black"
+                />
+              </div>
+              {errors.heightFeet?.message && <p className="text-red-500">{(errors.heightFeet as any)?.message}</p>}
+              {errors.heightInches?.message && <p className="text-red-500">{(errors.heightInches as any)?.message}</p>}
             </div>
 
             <div>
               <label className="text-white">Weight</label>
               <input
-                type="text"
-                placeholder="Enter your weight in pounds (Ex: 130)"
+                type="number"
+                placeholder="Enter your weight in pounds"
                 {...register("weight")}
                 className="w-full rounded border px-4 py-2 text-black"
               />
