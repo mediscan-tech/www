@@ -8,7 +8,11 @@ export default function Homepage() {
       <div className="flex flex-col items-center ">
         <Hero />
 
-        <h1 className="text-6xl font-bold translate-y-24 text-text-light">Our Features</h1>
+        <h1 className="text-6xl font-bold translate-y-20 mt-24 text-text-light">Our Features</h1>
+        <div className="w-[90vw] translate-y-24 h-0.5 flex">
+          <div className="bg-gradient-to-r from-bg to-text-light/40 w-full"></div>
+          <div className="bg-gradient-to-l from-bg to-text-light/40 w-full"></div>
+        </div>
 
         <DirectoryPage />
 

@@ -2,7 +2,6 @@
 import CardSkeleton from "@/components/ui/card-skeleton";
 import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
