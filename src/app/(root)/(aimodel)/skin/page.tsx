@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 export default function SkinModelPage() {
   const [files, setFiles] = useState<File[]>([]);
+  const [model, setModel] = useState("skin");
+  
   const handleFileUpload = async (files: File[]) => {
     setFiles(files);
 
@@ -15,7 +17,7 @@ export default function SkinModelPage() {
       try {
         // Create a FormData object
         const formData = new FormData();
-        formData.append("model_type", "skin");
+        formData.append("model_type", model);
         formData.append("image", file);
 
         // Make the POST request
@@ -38,32 +40,30 @@ export default function SkinModelPage() {
     }
   };
 
-  const [model, setModel] = useState("skin");
-
-  const handleSelectChange = (event) => {
+  const handleSelectChange = (event: any) => {
     setModel(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     alert(`You selected the ${model} model.`);
   };
 
   return (
     <div className="flex flex-col h-screen items-center justify-center pt-[104px]">
-      <form className="w-full max-w-4xl justify-center items-center text-center">
+      <form className="items-center justify-center w-full max-w-4xl text-center">
         <div className="w-full text-start">
           <label>I want to diagnose:</label>
-          <select className="mb-4 h-10 bg-bg-light/70" onChange={handleSelectChange}>
+          <select className="h-10 mb-4 bg-bg-light/70" onChange={handleSelectChange}>
             <option value="skin">Skin</option>
             <option value="mouth">Mouth</option>
             <option value="nail">Nail</option>
           </select>
         </div>
-        <CardSkeleton className="mx-auto min-h-96 w-full">
+        <CardSkeleton className="w-full mx-auto min-h-96">
           <FileUpload onChange={handleFileUpload} />
         </CardSkeleton>
-        <button type="submit" onClick={handleSubmit} className="border border-primary/80 bg-primary/10 rounded-lg text-primary font-bold py-2 mt-4 w-1/2">Analyze Image</button>
+        <button type="submit" onClick={handleSubmit} className="w-1/2 py-2 mt-4 font-bold border rounded-lg border-primary/80 bg-primary/10 text-primary">Analyze Image</button>
       </form>
     </div>
   );
