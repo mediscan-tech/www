@@ -33,9 +33,10 @@ const Lobby: React.FC<LobbyProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-4 text-2xl font-bold">Video Preview</h1>
-      <video ref={videoRef} autoPlay muted playsInline className="mb-4 w-1/2 rounded-2xl" />
-      <input
+      <div className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen">
+        <video ref={videoRef} autoPlay muted playsInline className="aspect-square h-full w-full z-10" />
+      </div>
+      {/* <input
         type="text"
         value={roomId}
         onChange={(e) => setRoomId(e.target.value)}
@@ -69,7 +70,7 @@ const Lobby: React.FC<LobbyProps> = ({
         className="mt-2 w-1/2 rounded bg-red-500 p-2 text-white"
       >
         Leave Lobby
-      </button>
+      </button> */}
     </div>
   );
 };
