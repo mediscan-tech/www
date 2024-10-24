@@ -22,7 +22,7 @@ export default function DiagnosisFromSymptoms() {
   return (
     <>
       <div className="h-screen w-screen py-[88px]">
-        <div className="w-full h-full overflow-scroll flex flex-col space-y-8 items-center py-16">
+        <div className="w-full h-full flex flex-col space-y-8 items-center py-16">
           {messages.map(m => (
             <div key={m.id} className="w-full flex flex-col items-center  px-4 pl-[72px] ">
               <div className="w-full max-w-6xl relative ">
@@ -43,7 +43,7 @@ export default function DiagnosisFromSymptoms() {
 
       <form onSubmit={handleSubmit} className="w-full fixed flex justify-center bottom-0 pb-10">
         <input
-          className="w-full max-w-7xl placeholder:text-text/60 h-12 mx-4 bg-bg-light border border-bg-extralight rounded-full px-8 outline-none"
+          className="w-full max-w-7xl placeholder:text-text/60 h-12 mx-4 bg-bg-light/80 border border-bg-extralight rounded-full px-8 outline-none"
           value={input}
           placeholder="Send a Message"
           onChange={handleInputChange}

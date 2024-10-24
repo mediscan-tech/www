@@ -1,9 +1,6 @@
 import "../styles/globals.css";
 import { Inter } from "next/font/google";
-import Footer from "@/components/ui/footer";
-import Navbar from "@/components/ui/navbar";
 import localFont from "next/font/local";
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 

@@ -124,7 +124,7 @@ export default function MapDisplayPage() {
       {location ? (
         <>
           {/* <div className="absolute w-screen h-screen bg-gradient-to-r from-bg/80 to-50% to-transparent z-10 pointer-events-none"></div> */}
-          <div className="absolute h-screen overflow-scroll p-4  pt-[96px] z-10 space-y-2 items-center">
+          <div className="absolute h-screen p-4 pt-[96px] z-10 space-y-2 items-center">
             <CardSkeleton className="py-2 px-4 bg-bg-light border-bg-extralight border flex justify-between">
               <button onClick={() => setHospial(hospital <= 0 ? 0 : hospital - 1)}>
                 <ChevronLeft className="h-8 w-8" />
