@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@clerk/nextjs";
 import { useToast } from "@/components/ui/use-toast"; // Import useToast
 import { useRouter } from "next/navigation"; // Import useRouter
+import CardSkeleton from "@/components/ui/card-skeleton";
 
 // Doctor schema
 const doctorSchema = z.object({
@@ -80,13 +81,13 @@ export default function OnboardingPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-black py-10">
-      <div className="w-full max-w-md rounded-lg bg-gray-800 p-6 shadow-lg">
-        <h1 className="mb-4 text-center text-2xl font-bold text-white">
+      <CardSkeleton className="w-full max-w-md p-6">
+        <h1 className="text-center text-2xl font-bold text-text-light">
           Onboarding Form
         </h1>
 
-        <div className="mt-6">
-          <label className="font-medium text-white">
+        <div className="mt-4">
+          <label>
             Are you signing up as a doctor or patient?
           </label>
           <div>
@@ -95,7 +96,6 @@ export default function OnboardingPage() {
               onChange={(e) =>
                 setUserType(e.target.value as "doctor" | "patient")
               }
-              className="w-full rounded border px-4 py-2 text-black"
             >
               <option value="">Select...</option>
               <option value="doctor">Doctor</option>
@@ -108,12 +108,12 @@ export default function OnboardingPage() {
           <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4">
               <div>
-                <label className="text-white">Name</label>
+                <label>Name</label>
                 <input
                   placeholder="Bob Joe"
                   type="text"
                   {...register("name")}
-                  className="w-full rounded border px-4 py-2 text-black"
+
                 />
                 {errors.name && (
                   <p className="text-red-500">
@@ -123,12 +123,12 @@ export default function OnboardingPage() {
               </div>
 
               <div>
-                <label className="text-white">Phone Number</label>
+                <label>Phone Number</label>
                 <input
                   placeholder="1234567890"
                   type="text"
                   {...register("phoneNumber")}
-                  className="w-full rounded border px-4 py-2 text-black"
+
                 />
                 {errors.phoneNumber && (
                   <p className="text-red-500">
@@ -140,12 +140,12 @@ export default function OnboardingPage() {
               {userType === "doctor" && (
                 <>
                   <div>
-                    <label className="text-white">Medical Degree</label>
+                    <label>Medical Degree</label>
                     <input
                       placeholder="Bachelor of Dental Surgery"
                       type="text"
                       {...register("degree")}
-                      className="w-full rounded border px-4 py-2 text-black"
+
                     />
                     {errors.degree && (
                       <p className="text-red-500">
@@ -155,12 +155,12 @@ export default function OnboardingPage() {
                   </div>
 
                   <div>
-                    <label className="text-white">Practice Location</label>
+                    <label>Practice Location</label>
                     <input
                       placeholder="Mercy Hospital St. Louis"
                       type="text"
                       {...register("practiceLocation")}
-                      className="w-full rounded border px-4 py-2 text-black"
+
                     />
                     {errors.practiceLocation && (
                       <p className="text-red-500">
@@ -173,28 +173,28 @@ export default function OnboardingPage() {
 
               {userType === "patient" && (
                 <div>
-                  <label className="text-white">
+                  <label>
                     Pre-existing Health Condition (Optional)
                   </label>
                   <input
                     placeholder="Ex: Melanoma, Gingivitis, Pitting"
                     type="text"
                     {...register("healthCondition")}
-                    className="w-full rounded border px-4 py-2 text-black"
+
                   />
                 </div>
               )}
 
               <button
                 type="submit"
-                className="rounded bg-blue-500 px-6 py-2 text-white"
+                className="bg-primary/10 border border-primary/80 font-bold rounded-lg mt-2 px-6 py-2 text-primary"
               >
                 Submit
               </button>
             </div>
           </form>
         )}
-      </div>
+      </CardSkeleton>
     </div>
   );
 }

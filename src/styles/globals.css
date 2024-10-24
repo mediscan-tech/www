@@ -76,4 +76,13 @@
   li {
     @apply text-[16px] text-text font-medium;
   }
+
+  input,
+  select {
+    @apply bg-bg-light w-full rounded-lg px-2 py-1.5 border border-bg-extralight outline-none placeholder:text-text/50
+  }
+
+  label {
+    @apply text-sm pl-1
+  }
 }
