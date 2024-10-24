@@ -2,33 +2,49 @@ export default function Footer() {
   return (
     <div className="flex flex-col items-center border-t-2 border-bg-light bg-bg-light/40 pt-8">
       <div className="flex w-[85vw] justify-between">
-        <div>
+        <div id="contact">
           <h1 className="pt-4 text-xl font-medium text-text-light">Contact</h1>
           <p className="mt-2 text-sm">support@mediscan.care</p>
           <p className="mt-1 text-sm">(123)-456-7890</p>
         </div>
-        <div>
+        <div className="flex flex-col">
           <h1 className="pt-4 text-xl font-medium text-text-light">
             Large Language Models
           </h1>
-          <p className="mt-2 text-sm">General Diagnosis</p>
-          <p className="mt-1 text-sm">First-Aid Advice</p>
-          <p className="mt-1 text-sm">Health Risk Prediction</p>
+          <a href="/ai-models" className="mt-2 text-sm">
+            General Diagnosis Chatbot
+          </a>
+          <a href="/ai-models" className="mt-1 text-sm">
+            First-Aid Advice
+          </a>
+          <a href="/ai-models" className="mt-1 text-sm">
+            Health Risk Prediction
+          </a>
         </div>
-        <div>
+        <div className="flex flex-col">
           <h1 className="pt-4 text-xl font-medium text-text-light">
             Machine Learning Models
           </h1>
-          <p className="mt-2 text-sm">Nail Conditions & Diseases</p>
-          <p className="mt-1 text-sm">Mouth Conditions & Diseases</p>
-          <p className="mt-1 text-sm">Skin Conditions & Diseases</p>
+          <a href="/ai-models" className="mt-2 text-sm">
+            Nail Conditions & Diseases
+          </a>
+          <a href="/ai-models" className="mt-1 text-sm">
+            Mouth Conditions & Diseases
+          </a>
+          <a href="/ai-models" className="mt-1 text-sm">
+            Skin Conditions & Diseases
+          </a>
         </div>
-        <div>
+        <div className="flex flex-col">
           <h1 className="pt-4 text-xl font-medium text-text-light">
             More From Mediscan
           </h1>
-          <p className="mt-2 text-sm">Accurate Nearby Hospital Wait Times</p>
-          <p className="mt-1 text-sm">Video Conference w/ Doctors</p>
+          <a href="/wait-times" className="mt-2 text-sm">
+            Accurate Nearby Hospital Wait Times
+          </a>
+          <a href="/telemedicine" className="mt-1 text-sm">
+            Video Conference w/ Doctors
+          </a>
         </div>
       </div>
       <div className="my-8 h-0.5 w-[90vw] bg-bg-light"></div>

@@ -147,14 +147,14 @@ export default function MapDisplayPage() {
               </button>
             </CardSkeleton>
             {hData &&
-              hData.data &&
-              hData.data.formattedData &&
-              hData.data.formattedData.results ? (
+            hData.data &&
+            hData.data.formattedData &&
+            hData.data.formattedData.results ? (
               <CardSkeleton className="flex w-96 items-center border border-bg-extralight bg-bg-light/90 p-4">
                 <div className="mr-4 flex aspect-square h-16 flex-col items-center justify-center rounded-full border border-primary bg-primary/10 font-mont">
                   <p className=" flex h-4 translate-y-2.5 items-center justify-center text-3xl text-text-light">
                     {hData.data.formattedData.results[hospital].score !=
-                      "Not Available"
+                    "Not Available"
                       ? hData.data.formattedData.results[hospital].score
                       : "-"}
                   </p>
@@ -172,7 +172,13 @@ export default function MapDisplayPage() {
                         .formattedAddress
                     }
                   </p>
-                  <a target="_blank" href={hData.data.formattedData.results[hospital].directions} className="px-12 w-fit flex items-center justify-center border border-primary/80 bg-primary/10 rounded-lg py-1 text-xs mt-2">Get Directions</a>
+                  <a
+                    target="_blank"
+                    href={hData.data.formattedData.results[hospital].directions}
+                    className="mt-2 flex w-fit items-center justify-center rounded-lg border border-primary/80 bg-primary/10 px-12 py-1 text-xs"
+                  >
+                    Get Directions
+                  </a>
                 </div>
               </CardSkeleton>
             ) : (

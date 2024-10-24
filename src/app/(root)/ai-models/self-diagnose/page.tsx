@@ -96,9 +96,11 @@ export default function SkinModelPage() {
             <ParticleSwarmLoader />
           </div>
         ) : generation ? (
-          <CardSkeleton className="mt-4 p-6 mb-48">
+          <CardSkeleton className="mb-48 mt-4 p-6">
             <p>{disease}</p>
-            <h1 className="text-2xl text-text-light font-bold mb-2">Self-Diagnosis Prediction:</h1>
+            <h1 className="mb-2 text-2xl font-bold text-text-light">
+              Self-Diagnosis Prediction:
+            </h1>
             <p className="text-sm">{generation}</p>
           </CardSkeleton>
         ) : null}

@@ -5,5 +5,5 @@ export default function AIModelsPage() {
     <div className="h-screen w-full">
       <AIModelsHero />
     </div>
-  )
+  );
 }

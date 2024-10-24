@@ -47,10 +47,22 @@ export default function Navbar({ className }: { className?: string }) {
           {/* Center: Navigation Links */}
           <div className="flex space-x-8 text-sm font-medium">
             <Link
-              href={"/directory"}
+              href={"/telemedicine"}
               className="transition-all duration-200 hover:opacity-80"
             >
-              Services
+              Telemedicine
+            </Link>
+            <Link
+              href={"/ai-models"}
+              className="transition-all duration-200 hover:opacity-80"
+            >
+              Self-Diagnose
+            </Link>
+            <Link
+              href={"/wait-times"}
+              className="transition-all duration-200 hover:opacity-80"
+            >
+              Wait Times
             </Link>
             <Link
               href={"/#about"}
