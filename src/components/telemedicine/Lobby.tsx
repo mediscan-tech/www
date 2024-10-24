@@ -33,8 +33,8 @@ const Lobby: React.FC<LobbyProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-4 text-2xl font-bold">Lobby</h1>
-      <video ref={videoRef} autoPlay muted playsInline className="mb-4 w-1/2" />
+      <h1 className="mb-4 text-2xl font-bold">Video Preview</h1>
+      <video ref={videoRef} autoPlay muted playsInline className="mb-4 w-1/2 rounded-2xl" />
       <input
         type="text"
         value={roomId}
@@ -45,17 +45,15 @@ const Lobby: React.FC<LobbyProps> = ({
       <div className="mb-2 flex space-x-2">
         <button
           onClick={toggleVideo}
-          className={`rounded p-2 ${
-            isVideoEnabled ? "bg-blue-500" : "bg-red-500"
-          } text-white`}
+          className={`rounded p-2 ${isVideoEnabled ? "bg-blue-500" : "bg-red-500"
+            } text-white`}
         >
           {isVideoEnabled ? "Disable Video" : "Enable Video"}
         </button>
         <button
           onClick={toggleAudio}
-          className={`rounded p-2 ${
-            isAudioEnabled ? "bg-blue-500" : "bg-red-500"
-          } text-white`}
+          className={`rounded p-2 ${isAudioEnabled ? "bg-blue-500" : "bg-red-500"
+            } text-white`}
         >
           {isAudioEnabled ? "Mute Audio" : "Unmute Audio"}
         </button>

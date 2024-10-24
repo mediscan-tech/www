@@ -97,7 +97,7 @@ export default function TelemedicinePage() {
             (schedule.patientClerkId === clerkId ||
               schedule.doctorClerkId === clerkId) &&
             timeDiff >= -30 * 60 * 1000 && // Show for 30 minutes after the start time
-            timeDiff <= 5 * 60 * 1000 // Start showing 5 minutes before the meeting
+            timeDiff <= 900000 * 60 * 1000 // Start showing 5 minutes before the meeting
           );
         });
 
@@ -130,8 +130,8 @@ export default function TelemedicinePage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center">
-      <CardSkeleton className="w-full max-w-md  p-6">
+    <div className="flex min-h-screen w-full flex-col items-center py-[104px] justify-center">
+      <CardSkeleton className="w-full max-w-md p-6">
         <h1 className="text-center text-2xl font-bold text-text-light mb-4">
           Schedule Virtual Appointment
         </h1>
@@ -149,41 +149,38 @@ export default function TelemedicinePage() {
             </option>
           ))}
         </select>
+        {
+          selectedDoctor && selectedDoctor.name && doctorEmail ?
+            <>
+              <p className="text-xs mt-2 pl-1">
+                {selectedDoctor.name} works at {selectedDoctor.practiceLocation} with a degree in {selectedDoctor.degree}. Contact {selectedDoctor.name} at {doctorEmail}.
+              </p>
+              {!showDateTimePicker ?
+                <button
+                  onClick={handleScheduleMeeting}
+                  className=" mt-4 w-full rounded-lg bg-primary/10 border-primary/80 p-2 text-primary font-bold border"
+                >
+                  Schedule with {selectedDoctor.name}
+                </button>
+                : <div />
+              }
+            </>
+            : <div></div>
+
+        }
+
       </CardSkeleton>
 
-      {selectedDoctor && (
+      {showDateTimePicker && (
         <CardSkeleton className="mt-4 w-full max-w-md p-6">
-          <h1 className="text-2xl font-bold text-text-light">{selectedDoctor.name}</h1>
-          <p className="text-sm">
-            {selectedDoctor.name} works at {selectedDoctor.practiceLocation} with a degree in {selectedDoctor.degree}.
-          </p>
-          {/* Display Doctor's Email */}
-          {doctorEmail && (
-            <p className="mt-2 text-sm text-gray-600">
-              Email: {doctorEmail}
-            </p>
-          )}
-          {/* Schedule a Virtual Meeting button */}
-          <button
-            onClick={handleScheduleMeeting}
-            className="mt-4 rounded-md bg-green-500 p-2 text-white"
-          >
-            Schedule with {selectedDoctor.name}
-          </button>
-
           {/* DateTimePicker */}
           {showDateTimePicker && (
-            <div className="mt-4 h-96 flex flex-col items-center">
+            <div className="mt-4 -translate-y-2 flex flex-col items-center">
               <DateTimePickerV2
                 onDateChange={handleDateChange}
                 selectedDate={selectedDate}
                 selectedDoctor={selectedDoctor}
               />
-              {selectedDate && (
-                <p className="mt-2 text-lg">
-                  Selected Date: {selectedDate.toLocaleDateString()}
-                </p>
-              )}
             </div>
           )}
         </CardSkeleton>

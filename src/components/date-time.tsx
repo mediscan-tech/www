@@ -97,9 +97,8 @@ export function DateTimePickerV2({
       if (response.ok) {
         toast({
           title: "Success! 🎉",
-          description: `Meeting scheduled with ${
-            selectedDoctor.name
-          } at: ${format(data.datetime, "PPP, p")}. Room ID: ${roomID}`,
+          description: `Meeting scheduled with ${selectedDoctor.name
+            } at: ${format(data.datetime, "PPP, p")}. Room ID: ${roomID}`,
           duration: 10000,
         });
         // Automatically redirect to /directory after a short delay
@@ -126,30 +125,26 @@ export function DateTimePickerV2({
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex w-full gap-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="">
+          <div className="flex w-full gap-2">
             <FormField
               control={form.control}
               name="datetime"
               render={({ field }) => (
                 <FormItem className="flex w-full flex-col">
-                  <FormLabel>Date</FormLabel>
                   <Popover open={isOpen} onOpenChange={setIsOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant={"outline"}
-                          className={cn(
-                            "mr-2 w-full font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
+                          className="border rounded-lg border-bg-extralight bg-bg-light w-64"
                         >
                           {field.value ? (
                             `${format(field.value, "PPP")}`
                           ) : (
                             <span>Pick a date</span>
                           )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-text-light" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -181,7 +176,6 @@ export function DateTimePickerV2({
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormDescription>Set your date and time.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -191,7 +185,6 @@ export function DateTimePickerV2({
               name="datetime"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Time</FormLabel>
                   <FormControl>
                     <Select
                       defaultValue={time}
@@ -206,7 +199,7 @@ export function DateTimePickerV2({
                         }
                       }}
                     >
-                      <SelectTrigger className="w-[120px] font-normal focus:ring-0">
+                      <SelectTrigger className="w-[120px] h-full border border-bg-extralight rounded-lg bg-bg-light">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-white">
@@ -239,7 +232,8 @@ export function DateTimePickerV2({
               )}
             />
           </div>
-          <Button type="submit">Schedule Meeting</Button>
+          <Button className="mt-4 w-full border border-primary/80 font-bold text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-all duration-300" type="submit">Schedule Appointment</Button>
+          <p className="text-xs pt-1 text-center">By clicking this button, you are scheduling a virtual appointment with {selectedDoctor.name} at {selectedDate ? selectedDate.toLocaleString() : ""}.</p>
         </form>
       </Form>
     </>
