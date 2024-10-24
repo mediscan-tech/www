@@ -80,7 +80,7 @@ const Room: React.FC<RoomProps> = ({
       socket.off("user:disconnected");
     };
   }, [stream, peer, socket]);
-  
+
   return (
     <div className="flex flex-col items-center">
       <div className="fixed right-4 top-4 z-30">
