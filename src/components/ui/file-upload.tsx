@@ -70,7 +70,7 @@ export const FileUpload = ({
       <motion.div
         onClick={handleClick}
         whileHover="animate"
-        className="relative block w-full p-10 overflow-hidden rounded-lg cursor-pointer group/file"
+        className="group/file relative block w-full cursor-pointer overflow-hidden rounded-lg p-10"
       >
         <input
           ref={fileInputRef}
@@ -86,7 +86,7 @@ export const FileUpload = ({
           <p className="relative z-20 mt-2">
             Drag and drop your files here or click to upload
           </p>
-          <div className="relative w-full max-w-xl mx-auto mt-10">
+          <div className="relative mx-auto mt-10 w-full max-w-xl">
             {files.length > 0 &&
               files[0] != null &&
               files.map((file, idx) => (
@@ -98,12 +98,12 @@ export const FileUpload = ({
                     "shadow-sm"
                   )}
                 >
-                  <div className="flex items-center justify-between w-full gap-4">
+                  <div className="flex w-full items-center justify-between gap-4">
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       layout
-                      className="max-w-xs text-base truncate text-text-light"
+                      className="max-w-xs truncate text-base text-text-light"
                     >
                       {file.name}
                     </motion.p>
@@ -111,13 +111,13 @@ export const FileUpload = ({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       layout
-                      className="flex-shrink-0 px-2 py-1 text-sm rounded-lg shadow-input w-fit"
+                      className="shadow-input w-fit flex-shrink-0 rounded-lg px-2 py-1 text-sm"
                     >
                       {(file.size / (1024 * 1024)).toFixed(2)} MB
                     </motion.p>
                   </div>
 
-                  <div className="flex flex-col items-start justify-between w-full mt-2 text-sm md:flex-row md:items-center">
+                  <div className="mt-2 flex w-full flex-col items-start justify-between text-sm md:flex-row md:items-center">
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -159,10 +159,10 @@ export const FileUpload = ({
                     className="flex flex-col items-center text-text-light"
                   >
                     Drop it!
-                    <IconUpload className="w-4 h-4 text-text-light" />
+                    <IconUpload className="h-4 w-4 text-text-light" />
                   </motion.p>
                 ) : (
-                  <IconUpload className="w-4 h-4 text-text-light" />
+                  <IconUpload className="h-4 w-4 text-text-light" />
                 )}
               </motion.div>
             )}
