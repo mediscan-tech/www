@@ -23,7 +23,7 @@ export default function DirectoryPage() {
               width="10000"
               className="absolute h-full w-full translate-x-[5%] scale-110 object-contain opacity-60"
             ></Image>
-            <h1 className="z-20 flex items-center justify-center p-4 text-4xl text-[3.35vw] font-extrabold">
+            <h1 className="z-20 flex items-center justify-center p-4 text-5xl font-extrabold">
               Telemedicine
             </h1>
             <p className="z-20 w-full px-8 text-center text-sm">
