@@ -75,7 +75,7 @@ export default function SkinModelPage() {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center pt-[104px]">
-      <form className="w-full max-w-4xl items-center justify-center text-center">
+      <form className="w-full max-w-4xl items-center justify-center text-center ">
         <div className="w-full text-start">
           <label>I want to diagnose a:</label>
           <select
@@ -96,18 +96,11 @@ export default function SkinModelPage() {
             <ParticleSwarmLoader />
           </div>
         ) : generation ? (
-          <div className="mt-4">
-            <br />
-            <h2 className="text-xl font-bold">Self-Diagnosis Prediction:</h2>
-            <h3>
-              <u>
-                <strong>{disease}</strong>
-              </u>
-            </h3>
-            <br />
-            <h2 className="text-xl font-bold">About This Condition:</h2>
-            <p>{generation}</p>
-          </div>
+          <CardSkeleton className="mt-4 p-6 mb-48">
+            <p>{disease}</p>
+            <h1 className="text-2xl text-text-light font-bold mb-2">Self-Diagnosis Prediction:</h1>
+            <p className="text-sm">{generation}</p>
+          </CardSkeleton>
         ) : null}
       </form>
     </div>

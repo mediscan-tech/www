@@ -4,8 +4,8 @@ export default function Footer() {
       <div className="flex w-[85vw] justify-between">
         <div>
           <h1 className="pt-4 text-xl font-medium text-text-light">Contact</h1>
-          <p className="mt-2 text-sm">john.doe@mediscan.tech</p>
-          <p className="mt-1 text-sm">(234) 567 8910</p>
+          <p className="mt-2 text-sm">support@mediscan.care</p>
+          <p className="mt-1 text-sm">(123)-456-7890</p>
         </div>
         <div>
           <h1 className="pt-4 text-xl font-medium text-text-light">
@@ -19,16 +19,16 @@ export default function Footer() {
           <h1 className="pt-4 text-xl font-medium text-text-light">
             Machine Learning Models
           </h1>
-          <p className="mt-2 text-sm">Hair & Scalp Conditions</p>
-          <p className="mt-1 text-sm">Oral Wellness</p>
-          <p className="mt-1 text-sm">Skin Conditions & Disease</p>
+          <p className="mt-2 text-sm">Nail Conditions & Diseases</p>
+          <p className="mt-1 text-sm">Mouth Conditions & Diseases</p>
+          <p className="mt-1 text-sm">Skin Conditions & Diseases</p>
         </div>
         <div>
           <h1 className="pt-4 text-xl font-medium text-text-light">
             More From Mediscan
           </h1>
-          <p className="mt-2 text-sm">Nearby Hospital Wait Times</p>
-          <p className="mt-1 text-sm">Telemedicine Service</p>
+          <p className="mt-2 text-sm">Accurate Nearby Hospital Wait Times</p>
+          <p className="mt-1 text-sm">Video Conference w/ Doctors</p>
         </div>
       </div>
       <div className="my-8 h-0.5 w-[90vw] bg-bg-light"></div>
