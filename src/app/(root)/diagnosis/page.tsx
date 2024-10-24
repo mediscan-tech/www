@@ -5,10 +5,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import CardSkeleton from "@/components/ui/card-skeleton";
 
 // Zod Schema 
 const formSchema = z.object({
-    age: z
+  age: z
     .string()
     .min(1, "Age is required")
     .transform((val) => Number(val))
@@ -52,8 +53,9 @@ const formSchema = z.object({
 });
 
 export default function DiagnosisForm() {
-  const { toast } = useToast(); 
+  const { toast } = useToast();
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -64,20 +66,21 @@ export default function DiagnosisForm() {
 
   const onSubmit = async (data: any) => {
     try {
-      
-      console.log("Submitted data:", data);
-  
-      
-      toast({
-        title: "Success! 🎉",
-        description: "Your diagnosis has been submitted.",
+
+      const params = new URLSearchParams();
+
+      console.log(Object.keys(data));
+
+      Object.keys(data).forEach(key => {
+        params.append(key, data[key]);
       });
-  
-      
-      setTimeout(() => {
-        router.push("/directory");
-      }, 2000);
-      
+
+      router.push(`/chat?${params.toString()}`);
+
+      // setTimeout(() => {
+      //   router.push("/chat");
+      // }, 2000);
+
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
@@ -87,30 +90,28 @@ export default function DiagnosisForm() {
       });
     }
   };
-  
+
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-black py-10 pt-32">
-      <div className="w-full max-w-md rounded-lg bg-gray-800 p-6 shadow-lg">
-        <h1 className="mb-4 text-center text-2xl font-bold text-white">Diagnosis Form</h1>
-        <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+      <CardSkeleton className="w-full max-w-md p-6">
+        <h1 className="mb-4 text-center text-2xl font-bold text-white">Diagnosis By Symptom</h1>
+        <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4">
             <div>
-              <label className="text-white">Age</label>
+              <label>Age</label>
               <input
                 type="number"
                 placeholder="Enter your age"
                 {...register("age")}
-                className="w-full rounded border px-4 py-2 text-black"
               />
               {errors.age?.message && <p className="text-red-500">{(errors.age as any)?.message}</p>}
             </div>
 
             <div>
-              <label className="text-white">Gender</label>
+              <label>Gender</label>
               <select
                 {...register("gender")}
-                className="w-full rounded border px-4 py-2 text-black"
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -120,20 +121,18 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Height</label>
+              <label >Height</label>
               <div className="flex items-center gap-2">
                 <input
                   type="number"
                   placeholder="Feet"
                   {...register("heightFeet")}
-                  className="w-1/3 rounded border px-4 py-2 text-black"
                 />
-                <span className="text-white">'</span>
+                <span>'</span>
                 <input
                   type="number"
                   placeholder="Inches"
                   {...register("heightInches")}
-                  className="w-1/3 rounded border px-4 py-2 text-black"
                 />
               </div>
               {errors.heightFeet?.message && <p className="text-red-500">{(errors.heightFeet as any)?.message}</p>}
@@ -141,22 +140,20 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Weight</label>
+              <label>Weight</label>
               <input
                 type="number"
                 placeholder="Enter your weight in pounds"
                 {...register("weight")}
-                className="w-full rounded border px-4 py-2 text-black"
               />
               {errors.weight?.message && <p className="text-red-500">{(errors.weight as any)?.message}</p>}
             </div>
 
             <div>
-              <label className="text-white">Description of Injury</label>
+              <label>Description of Injury</label>
               <textarea
                 placeholder="Describe the injury"
                 {...register("injuryDescription")}
-                className="w-full rounded border px-4 py-2 text-black"
               />
               {errors.injuryDescription?.message && (
                 <p className="text-red-500">{(errors.injuryDescription as any)?.message}</p>
@@ -164,12 +161,11 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">How long ago did it happen?</label>
+              <label>How long ago did it happen?</label>
               <input
                 type="text"
                 placeholder="Duration (e.g., 2 hours ago)"
                 {...register("injuryDuration")}
-                className="w-full rounded border px-4 py-2 text-black"
               />
               {errors.injuryDuration?.message && (
                 <p className="text-red-500">{(errors.injuryDuration as any)?.message}</p>
@@ -177,10 +173,9 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Is the person conscious?</label>
+              <label>Is the person conscious?</label>
               <select
                 {...register("conscious")}
-                className="w-full rounded border px-4 py-2 text-black"
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -191,11 +186,11 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">First Aid Administered (if any)</label>
+              <label>First Aid Administered (if any)</label>
               <textarea
                 placeholder="Describe any first aid administered"
                 {...register("firstAid")}
-                className="w-full rounded border px-4 py-2 text-black"
+
               />
               {errors.firstAid?.message && (
                 <p className="text-red-500">{(errors.firstAid as any)?.message}</p>
@@ -203,11 +198,11 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Current Symptoms</label>
+              <label>Current Symptoms</label>
               <textarea
                 placeholder="List current symptoms"
                 {...register("currentSymptoms")}
-                className="w-full rounded border px-4 py-2 text-black"
+
               />
               {errors.currentSymptoms?.message && (
                 <p className="text-red-500">{(errors.currentSymptoms as any)?.message}</p>
@@ -215,12 +210,12 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Duration of Symptom</label>
+              <label>Duration of Symptom</label>
               <input
                 type="text"
                 placeholder="e.g., 3 days"
                 {...register("symptomDuration")}
-                className="w-full rounded border px-4 py-2 text-black"
+
               />
               {errors.symptomDuration?.message && (
                 <p className="text-red-500">{(errors.symptomDuration as any)?.message}</p>
@@ -228,10 +223,10 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Severity of Symptom</label>
+              <label>Severity of Symptom</label>
               <select
                 {...register("symptomSeverity")}
-                className="w-full rounded border px-4 py-2 text-black"
+
               >
                 <option value="Mild">Mild</option>
                 <option value="Moderate">Moderate</option>
@@ -243,11 +238,11 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Family History of Medical Conditions</label>
+              <label>Family History of Medical Conditions</label>
               <textarea
                 placeholder="Describe family medical history (if relevant)"
                 {...register("familyHistory")}
-                className="w-full rounded border px-4 py-2 text-black"
+
               />
               {errors.familyHistory?.message && (
                 <p className="text-red-500">{(errors.familyHistory as any)?.message}</p>
@@ -255,11 +250,11 @@ export default function DiagnosisForm() {
             </div>
 
             <div>
-              <label className="text-white">Current Medications</label>
+              <label>Current Medications</label>
               <textarea
                 placeholder="List current medications"
                 {...register("currentMedications")}
-                className="w-full rounded border px-4 py-2 text-black"
+
               />
               {errors.currentMedications?.message && (
                 <p className="text-red-500">{(errors.currentMedications as any)?.message}</p>
@@ -268,13 +263,13 @@ export default function DiagnosisForm() {
 
             <button
               type="submit"
-              className="mt-4 w-full rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600"
+              className=" w-full rounded-lg text-primary font-bold border py-2 bg-primary/10 border-primary/80 "
             >
-              Submit Diagnosis
+              Recieve Diagnosis
             </button>
           </div>
         </form>
-      </div>
+      </CardSkeleton>
     </div>
   );
 }
