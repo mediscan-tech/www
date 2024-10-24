@@ -5,14 +5,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@clerk/nextjs";
-import { useToast } from "@/components/ui/use-toast"; // Import useToast
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 import CardSkeleton from "@/components/ui/card-skeleton";
 
 // Doctor schema
 const doctorSchema = z.object({
   name: z.string().min(3, "Name is required"),
-  phoneNumber: z.string().min(10, "Phone number is required"),
   degree: z.string().min(4, "Medical degree is required"),
   practiceLocation: z.string().min(4, "Practice location is required"),
 });
@@ -20,13 +19,12 @@ const doctorSchema = z.object({
 // Patient Schema
 const patientSchema = z.object({
   name: z.string().min(3, "Name is required"),
-  phoneNumber: z.string().min(10, "Phone number is required"),
   healthCondition: z.string().optional(),
 });
 
 export default function OnboardingPage() {
-  const { toast } = useToast(); // Initialize the toast function
-  const router = useRouter(); // Initialize router for redirection
+  const { toast } = useToast();
+  const router = useRouter();
   const { user } = useUser();
   const [userType, setUserType] = useState<"doctor" | "patient" | null>(null);
 
@@ -118,21 +116,6 @@ export default function OnboardingPage() {
                 {errors.name && (
                   <p className="text-red-500">
                     {(errors.name as any)?.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label>Phone Number</label>
-                <input
-                  placeholder="1234567890"
-                  type="text"
-                  {...register("phoneNumber")}
-
-                />
-                {errors.phoneNumber && (
-                  <p className="text-red-500">
-                    {(errors.phoneNumber as any)?.message}
                   </p>
                 )}
               </div>

@@ -7,6 +7,7 @@ export async function GET() {
 
   try {
     const doctors = await db.collection("doctors").find().toArray();
+    // Ensure clerk_id is part of the doctor data
     return NextResponse.json(doctors);
   } catch (error) {
     console.error("Error fetching doctors:", error);

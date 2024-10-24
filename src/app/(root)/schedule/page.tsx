@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { IoDesktop } from "react-icons/io5";
 import { DateTimePickerV2 } from "@/components/date-time";
 import { useRouter } from "next/navigation";
-import { useSession } from "@clerk/nextjs";
+import { useSession, useUser } from "@clerk/nextjs";
 import { format, toZonedTime } from "date-fns-tz";
 import CardSkeleton from "@/components/ui/card-skeleton";
 
@@ -38,6 +38,12 @@ export default function TelemedicinePage() {
   const clerkId = session?.user?.id;
   const patientName = session?.user?.fullName || "Patient";
   const [upcomingMeeting, setUpcomingMeeting] = useState(null);
+  const { user } = useUser();
+  const [userType, setUserType] = useState<"doctor" | "patient" | null>(null);
+  const userId = user?.id;
+  const [doctorEmail, setDoctorEmail] = useState<string | null>(null);
+
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress || "No email available";
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -52,6 +58,23 @@ export default function TelemedicinePage() {
 
     fetchDoctors();
   }, []);
+
+  const handleDoctorChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedName = event.target.value;
+    const doctor = doctors.find((doc) => doc.name === selectedName);
+    setSelectedDoctor(doctor || null);
+
+    if (doctor) {
+      try {
+        // Fetch the doctor's email using the Clerk ID
+        const response = await fetch(`/api/getDoctorEmail?clerkId=${doctor.clerk_id}`);
+        const data = await response.json();
+        setDoctorEmail(data.email);
+      } catch (error) {
+        console.error("Error fetching doctor's email:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchSchedulesAndCheckMeetings = async () => {
@@ -98,12 +121,6 @@ export default function TelemedicinePage() {
     router.push("/room");
   };
 
-  const handleDoctorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedName = event.target.value;
-    const doctor = doctors.find((doc) => doc.name === selectedName);
-    setSelectedDoctor(doctor || null);
-  };
-
   const handleScheduleMeeting = () => {
     setShowDateTimePicker(!showDateTimePicker);
   };
@@ -135,11 +152,17 @@ export default function TelemedicinePage() {
       </CardSkeleton>
 
       {selectedDoctor && (
-        <CardSkeleton
-          className="mt-4 w-full max-w-md p-6"
-        >
+        <CardSkeleton className="mt-4 w-full max-w-md p-6">
           <h1 className="text-2xl font-bold text-text-light">{selectedDoctor.name}</h1>
-          <p className="text-sm">{selectedDoctor.name} works at {selectedDoctor.practiceLocation} with a degree in {selectedDoctor.degree}.</p>
+          <p className="text-sm">
+            {selectedDoctor.name} works at {selectedDoctor.practiceLocation} with a degree in {selectedDoctor.degree}.
+          </p>
+          {/* Display Doctor's Email */}
+          {doctorEmail && (
+            <p className="mt-2 text-sm text-gray-600">
+              Email: {doctorEmail}
+            </p>
+          )}
           {/* Schedule a Virtual Meeting button */}
           <button
             onClick={handleScheduleMeeting}
