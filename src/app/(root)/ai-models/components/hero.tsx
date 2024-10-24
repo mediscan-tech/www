@@ -82,14 +82,14 @@ export default function AIModelsHero() {
         }}
         className="absolute bottom-16 flex w-full items-center justify-center space-x-4"
       >
-        <button onClick={() => router.push("/diagnosis")}>
-          <CardSkeleton className="flex w-48 items-center justify-center space-x-1 whitespace-nowrap rounded-lg px-6 py-2 font-semibold text-text">
-            AI-Assistant
-          </CardSkeleton>
-        </button>
         <button onClick={() => router.push("/ai-models/self-diagnose")}>
           <CardSkeleton className="flex w-48 items-center justify-center space-x-1 whitespace-nowrap rounded-lg px-6 py-2 font-semibold text-text">
             Self-Diagnose
+          </CardSkeleton>
+        </button>
+        <button onClick={() => router.push("/diagnosis")}>
+          <CardSkeleton className="flex w-48 items-center justify-center space-x-1 whitespace-nowrap rounded-lg px-6 py-2 font-semibold text-text">
+            AI-Assistant
           </CardSkeleton>
         </button>
       </motion.div>
