@@ -1,10 +1,13 @@
 // src/app/api/schedules/route.ts
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongo/mongodb";
+import { unstable_noStore as noStore } from 'next/cache';
 
-export const revalidate = 0;
 
 export async function GET() {
+  // Call noStore to prevent caching
+  noStore();
+
   const mongoClient = await clientPromise;
   const db = mongoClient.db("mediscan");
 
