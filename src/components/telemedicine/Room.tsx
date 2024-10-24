@@ -80,34 +80,40 @@ const Room: React.FC<RoomProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="fixed right-0 top-0 z-30">
-        {Object.entries(peers).map(([userId, stream]) => (
-          <div key={userId}>
-            <h2 className="mb-2 text-xl font-semibold">Peer Video</h2>
-            <video
-              autoPlay
-              playsInline
-              ref={(el) => {
-                if (el) el.srcObject = stream;
-              }}
-              className="w-full"
-            />
-          </div>
-        ))}
+      <div className="fixed top-4 right-4 z-30">
+        <div className="w-96 h-96">
+          <video
+            ref={videoRef2}
+            autoPlay
+            muted
+            playsInline
+            className="w-full rounded-2xl border-2 border-bg-extralight"
+          />
+        </div>
+
       </div>
       <div className="fixed bottom-0 left-0 right-0 top-0 flex h-screen w-screen items-start">
         <video
-          ref={videoRef}
           autoPlay
-          muted
           playsInline
+          ref={(el) => {
+            if (Object.entries(peers)[0]) {
+              const [userId, stream] = Object.entries(peers)[0];
+              if (el) el.srcObject = stream;
+            }
+          }}
           className="absolute -z-10 h-full w-full bg-transparent"
         />
         <video
-          ref={videoRef2}
           autoPlay
-          muted
           playsInline
+          ref={(el) => {
+            if (Object.entries(peers)[0]) {
+              const [userId, stream] = Object.entries(peers)[0];
+              if (el) el.srcObject = stream;
+            }
+          }}
+
           className="absolute -z-20 h-full w-full scale-150 bg-transparent opacity-50 blur-xl"
         />
       </div>
@@ -122,11 +128,10 @@ const Room: React.FC<RoomProps> = ({
         <div className="space-x-4">
           <button
             onClick={toggleVideo}
-            className={`aspect-square h-full rounded-lg border p-1 ${
-              isVideoEnabled
+            className={`aspect-square h-full rounded-lg border p-1 ${isVideoEnabled
                 ? "border-primary bg-primary/10"
                 : "border-red-500 bg-red-500/10"
-            }`}
+              }`}
           >
             {isVideoEnabled ? (
               <IoVideocamOutline className="h-full w-full text-primary" />
@@ -137,11 +142,10 @@ const Room: React.FC<RoomProps> = ({
 
           <button
             onClick={toggleAudio}
-            className={`aspect-square h-full rounded-lg border p-1 ${
-              isAudioEnabled
+            className={`aspect-square h-full rounded-lg border p-1 ${isAudioEnabled
                 ? "border-primary bg-primary/10"
                 : "border-red-500 bg-red-500/10"
-            }`}
+              }`}
           >
             {isAudioEnabled ? (
               <AiOutlineAudio className="h-full w-full text-primary" />
