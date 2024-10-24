@@ -9,7 +9,7 @@ import { format, toZonedTime } from "date-fns-tz";
 import CardSkeleton from "@/components/ui/card-skeleton";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiFileCopyLine } from "react-icons/ri";
-
+export const revalidate = 0;
 interface Doctor {
   clerk_id: string;
   name: string;
@@ -145,18 +145,18 @@ export default function TelemedicinePage() {
         <>
           <CardSkeleton className="w-full max-w-md p-6">
             <div className="text-center">
-              <h1 className="mb-2 text-center text-2xl font-bold text-text-light">
+              <h1 className="mb-2 text-2xl font-bold text-center text-text-light">
                 Upcoming Appointment
               </h1>
 
-              <div className="flex w-full flex-col items-center">
-                <div className="flex w-fit items-center justify-center rounded-full border border-bg-extralight bg-bg-light px-3 py-1">
+              <div className="flex flex-col items-center w-full">
+                <div className="flex items-center justify-center px-3 py-1 border rounded-full w-fit border-bg-extralight bg-bg-light">
                   {roomID}{" "}
                   <button
                     onClick={() => navigator.clipboard.writeText(roomID)}
                     className="pl-1"
                   >
-                    <RiFileCopyLine className="h-5 w-5" />
+                    <RiFileCopyLine className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -181,12 +181,12 @@ export default function TelemedicinePage() {
               </button>
             </div>
           </CardSkeleton>
-          <div className="my-8 h-px w-full max-w-lg bg-bg-extralight"></div>
+          <div className="w-full h-px max-w-lg my-8 bg-bg-extralight"></div>
         </>
       )}
 
       <CardSkeleton className="w-full max-w-md p-6">
-        <h1 className="mb-4 text-center text-2xl font-bold text-text-light">
+        <h1 className="mb-4 text-2xl font-bold text-center text-text-light">
           Schedule Virtual Appointment
         </h1>
 
@@ -204,7 +204,7 @@ export default function TelemedicinePage() {
             {!showDateTimePicker ? (
               <button
                 onClick={handleScheduleMeeting}
-                className="mt-4 w-full rounded-lg border border-primary/80 bg-primary/10 p-2 font-bold text-primary"
+                className="w-full p-2 mt-4 font-bold border rounded-lg border-primary/80 bg-primary/10 text-primary"
               >
                 Schedule with Dr. {selectedDoctor.name}
               </button>
@@ -218,11 +218,11 @@ export default function TelemedicinePage() {
       </CardSkeleton>
 
       {doctorProfilePicture && selectedDoctor && doctorEmail ? (
-        <CardSkeleton className="mt-4 flex w-full max-w-md items-center p-6">
+        <CardSkeleton className="flex items-center w-full max-w-md p-6 mt-4">
           <img
             src={doctorProfilePicture}
             alt={`${selectedDoctor.name}'s profile`}
-            className="h-full w-24 rounded-2xl"
+            className="w-24 h-full rounded-2xl"
           />
           <div className="w-full pl-6">
             <h1 className="mb-1 text-xl font-bold text-text-light">
@@ -233,7 +233,7 @@ export default function TelemedicinePage() {
               {selectedDoctor.practiceLocation}.
             </p>
             <div className="flex items-center space-x-1">
-              <MdOutlineMailOutline className="h-4 w-4 text-text " />
+              <MdOutlineMailOutline className="w-4 h-4 text-text " />
               <a
                 target="_blank"
                 href={`mailto:${doctorEmail}`}
@@ -249,10 +249,10 @@ export default function TelemedicinePage() {
       )}
 
       {showDateTimePicker && (
-        <CardSkeleton className="mt-4 w-full max-w-md p-6">
+        <CardSkeleton className="w-full max-w-md p-6 mt-4">
           {/* DateTimePicker */}
           {showDateTimePicker && (
-            <div className="mt-4 flex -translate-y-2 flex-col items-center">
+            <div className="flex flex-col items-center mt-4 -translate-y-2">
               <DateTimePickerV2
                 onDateChange={handleDateChange}
                 selectedDate={selectedDate}
