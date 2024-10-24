@@ -59,6 +59,17 @@ export default function SkinModelPage() {
     alert(`You selected the ${model} model.`);
   };
 
+  const [model, setModel] = useState("skin");
+
+  const handleSelectChange = (event) => {
+    setModel(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`You selected the ${model} model.`);
+  };
+
   return (
     <div className="flex flex-col h-screen items-center justify-center pt-[104px]">
       <form className="w-full max-w-4xl justify-center items-center text-center">
