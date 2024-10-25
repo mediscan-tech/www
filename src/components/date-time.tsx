@@ -76,6 +76,9 @@ export function DateTimePickerV2({
     const roomID = crypto.randomBytes(5).toString("hex");
 
     try {
+      const meetingDateTime = new Date(data.datetime.toLocaleString("en-US", {
+        timeZone: userTimeZone,
+      }));
       const response = await fetch("/api/telemedicineDate", {
         method: "POST",
         headers: {
@@ -84,9 +87,7 @@ export function DateTimePickerV2({
         body: JSON.stringify({
           patientClerkId: user.id,
           doctorClerkId: selectedDoctor.clerk_id,
-          meetingDateTime: data.datetime.toLocaleString("en-US", {
-            timeZone: userTimeZone,
-          }),
+          meetingDateTime: meetingDateTime.toISOString(),
           timeZone: userTimeZone,
           roomID,
           patientName: user.fullName,
@@ -132,20 +133,20 @@ export function DateTimePickerV2({
               control={form.control}
               name="datetime"
               render={({ field }) => (
-                <FormItem className="flex w-full flex-col">
+                <FormItem className="flex flex-col w-full">
                   <Popover open={isOpen} onOpenChange={setIsOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant={"outline"}
-                          className="w-64 rounded-lg border border-bg-extralight bg-bg-light"
+                          className="w-64 border rounded-lg border-bg-extralight bg-bg-light"
                         >
                           {field.value ? (
                             `${format(field.value, "PPP")}`
                           ) : (
                             <span>Pick a date</span>
                           )}
-                          <CalendarIcon className="ml-auto h-4 w-4 text-text-light opacity-50" />
+                          <CalendarIcon className="w-4 h-4 ml-auto opacity-50 text-text-light" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -234,12 +235,12 @@ export function DateTimePickerV2({
             />
           </div>
           <Button
-            className="mt-4 w-full rounded-lg border border-primary/80 bg-primary/10 font-bold text-primary transition-all duration-300 hover:bg-primary/20"
+            className="w-full mt-4 font-bold transition-all duration-300 border rounded-lg border-primary/80 bg-primary/10 text-primary hover:bg-primary/20"
             type="submit"
           >
             Schedule Appointment
           </Button>
-          <p className="pt-1 text-center text-xs">
+          <p className="pt-1 text-xs text-center">
             By clicking this button, you are scheduling a virtual appointment
             with {selectedDoctor.name} at{" "}
             {selectedDate ? selectedDate.toLocaleString() : ""}.
