@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongo/mongodb";
 
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
 

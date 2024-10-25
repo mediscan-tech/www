@@ -10,6 +10,8 @@ import CardSkeleton from "@/components/ui/card-skeleton";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiFileCopyLine } from "react-icons/ri";
 
+export const dynamic = 'force-dynamic';
+
 interface Doctor {
   clerk_id: string;
   name: string;
